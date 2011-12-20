@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: org.cbi.clientesmodel
+OpenIDE-Module-Localizing-Bundle: org/cbi/clientesmodel/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+
