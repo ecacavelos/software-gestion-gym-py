@@ -25,7 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Clientes.findAll", query = "SELECT c FROM Clientes c"),
     @NamedQuery(name = "Clientes.findByClienteid", query = "SELECT c FROM Clientes c WHERE c.clienteid = :clienteid"),
     @NamedQuery(name = "Clientes.findByNombre", query = "SELECT c FROM Clientes c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Clientes.findByApellido", query = "SELECT c FROM Clientes c WHERE c.apellido = :apellido")})
+    @NamedQuery(name = "Clientes.findByApellido", query = "SELECT c FROM Clientes c WHERE c.apellido = :apellido"),
+    @NamedQuery(name = "Clientes.findByCedula", query = "SELECT c FROM Clientes c WHERE c.cedula = :cedula")})
 public class Clientes implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,6 +38,8 @@ public class Clientes implements Serializable {
     private String nombre;
     @Column(name = "APELLIDO")
     private String apellido;
+    @Column(name = "CEDULA")
+    private Integer cedula;
 
     public Clientes() {
     }
@@ -74,6 +77,14 @@ public class Clientes implements Serializable {
         this.apellido = apellido;
     }
 
+    public Integer getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(Integer cedula) {
+        this.cedula = cedula;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -98,4 +109,5 @@ public class Clientes implements Serializable {
     public String toString() {
         return "lib.Clientes[ clienteid=" + clienteid + " ]";
     }
+    
 }
