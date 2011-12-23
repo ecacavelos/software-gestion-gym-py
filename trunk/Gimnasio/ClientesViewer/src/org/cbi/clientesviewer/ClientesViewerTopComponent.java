@@ -45,6 +45,7 @@ public final class ClientesViewerTopComponent extends TopComponent implements Ex
         EntityManager entityManager = Persistence.createEntityManagerFactory("GimnasioLibraryPU").createEntityManager();
         Query query = entityManager.createNamedQuery("Clientes.findAll");
         List<Clientes> resultList = query.getResultList();
+        this.setDisplayName("Clientes");
         
         /*A partir de aca es la parte de la API de netbeans*/
         
@@ -70,23 +71,21 @@ public final class ClientesViewerTopComponent extends TopComponent implements Ex
 
         beanTreeView1 = new org.openide.explorer.view.BeanTreeView();
 
-        beanTreeView1.setToolTipText(org.openide.util.NbBundle.getMessage(ClientesViewerTopComponent.class, "ClientesViewerTopComponent.beanTreeView1.toolTipText")); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(beanTreeView1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(beanTreeView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(beanTreeView1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(beanTreeView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
