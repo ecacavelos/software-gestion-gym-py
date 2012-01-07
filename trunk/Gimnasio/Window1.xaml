@@ -1,0 +1,36 @@
+﻿<Window x:Class="Gimnasio.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="GymAdmin" Height="493" Width="869" Loaded="Window_Loaded" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" WindowStartupLocation="CenterScreen" WindowState="Normal" Background="#FFBECBEB">
+    <Window.Resources>
+        <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance my:clientes, CreateList=True}" />
+    </Window.Resources>
+    <Grid DataContext="{StaticResource clientesViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            
+        </Grid.RowDefinitions>
+        <Menu Background="#2A040417">
+            <MenuItem Header="Archivo">
+                <MenuItem Header="Salir"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Clientes">
+                <MenuItem Header="Ver"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Cuotas" />
+            <MenuItem Header="Ayuda" />
+        </Menu>
+        <ToolBar Grid.Row="1" HorizontalAlignment="Left" Background="#5A1B1B1D">
+            <Button Margin="3" Click="abrirVentanaClientes" Content="Clientes"></Button>
+            <Separator></Separator>
+            <Button Margin="3" Content="Ingresar Pago" Click="Button_Click_2"></Button>
+            <Separator></Separator>
+            <Button Margin="3" Click="Button_Click_1">Control de ingreso</Button>
+        </ToolBar>
+        <StackPanel Grid.Row="4" HorizontalAlignment="Left" Margin="12,6,0,0" Name="stackPanel1" VerticalAlignment="Top"  DataContext="{StaticResource clientesViewSource}"></StackPanel>
+    </Grid>
+</Window>
