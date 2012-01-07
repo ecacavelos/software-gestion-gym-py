@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="clientes" EntityType="Database1Model.clientes" />
+    <EntitySet Name="Cuotas" EntityType="Database1Model.Cuotas" />
+    <EntitySet Name="Pagos" EntityType="Database1Model.Pagos" />
+    <AssociationSet Name="FK_cliente_pago" Association="Database1Model.FK_cliente_pago">
+      <End Role="clientes" EntitySet="clientes" />
+      <End Role="Pagos" EntitySet="Pagos" />
+    </AssociationSet>
+    <AssociationSet Name="fk_tipoCuota_pago" Association="Database1Model.fk_tipoCuota_pago">
+      <End Role="Cuotas" EntitySet="Cuotas" />
+      <End Role="Pagos" EntitySet="Pagos" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="clientes">
+    <Key>
+      <PropertyRef Name="idCliente" />
+    </Key>
+    <Property Type="Int32" Name="idCliente" Nullable="false" />
+    <Property Type="String" Name="nombre" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="apellido" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="direccion" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="telefono" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="email" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="fecha_nacimiento" />
+    <Property Type="DateTime" Name="fecha_ingreso" />
+    <Property Type="Int32" Name="altura" />
+    <Property Type="Int32" Name="peso" />
+    <NavigationProperty Name="Pagos" Relationship="Database1Model.FK_cliente_pago" FromRole="clientes" ToRole="Pagos" />
+  </EntityType>
+  <EntityType Name="Cuotas">
+    <Key>
+      <PropertyRef Name="idCuota" />
+    </Key>
+    <Property Type="Int32" Name="idCuota" Nullable="false" />
+    <Property Type="String" Name="monto" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="diasHabilitados" />
+    <NavigationProperty Name="Pagos" Relationship="Database1Model.fk_tipoCuota_pago" FromRole="Cuotas" ToRole="Pagos" />
+  </EntityType>
+  <EntityType Name="Pagos">
+    <Key>
+      <PropertyRef Name="idPago" />
+    </Key>
+    <Property Type="DateTime" Name="fecha" />
+    <Property Type="String" Name="idPago" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="fk_cliente" />
+    <Property Type="Int32" Name="fk_tipoCuota" />
+    <NavigationProperty Name="clientes" Relationship="Database1Model.FK_cliente_pago" FromRole="Pagos" ToRole="clientes" />
+    <NavigationProperty Name="Cuotas" Relationship="Database1Model.fk_tipoCuota_pago" FromRole="Pagos" ToRole="Cuotas" />
+  </EntityType>
+  <Association Name="FK_cliente_pago">
+    <End Type="Database1Model.clientes" Role="clientes" Multiplicity="0..1" />
+    <End Type="Database1Model.Pagos" Role="Pagos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clientes">
+        <PropertyRef Name="idCliente" />
+      </Principal>
+      <Dependent Role="Pagos">
+        <PropertyRef Name="fk_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_tipoCuota_pago">
+    <End Type="Database1Model.Cuotas" Role="Cuotas" Multiplicity="0..1" />
+    <End Type="Database1Model.Pagos" Role="Pagos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cuotas">
+        <PropertyRef Name="idCuota" />
+      </Principal>
+      <Dependent Role="Pagos">
+        <PropertyRef Name="fk_tipoCuota" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

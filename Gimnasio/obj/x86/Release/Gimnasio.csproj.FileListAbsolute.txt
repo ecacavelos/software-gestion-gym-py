@@ -1,0 +1,16 @@
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\bin\Release\Database1.sdf
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\bin\Release\Gimnasio.exe.config
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\bin\Release\Gimnasio.exe
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\bin\Release\Gimnasio.pdb
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\Window1.baml
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\Window1.g.cs
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\App.g.cs
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\Gimnasio_Content.g.cs
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\Gimnasio_MarkupCompile.cache
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\Gimnasio.g.resources
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\Gimnasio.Properties.Resources.resources
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\Gimnasio.exe
+C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\Gimnasio.pdb

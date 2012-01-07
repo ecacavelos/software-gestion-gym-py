@@ -1,0 +1,93 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server Compact Edition
+-- --------------------------------------------------
+-- Date Created: 01/04/2012 18:53:27
+-- Generated from EDMX file: C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\Model1.edmx
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- NOTE: if the constraint does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    ALTER TABLE [cuotas] DROP CONSTRAINT [FK_clientescuotas];
+GO
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- NOTE: if the table does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    DROP TABLE [clientes];
+GO
+    DROP TABLE [cuotas];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'clientes'
+CREATE TABLE [clientes] (
+    [id] int IDENTITY(1,1) NOT NULL,
+    [nombre] nvarchar(100)  NOT NULL,
+    [apellido] nvarchar(100)  NOT NULL,
+    [cedula] int  NOT NULL,
+    [direccion] nvarchar(4000)  NOT NULL,
+    [email] nvarchar(4000)  NOT NULL,
+    [fecha_nacimiento] nvarchar(4000)  NOT NULL,
+    [fecha_ingreso] nvarchar(4000)  NOT NULL,
+    [edad] nvarchar(4000)  NOT NULL,
+    [peso] nvarchar(4000)  NOT NULL,
+    [altura] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'cuotas'
+CREATE TABLE [cuotas] (
+    [id] int  NOT NULL,
+    [monto] int  NOT NULL,
+    [diasHabilitados] int  NOT NULL,
+    [clientes_id] int  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [id] in table 'clientes'
+ALTER TABLE [clientes]
+ADD CONSTRAINT [PK_clientes]
+    PRIMARY KEY ([id] );
+GO
+
+-- Creating primary key on [id] in table 'cuotas'
+ALTER TABLE [cuotas]
+ADD CONSTRAINT [PK_cuotas]
+    PRIMARY KEY ([id] );
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [clientes_id] in table 'cuotas'
+ALTER TABLE [cuotas]
+ADD CONSTRAINT [FK_clientescuotas]
+    FOREIGN KEY ([clientes_id])
+    REFERENCES [clientes]
+        ([id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_clientescuotas'
+CREATE INDEX [IX_FK_clientescuotas]
+ON [cuotas]
+    ([clientes_id]);
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------
