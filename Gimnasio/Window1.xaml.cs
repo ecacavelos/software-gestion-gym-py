@@ -24,15 +24,7 @@ namespace Gimnasio
             InitializeComponent();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
-            // Load data into clientes. You can modify this code as needed.
-            System.Windows.Data.CollectionViewSource clientesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("clientesViewSource")));
-            System.Data.Objects.ObjectQuery<Gimnasio.clientes> clientesQuery = this.GetclientesQuery(database1Entities);
-            clientesViewSource.Source = clientesQuery.Execute(System.Data.Objects.MergeOption.AppendOnly);
-        }
+     
 
         private System.Data.Objects.ObjectQuery<clientes> GetclientesQuery(Database1Entities database1Entities)
         {

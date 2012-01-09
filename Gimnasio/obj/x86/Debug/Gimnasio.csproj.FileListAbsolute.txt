@@ -30,10 +30,7 @@ C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Deb
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Gimnasio_MarkupCompile.lref
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Window2.baml
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Window2.g.cs
-C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Gimnasio.AgregarCliente.resources
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Window3.baml
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Window3.g.cs
-C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\UserControl1.baml
-C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\UserControl1.g.cs
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Window4.g.cs
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Window4.baml
