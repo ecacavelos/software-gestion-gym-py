@@ -14,3 +14,16 @@ C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Rel
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\GenerateResource.write.1.tlog
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\Gimnasio.exe
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Release\Gimnasio.pdb
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Window3.baml
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Window5.baml
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Window1.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Window2.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Window3.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Window4.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Window5.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\App.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Gimnasio_Content.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Gimnasio_MarkupCompile.cache
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Gimnasio_MarkupCompile.lref
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Release\Gimnasio.exe

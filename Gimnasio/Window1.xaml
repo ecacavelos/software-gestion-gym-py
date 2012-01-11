@@ -30,6 +30,8 @@
             <Button Margin="3" Content="Ingresar Pago" Click="Button_Click_2"></Button>
             <Separator></Separator>
             <Button Margin="3" Click="Button_Click_1">Control de ingreso</Button>
+            <Separator></Separator>
+            <Button Margin="3" Click="Button_Click_3">Habilitar manualmente</Button>
         </ToolBar>
         <StackPanel Grid.Row="4" HorizontalAlignment="Left" Margin="12,6,0,0" Name="stackPanel1" VerticalAlignment="Top"  DataContext="{StaticResource clientesViewSource}"></StackPanel>
     </Grid>
