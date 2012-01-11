@@ -89,5 +89,20 @@ namespace Gimnasio
                 
 
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Button cmd = (Button)e.OriginalSource;
+
+            // Create an instance of the window named
+            // by the current button.
+            Type type = this.GetType();
+            Assembly assembly = type.Assembly;
+            Window win = (Window)assembly.CreateInstance("Gimnasio.Window5");
+            //win.Owner = this;
+
+            // BLOQUEA LAS OTRAS VENTANAS !
+            win.ShowDialog();
+        }
     }
 }

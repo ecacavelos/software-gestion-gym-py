@@ -34,3 +34,28 @@ C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Deb
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Window3.g.cs
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Window4.g.cs
 C:\Users\cbi\documents\visual studio 2010\Projects\Gimnasio\Gimnasio\obj\x86\Debug\Window4.baml
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Window3.baml
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Window1.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Window2.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Window3.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Window4.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\App.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Gimnasio_Content.g.cs
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Gimnasio_MarkupCompile.cache
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Gimnasio_MarkupCompile.lref
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Gimnasio.exe
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Gimnasio.pdb
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\bin\Debug\Gimnasio.exe.config
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\bin\Debug\Database1.sdf
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\bin\Debug\Gimnasio.exe
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\bin\Debug\Gimnasio.pdb
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Window1.baml
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Window2.baml
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Window4.baml
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Gimnasio.g.resources
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Gimnasio.Properties.Resources.resources
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Window5.baml
+C:\Users\David-CBI\Documents\software-gestion-gym-py\Gimnasio\obj\x86\Debug\Window5.g.cs
