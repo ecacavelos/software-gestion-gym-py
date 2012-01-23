@@ -163,6 +163,7 @@
     <Content Include="Database1.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\colorful_chart.ico" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Window1.xaml">

@@ -24,8 +24,6 @@ namespace Gimnasio
             InitializeComponent();
         }
 
-     
-
         private System.Data.Objects.ObjectQuery<clientes> GetclientesQuery(Database1Entities database1Entities)
         {
             // Auto generated code
@@ -68,7 +66,7 @@ namespace Gimnasio
 
             // Show the window.
             win.Show();
-                
+
             System.Console.WriteLine("abrir la ventana de control");
         }
 
@@ -86,7 +84,6 @@ namespace Gimnasio
 
             // BLOQUEA LAS OTRAS VENTANAS !
             win.ShowDialog();
-                
 
         }
 
