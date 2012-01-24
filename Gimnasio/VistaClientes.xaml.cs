@@ -15,14 +15,14 @@ using System.Windows.Shapes;
 namespace Gimnasio
 {
     /// <summary>
-    /// Interaction logic for Window2.xaml
+    /// Interaction logic for VistaClientes.xaml
     /// </summary>
-    public partial class Window2 : Window
+    public partial class VistaClientes : Window
     {
 
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
 
-        public Window2()
+        public VistaClientes()
         {
             InitializeComponent();
         }
