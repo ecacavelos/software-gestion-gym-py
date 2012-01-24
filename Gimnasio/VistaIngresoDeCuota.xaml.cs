@@ -17,11 +17,11 @@ namespace Gimnasio
     /// <summary>
     /// Interaction logic for Window4.xaml
     /// </summary>
-    public partial class Window4 : Window
+    public partial class VistaIngresoDeCuota : Window
     {
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
 
-        public Window4()
+        public VistaIngresoDeCuota()
         {
             InitializeComponent();
         }
