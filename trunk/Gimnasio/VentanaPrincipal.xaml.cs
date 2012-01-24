@@ -15,11 +15,11 @@ using System.Reflection;
 namespace Gimnasio
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for VentanaPrincipal.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class VentanaPrincipal : Window
     {
-        public Window1()
+        public VentanaPrincipal()
         {
             InitializeComponent();
         }
@@ -47,7 +47,7 @@ namespace Gimnasio
             // by the current button.
             Type type = this.GetType();
             Assembly assembly = type.Assembly;
-            Window win = (Window)assembly.CreateInstance("Gimnasio.Window2");
+            Window win = (Window)assembly.CreateInstance("Gimnasio.VistaClientes");
             // Show the window.
             win.Show();
         }
