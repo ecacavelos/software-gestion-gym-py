@@ -1,4 +1,4 @@
-﻿<Window x:Class="Gimnasio.Window5"
+﻿<Window x:Class="Gimnasio.VistaIngresoManual"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Apertura Manual" Height="160" Width="246" ResizeMode="NoResize" Loaded="Window_Loaded">
