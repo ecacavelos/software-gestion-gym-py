@@ -1,4 +1,4 @@
-﻿<Window x:Class="Gimnasio.Window3"
+﻿<Window x:Class="Gimnasio.VistaControlIngreso"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Control de Ingreso" Height="280" Width="770" ResizeMode="NoResize">

@@ -24,9 +24,9 @@ using System.Runtime.InteropServices;
 namespace Gimnasio
 {
     /// <summary>
-    /// Interaction logic for Window3.xaml
+    /// Interaction logic for VistaControlIngreso.xaml
     /// </summary>
-    public partial class Window3 : Window
+    public partial class VistaControlIngreso : Window
     {
         #region "Imported Functions"
 
@@ -45,7 +45,7 @@ namespace Gimnasio
         private int _PortAddress = 0;
         string ExceptionOccured;
 
-        public Window3()
+        public VistaControlIngreso()
         {
             ParallelPort();
             InitializeComponent();

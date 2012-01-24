@@ -61,7 +61,7 @@ namespace Gimnasio
             // by the current button.
             Type type = this.GetType();
             Assembly assembly = type.Assembly;
-            Window win = (Window)assembly.CreateInstance("Gimnasio.Window3");
+            Window win = (Window)assembly.CreateInstance("Gimnasio.VistaControlIngreso");
             //win.Owner = this;
 
             // Show the window.
