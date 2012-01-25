@@ -27,7 +27,7 @@
         <ToolBar Grid.Row="4" HorizontalAlignment="Left" Background="#5A1B1B1D" Margin="12,12,0,215" Width="594">
             <Button Margin="3" Click="abrirVentanaClientes" Content="Clientes"></Button>
             <Separator></Separator>
-            <Button Margin="3" Content="Ingresar Pago" Click="Button_Click_2"></Button>
+            <Button Margin="3" Content="Ingresar Pago" Click="clickBtnIngresarPago"></Button>
             <Separator></Separator>
             <Button Margin="3" Click="Button_Click_1">Control de ingreso</Button>
             <Separator></Separator>

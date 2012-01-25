@@ -70,22 +70,7 @@ namespace Gimnasio
             System.Console.WriteLine("abrir la ventana de control");
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            // Get the current button.
-            Button cmd = (Button)e.OriginalSource;
-
-            // Create an instance of the window named
-            // by the current button.
-            Type type = this.GetType();
-            Assembly assembly = type.Assembly;
-            Window win = (Window)assembly.CreateInstance("Gimnasio.VistaControlIngreso");
-            //win.Owner = this;
-
-            // BLOQUEA LAS OTRAS VENTANAS !
-            win.ShowDialog();
-
-        }
+       
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
@@ -96,6 +81,22 @@ namespace Gimnasio
             Type type = this.GetType();
             Assembly assembly = type.Assembly;
             Window win = (Window)assembly.CreateInstance("Gimnasio.VistaIngresoManual");
+            //win.Owner = this;
+
+            // BLOQUEA LAS OTRAS VENTANAS !
+            win.ShowDialog();
+        }
+
+        private void clickBtnIngresarPago(object sender, RoutedEventArgs e)
+        {
+            // Get the current button.
+            Button cmd = (Button)e.OriginalSource;
+
+            // Create an instance of the window named
+            // by the current button.
+            Type type = this.GetType();
+            Assembly assembly = type.Assembly;
+            Window win = (Window)assembly.CreateInstance("Gimnasio.VistaIngresoDeCuota");
             //win.Owner = this;
 
             // BLOQUEA LAS OTRAS VENTANAS !
