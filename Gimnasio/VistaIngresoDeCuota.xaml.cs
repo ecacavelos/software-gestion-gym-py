@@ -19,10 +19,17 @@ namespace Gimnasio
     /// </summary>
     public partial class VistaIngresoDeCuota : Window
     {
-        Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
+         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
+        string esqlCuotas = "select value c from cuotas as c";
+        int diasAHabilitar;
+        DateTime fechaPago;
+        int nroCedula, idCliente, cuotaId;
 
         public VistaIngresoDeCuota()
         {
+            this.diasAHabilitar = new int();
+            this.fechaPago = new DateTime();
+            this.nroCedula = new int();
             InitializeComponent();
         }
 
@@ -49,60 +56,135 @@ namespace Gimnasio
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // Load data into Pagos. You can modify this code as needed.
-            System.Windows.Data.CollectionViewSource pagosViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("pagosViewSource")));
-            System.Data.Objects.ObjectQuery<Gimnasio.Pagos> pagosQuery = this.GetPagosQuery(database1Entities);
-            pagosViewSource.Source = pagosQuery.Execute(System.Data.Objects.MergeOption.AppendOnly);
+            // cargar en el combobox los parametros de cuotas posibles, trayendo de la tabla Cuotas. 
+            var cuotas = database1Entities.CreateQuery<Cuotas>(esqlCuotas);
+            comboBoxTiposCuotas.ItemsSource = cuotas;
+            comboBoxTiposCuotas.DisplayMemberPath = "diasHabilitados";
+
         }
 
-        //obtiene cualquier caracter. 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        private void botonAplicarPago(object sender, RoutedEventArgs e)
         {
-            /*Si (la tecla presionada es ENTER)
-                    entonces, evaluar el numero de cedula y traer el cliente y llenar los datos
-              Si no, no hacer nada. 
-             
-             */
-            
+            //Cantidad de dias a habilitar, si esta en 0 entonces aun no se seteo
+            if (diasAHabilitar == 0)
+            {
+
+                //abrir una ventanita con el aviso de seteo de los dias que se quiere habilitar
+                MessageBox.Show("Debe seleccionar la cantidad de dias a habilitar");
+
+
+            }
+            else
+            { // esta correctamente seteada la cantidad de dias, comprobar si la fecha esta seleccionada
+                if ((fechaPago.Year == 1) && (fechaPago.Day == 1) && (fechaPago.Month == 1))
+                {
+                    //abrir una ventanita con el aviso de seteo de los dias que se quiere habilitar
+                    MessageBox.Show("Debe seleccionar la fecha");
+
+                }
+                else
+                {
+                    if (textBoxNombre.Text == "")// aun no se selecciono ningun cliente
+                    {//todavia no esta seteado ningun nombre.
+                        //abrir una ventanita con el aviso de seteo de los dias que se quiere habilitar
+                        MessageBox.Show("Debe seleccionar un cliente");
+
+                    }
+                    else
+                    { // esta todo seteado, aplicar el pago 
+                        /* Calcular 30/7/1 dias para establecer la fecha de vencimiento en al tabla Pagos. 
+                        *Por ejemplo: Dia actual  14/10/2012 y se paga por 30 dias, entonces el 13/11/2011 sera la fecha de vencimiento
+                       */
+                        Pagos pagoAAgregar = new Pagos();
+                        pagoAAgregar.fk_cliente = this.idCliente;
+                        pagoAAgregar.fk_tipoCuota = this.cuotaId;
+                        pagoAAgregar.fecha = this.fechaPago;
+                        pagoAAgregar.fecha_vencimiento = this.fechaPago.AddDays(this.diasAHabilitar);
+                        pagoAAgregar.idPago = 2;
+                        database1Entities.AddToPagos(pagoAAgregar);
+                        if (database1Entities.SaveChanges() == 0)
+                        {
+
+                            Console.WriteLine("No se agrego nada");
+
+                        }
+                        else Console.WriteLine("algo se tuvo que actualizar");
+                        //pagoAAgregar.fech
+                        //pagoAAgregar.fk_tipoCuota = 
+                    }
+                }
+
+            }
+
+
+
+        }
+
+        // la seleccion de la fecha fue realizada
+        private void datePickerFechaInicialPago_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            // se obtiene la fecha elegida y se setea el campo correspondiente
+            this.fechaPago = (System.DateTime)datePickerFechaInicialPago.SelectedDate;
+        }
+
+        private void comboBoxTiposCuotas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //comboBoxTiposCuotas.
+            Cuotas cuotaSeleccionada = (Cuotas)comboBoxTiposCuotas.SelectedItem;
+            diasAHabilitar = (int)cuotaSeleccionada.diasHabilitados; // aca se setean los dias a habilitar para el cliente
+            this.cuotaId = (int)cuotaSeleccionada.idCuota;
+            Console.WriteLine("Dias a habilitar = " + diasAHabilitar.ToString());
+
+        }
+
+        /*
+         * CALLBACK  que captura cualquier tecla presionada en el textbox con nombre textBoxNroCedula en el archivo VistaIngresoCuota.xaml
+         * Descripcion: Cuando se presiona la tecla ENTER, se verifica si el nro. de cedula ingresado corresponde a un cliente en la base de datos. 
+         * Si no existe entonces se emite una alerta y no se setea el campo nroCedula, si se encuentra el cliente, 
+         * entonces se setea con el valor encontrado.
+         */
+        private void textBoxNroCedula_KeyDown(object sender, KeyEventArgs e)
+        {
+            // se presiono ENTER
             if (e.Key.ToString() == "Return")
             {
-                
-               
 
                 String numeroCedula = e.OriginalSource.ToString().Substring(33);
-                //System.Console.WriteLine("ve.OriginalSource.ToString()" + e.OriginalSource.ToString().Remove(4) + "\n");
                 System.Console.WriteLine("substring  : " + numeroCedula + "\n");
                 // comprobar si existe este objeto y llenar el formulario
 
-                Console.WriteLine("a buscar el cliente y cuotas");
-                string esql = "select value c from clientes as c where c.nombre= '" + numeroCedula +  "\'";
-                string esqlCuotas = "select value c from cuotas as c";
+
+                Console.WriteLine("a buscar el cliente");
+                string esql = "select value c from clientes as c where c.nro_cedula= '" + numeroCedula + "\'";
+
 
                 Console.WriteLine("consulta: " + esql);
-                var clientes = database1Entities.CreateQuery<clientes>(esql);
-                var cuotas = database1Entities.CreateQuery<Cuotas>(esqlCuotas);
-                //foreach (var cliente in clientes)
-                //{
-                //    Console.WriteLine("apellido:" + cliente.apellido);
+                var clientesVar = database1Entities.CreateQuery<clientes>(esql);
+
+
+
+
+                //if(){
                 //}
-                ClienteSeleccionado.DataContext = clientes; // Establecer el data context para los elementos del cliente
-                comboBoxTiposCuotas.ItemsSource = cuotas;
-                comboBoxTiposCuotas.DisplayMemberPath = "monto";
-                // traer todos los tipos de cuotas que existen
-                // Load data into Pagos. You can modify this code as needed.
 
-                
-                //System.Windows.Data.CollectionViewSource cuotasViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("cuotasViewSource")));
-                //System.Data.Objects.ObjectQuery<Gimnasio.Cuotas> cuotasQuery = this.GetcuotasQuery(database1Entities);
-                //cuotasViewSource.Source = cuotasQuery.Execute(System.Data.Objects.MergeOption.AppendOnly);
+                ClienteSeleccionado.DataContext = clientesVar; // Establecer el data context para los elementos del cliente
+                foreach (clientes result in clientesVar)
+                {
+                    Console.WriteLine("id del cliente:" + result.idCliente);
+                    this.idCliente = result.idCliente;
+                }
 
             }
-            else {
-                System.Console.WriteLine("otra tecla");
+            else
+            {
+                System.Console.WriteLine("se presiono cualquier otra tecla que no es Return");
 
             }
-            
-            
+
+
+
         }
+
     }
 }
