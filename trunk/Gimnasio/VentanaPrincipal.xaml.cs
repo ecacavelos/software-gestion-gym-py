@@ -102,5 +102,21 @@ namespace Gimnasio
             // BLOQUEA LAS OTRAS VENTANAS !
             win.ShowDialog();
         }
+
+        private void SalirMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void VerMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of the window named
+            // by the current button.
+            Type type = this.GetType();
+            Assembly assembly = type.Assembly;
+            Window win = (Window)assembly.CreateInstance("Gimnasio.VistaClientes");
+            // Show the window.
+            win.Show();
+        }
     }
 }
