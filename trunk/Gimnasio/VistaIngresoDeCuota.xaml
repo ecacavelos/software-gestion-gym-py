@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Gimnasio.VistaIngresoDeCuota"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Pago de cuota" Height="400" Width="491" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" ResizeMode="NoResize" Icon="/Gimnasio;component/Images/iconoCuotas.jpg">
+        Title="Pago de cuota" Height="400" Width="491" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" ResizeMode="NoResize" Icon="/Gimnasio;component/iconoCuotas.jpg">
     <Window.Resources>
         <CollectionViewSource x:Key="pagosViewSource" d:DesignSource="{d:DesignInstance my:Pagos, CreateList=True}" />
     </Window.Resources>

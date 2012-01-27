@@ -80,20 +80,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
+    <Compile Include="VentanaPrincipal.xaml.cs">
+      <DependentUpon>VentanaPrincipal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window2.xaml.cs">
-      <DependentUpon>Window2.xaml</DependentUpon>
+    <Compile Include="VistaClientes.xaml.cs">
+      <DependentUpon>VistaClientes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window3.xaml.cs">
-      <DependentUpon>Window3.xaml</DependentUpon>
+    <Compile Include="VistaControlIngreso.xaml.cs">
+      <DependentUpon>VistaControlIngreso.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window4.xaml.cs">
-      <DependentUpon>Window4.xaml</DependentUpon>
+    <Compile Include="VistaIngresoDeCuota.xaml.cs">
+      <DependentUpon>VistaIngresoDeCuota.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window5.xaml.cs">
-      <DependentUpon>Window5.xaml</DependentUpon>
+    <Compile Include="VistaIngresoManual.xaml.cs">
+      <DependentUpon>VistaIngresoManual.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -160,31 +160,35 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="agregarClienteIcon.png" />
     <Content Include="Database1.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="iconoControAcceso.png" />
+    <Resource Include="iconoCuotas.jpg" />
+    <Resource Include="vistaClientesIcon.png" />
     <Resource Include="Images\colorful_chart.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Window1.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="VentanaPrincipal.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Window2.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="VistaClientes.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Window3.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="VistaControlIngreso.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Window4.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="VistaIngresoDeCuota.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Window5.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="VistaIngresoManual.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
