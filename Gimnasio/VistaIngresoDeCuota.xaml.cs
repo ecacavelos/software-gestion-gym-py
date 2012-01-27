@@ -190,8 +190,10 @@ namespace Gimnasio
                     var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
                     foreach (Pagos resultPagos in fechaUltimoVencimientoResult) 
                     {
-                        Console.WriteLine(resultPagos.fecha_vencimiento.ToString());
-                        this.fechaUltimoVencimiento = (System.DateTime)resultPagos.fecha_vencimiento;
+                        if (resultPagos.fecha_vencimiento == null)
+                            this.fechaUltimoVencimiento = new DateTime();
+                        else
+                            this.fechaUltimoVencimiento = (System.DateTime)resultPagos.fecha_vencimiento;
                     }
 
                 }
