@@ -10,6 +10,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nombreColumn" Binding="{Binding Path=nombre}" Header="Nombre" />
                 <DataGridTextColumn x:Name="apellidoColumn" Binding="{Binding Path=apellido}" Header="Apellido" />
+                <DataGridTextColumn x:Name="nro_cedulaColumn" Binding="{Binding Path=nro_cedula}" Header="Nro. de cedula" />
                 <DataGridTextColumn x:Name="direccionColumn" Binding="{Binding Path=direccion}" Header="Dirección"  />
                 <DataGridTextColumn x:Name="telefonoColumn" Binding="{Binding Path=telefono}" Header="Teléfono"  />
                 <DataGridTextColumn x:Name="emailColumn" Binding="{Binding Path=email}" Header="email" />

@@ -70,51 +70,6 @@ namespace Gimnasio
 
         }
 
-        private void c(object sender, MouseWheelEventArgs e)
-        {
-
-        }
-
-        private void clientesDataGrid_CurrentCellChanged(object sender, EventArgs e)
-        {
-            System.Console.WriteLine("Hola.");
-        }
-
-        private void clientesDataGrid_SourceUpdated(object sender, DataTransferEventArgs e)
-        {
-            System.Console.WriteLine("clientesDataGrid_SourceUpdated");
-        }
-
-        private void clientesDataGrid_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            System.Console.WriteLine("clientesDataGrid_IsEnabledChanged");
-        }
-
-        private void clientesDataGrid_IsHitTestVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            System.Console.WriteLine("clientesDataGrid_IsHitTestVisibleChanged");
-        }
-
-        private void clientesDataGrid_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            System.Console.WriteLine("clientesDataGrid_IsVisibleChanged");
-        }
-
-        private void clientesDataGrid_RowDetailsVisibilityChanged(object sender, DataGridRowDetailsEventArgs e)
-        {
-            System.Console.WriteLine("clientesDataGrid_RowDetailsVisibilityChanged");
-        }
-
-        private void clientesDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            System.Console.WriteLine("clientesDataGrid_SelectedCellsChanged");
-        }
-
-        private void clientesDataGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            System.Console.WriteLine("clientesDataGrid_SizeChanged");
-        }
-
 
         // Verificamos cuando hay cambios en el registro, habilitando el boton para guardarlos.
         private void clientesDataGrid_UnloadingRow(object sender, DataGridRowEventArgs e)
@@ -125,6 +80,24 @@ namespace Gimnasio
 
         private void clientesDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
+
+
+            clientes obj = e.Row.Item as clientes;
+            if (obj.idCliente == 0)
+            {// new record 
+                TimeSpan time = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+                int timestamp = (int)time.TotalSeconds;
+                int c = clientesDataGrid.Items.Count;
+                List<clientes> clientesList = database1Entities.clientes.ToList();
+
+                int maxVal = clientesList.Max(t => t.idCliente) + 1;
+
+                obj.idCliente = timestamp;
+
+            }
+
+
+
             button2.IsEnabled = true;
         }
 
