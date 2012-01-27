@@ -191,9 +191,18 @@ namespace Gimnasio
                     foreach (Pagos resultPagos in fechaUltimoVencimientoResult) 
                     {
                         if (resultPagos.fecha_vencimiento == null)
+                        {
                             this.fechaUltimoVencimiento = new DateTime();
+                            this.textBlockFechaVto.Text = "Sin pagos de cuotas";
+                        }
+                            
                         else
+                        {
                             this.fechaUltimoVencimiento = (System.DateTime)resultPagos.fecha_vencimiento;
+                            this.textBlockFechaVto.Text = this.fechaUltimoVencimiento.ToShortDateString();
+                        }
+                            
+                    
                     }
 
                 }
