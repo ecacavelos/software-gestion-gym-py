@@ -22,7 +22,7 @@ namespace Gimnasio
          Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
         string esqlCuotas = "select value c from cuotas as c";
         int diasAHabilitar;
-        DateTime fechaPago;
+        DateTime fechaPago, fechaUltimoVencimiento;
         int nroCedula, idCliente, cuotaId;
 
         public VistaIngresoDeCuota()
@@ -68,10 +68,8 @@ namespace Gimnasio
             //Cantidad de dias a habilitar, si esta en 0 entonces aun no se seteo
             if (diasAHabilitar == 0)
             {
-
                 //abrir una ventanita con el aviso de seteo de los dias que se quiere habilitar
                 MessageBox.Show("Debe seleccionar la cantidad de dias a habilitar");
-
 
             }
             else
@@ -95,20 +93,35 @@ namespace Gimnasio
                         /* Calcular 30/7/1 dias para establecer la fecha de vencimiento en al tabla Pagos. 
                         *Por ejemplo: Dia actual  14/10/2012 y se paga por 30 dias, entonces el 13/11/2011 sera la fecha de vencimiento
                        */
-                        Pagos pagoAAgregar = new Pagos();
-                        pagoAAgregar.fk_cliente = this.idCliente;
-                        pagoAAgregar.fk_tipoCuota = this.cuotaId;
-                        pagoAAgregar.fecha = this.fechaPago;
-                        pagoAAgregar.fecha_vencimiento = this.fechaPago.AddDays(this.diasAHabilitar);
-                        pagoAAgregar.idPago = 2;
-                        database1Entities.AddToPagos(pagoAAgregar);
-                        if (database1Entities.SaveChanges() == 0)
+                        if (this.fechaUltimoVencimiento < this.fechaPago)
                         {
+                            TimeSpan time = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+                            int timestamp = (int)time.TotalSeconds;
 
-                            Console.WriteLine("No se agrego nada");
+                            Pagos pagoAAgregar = new Pagos();
+                            pagoAAgregar.fk_cliente = this.idCliente;
+                            pagoAAgregar.idPago = timestamp;
+                            pagoAAgregar.fk_tipoCuota = this.cuotaId;
+                            pagoAAgregar.fecha = this.fechaPago;
+                            pagoAAgregar.fecha_vencimiento = this.fechaPago.AddDays(this.diasAHabilitar);
+                            database1Entities.AddToPagos(pagoAAgregar);
+                            if (database1Entities.SaveChanges() == 0)
+                            {
 
+                                MessageBox.Show("Hubo un problema de base de datos, por favor consule con los responsables de la aplicacion");
+
+                            }
+                            else
+                            {
+                                MessageBox.Show("El pago se aplico correctamente");
+                                this.Close();
+                            }
                         }
-                        else Console.WriteLine("algo se tuvo que actualizar");
+                        else {
+
+                            MessageBox.Show("Debe seleccionar una fecha posterior a la fecha del vencimiento de la cuota anterior");
+                        }
+                        
                         //pagoAAgregar.fech
                         //pagoAAgregar.fk_tipoCuota = 
                     }
@@ -125,7 +138,15 @@ namespace Gimnasio
         {
 
             // se obtiene la fecha elegida y se setea el campo correspondiente
-            this.fechaPago = (System.DateTime)datePickerFechaInicialPago.SelectedDate;
+            if (this.fechaUltimoVencimiento < (System.DateTime)datePickerFechaInicialPago.SelectedDate)
+            {
+                this.fechaPago = (System.DateTime)datePickerFechaInicialPago.SelectedDate;
+            }
+            else 
+            {
+                MessageBox.Show("Debe seleccionar una fecha posterior a la fecha del vencimiento de la ultima cuota");
+            }
+            
         }
 
         private void comboBoxTiposCuotas_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -155,26 +176,26 @@ namespace Gimnasio
                 // comprobar si existe este objeto y llenar el formulario
 
 
-                Console.WriteLine("a buscar el cliente");
                 string esql = "select value c from clientes as c where c.nro_cedula= '" + numeroCedula + "\'";
-
-
-                Console.WriteLine("consulta: " + esql);
                 var clientesVar = database1Entities.CreateQuery<clientes>(esql);
-
-
-
-
-                //if(){
-                //}
 
                 ClienteSeleccionado.DataContext = clientesVar; // Establecer el data context para los elementos del cliente
                 foreach (clientes result in clientesVar)
                 {
                     Console.WriteLine("id del cliente:" + result.idCliente);
                     this.idCliente = result.idCliente;
-                }
 
+                    //SETEAR FECHA DE VENCIMIENTO DE ULTIMO PAGO
+                    string fechaVencimientoQuery = "select value p from Pagos as p where p.fk_cliente=" + this.idCliente + " order by p.fecha_vencimiento desc limit 1";
+                    var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
+                    foreach (Pagos resultPagos in fechaUltimoVencimientoResult) 
+                    {
+                        Console.WriteLine(resultPagos.fecha_vencimiento.ToString());
+                        this.fechaUltimoVencimiento = (System.DateTime)resultPagos.fecha_vencimiento;
+                    }
+
+                }
+                
             }
             else
             {
