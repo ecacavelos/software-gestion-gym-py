@@ -33,7 +33,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Guardar Cambios" Height="26" HorizontalAlignment="Right" Margin="0,401,118,0" Name="button2" VerticalAlignment="Top" Width="100" Click="GuardarCambiosClientes" IsEnabled="False" />
-        <Button Content="Cancelar" Height="26" HorizontalAlignment="Right" Margin="0,401,12,0" Name="button1" VerticalAlignment="Top" Width="100" />
+        <Button Content="Cancelar" Height="26" HorizontalAlignment="Right" Margin="0,401,12,0" Name="button1" VerticalAlignment="Top" Width="100" Click="btnCancelarVistaClientes" />
         <Label Height="27" HorizontalAlignment="Left" Margin="12,400,0,0" Name="label1" VerticalAlignment="Top" Width="544" />
     </Grid>
 </Window>
