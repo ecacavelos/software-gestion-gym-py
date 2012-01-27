@@ -17,9 +17,11 @@
         <Button Content="Aplicar" Height="23" HorizontalAlignment="Left" Margin="276,249,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="botonAplicarPago" />
         <Button Content="Cancelar" Height="23" HorizontalAlignment="Right" Margin="0,249,14,0" Name="button2" VerticalAlignment="Top" Width="75" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="107,122,0,0" Name="textBoxNombre" Text="{Binding Path=nombre}" VerticalAlignment="Top" Width="89" Background="#12000000" />
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="107,161,0,0" Name="textBoxApellido" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="89" Background="#12000000" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="107,156,0,0" Name="textBoxApellido" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="89" Background="#12000000" />
         <TextBlock Name="textBoxMonto" DataContext="{Binding ElementName=comboBoxTiposCuotas, Path=SelectedItem}" Background="#12000000" Height="23" HorizontalAlignment="Right" Margin="0,122,88,0"  VerticalAlignment="Top" Width="41" Text="{Binding Path=monto}" />
         <Label Content="Fecha inicial :" Height="28" HorizontalAlignment="Left" Margin="215,156,0,0" Name="label7" VerticalAlignment="Top" />
         <DatePicker Height="25" HorizontalAlignment="Left" Margin="317,159,0,0" Name="datePickerFechaInicialPago" VerticalAlignment="Top" Width="115" SelectedDateChanged="datePickerFechaInicialPago_SelectedDateChanged" />
+        <Label Content="Fecha Vto. :" Height="28" HorizontalAlignment="Left" Margin="12,190,0,0" Name="label8" VerticalAlignment="Top" />
+        <TextBlock Background="#12000000" Height="23" HorizontalAlignment="Left" Margin="107,190,0,0" Name="textBlockFechaVto" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="89" />
     </Grid>
 </Window>
