@@ -96,24 +96,47 @@ namespace Gimnasio
             if (e.Key.ToString() == "Return")
             {
 
-                //habilitar
-                try
-                {
-                    D0 = !D0;
-                    Console.WriteLine("laputa madre" + this._PortAddress.ToString());
-                }
-                catch (Exception ex)
-                {
-                    ExceptionOccured = "PD0_Click(object sender, EventArgs e) called. ERROR occured is ---> " + ex.Message;
-                }
+                // hacer el control de pago de cuota. Si la fecha de vencimiento en la tabla pagos es menor al dia de hoy entonces habilitar
 
-              
+                Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
 
+                //se selecciona el cliente en cuestion
+                string esql = "select value c from clientes as c where c.nro_cedula= '" + textBox_Cedula.Text + "\'";
+                var clientesVar = database1Entities.CreateQuery<clientes>(esql);
+                
+                
+                string fechaVencimientoQuery = "select value p from Pagos as p where p.fk_cliente=" + clientesVar.ToArray()[0].idCliente + " order by p.fecha_vencimiento desc limit 1";
+                var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
+
+                // Se aceptan el vencimiento hasta el dia actual
+                if (fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento >= System.DateTime.Today)
+                {
+
+                    // Abrir el porton
+                    try
+                    {
+                        D0 = !D0;
+                        Console.WriteLine("laputa madre" + this._PortAddress.ToString());
+                        MessageBox.Show("Puede ingresar al gimnasio");
+                        //mostrar foto.
+                    }
+                    catch (Exception ex)
+                    {
+                        ExceptionOccured = "PD0_Click(object sender, EventArgs e) called. ERROR occured is ---> " + ex.Message;
+                        MessageBox.Show("Ocurrio un error al intentar abrir el porton, por favor contacte con los tecnicos");
+
+                    }
+
+
+                }
+                else // NO ESTA HABILITADO PARA ENTRAR. 
+                {
+                    MessageBox.Show("Debes estar al dia para poder acceder, por favor abona una cuota, Gracias");
+                }
             }
             else
             {
-                System.Console.WriteLine("otra tecla");
-
+               // System.Console.WriteLine("otra tecla");
             }
         }
 
