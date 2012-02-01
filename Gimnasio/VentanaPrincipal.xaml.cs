@@ -136,5 +136,17 @@ namespace Gimnasio
             windowAbout.Show();
 
         }
+
+        private void click_ConsultarPagos(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of the window named
+            // by the current button.
+            Type type = this.GetType();
+            Assembly assembly = type.Assembly;
+            Window win = (Window)assembly.CreateInstance("Gimnasio.ConsultarPagosCliente");
+            // Show the window.
+            win.Show();
+
+        }
     }
 }

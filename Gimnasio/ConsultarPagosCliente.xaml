@@ -1,0 +1,25 @@
+﻿<Window x:Class="Gimnasio.ConsultarPagosCliente"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Consulta de pagos de clientes" Height="486" Width="444" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" ResizeMode="NoResize" Icon="/Gimnasio;component/iconoCuotas.jpg">
+    <Window.Resources>
+        <CollectionViewSource x:Key="pagosViewSource" d:DesignSource="{d:DesignInstance my:Pagos, CreateList=True}" />
+    </Window.Resources>
+    <Grid Name="ClienteSeleccionado" Background="#FFBECBEB" Height="392" Width="399">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="247*" />
+            <RowDefinition Height="145*" />
+        </Grid.RowDefinitions>
+        <Label Content="Nro. de Cedula :" Height="28" HorizontalAlignment="Left" Margin="12,83,0,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="Consulta de pagos" Height="35" HorizontalAlignment="Center" Margin="8,12,12,0" Name="label2" VerticalAlignment="Top" Width="323" FontFamily="Calibri" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="107,85,0,0" Name="textBoxNroCedula" VerticalAlignment="Top" Width="89" KeyDown="textBoxNroCedula_KeyDown" />
+        <Label Content="Nombre :" Height="28" HorizontalAlignment="Left" Margin="12,117,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="Apellido :" Height="28" HorizontalAlignment="Left" Margin="12,156,0,0" Name="label4" VerticalAlignment="Top" />
+        <Button Content="Aplicar" Height="23" HorizontalAlignment="Left" Margin="215,85,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="botonAplicarPago" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="107,122,0,0" Name="textBoxNombre" Text="{Binding Path=nombre}" VerticalAlignment="Top" Width="89" Background="#12000000" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="107,156,0,0" Name="textBoxApellido" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="89" Background="#12000000" />
+        <Label Content="Fecha Vto. :" Height="28" HorizontalAlignment="Left" Margin="12,190,0,0" Name="label8" VerticalAlignment="Top" />
+        <TextBlock Background="#12000000" Height="23" HorizontalAlignment="Left" Margin="107,190,0,0" Name="textBlockFechaVto" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="89" />
+        <DataGrid AutoGenerateColumns="False" Grid.Row="1" Height="116" HorizontalAlignment="Left" Margin="12,0,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="263" />
+    </Grid>
+</Window>

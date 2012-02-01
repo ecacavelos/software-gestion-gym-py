@@ -81,6 +81,9 @@
     <Compile Include="AboutGymAdmin.Designer.cs">
       <DependentUpon>AboutGymAdmin.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConsultarPagosCliente.xaml.cs">
+      <DependentUpon>ConsultarPagosCliente.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -182,6 +185,10 @@
     <Resource Include="Images\colorful_chart.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ConsultarPagosCliente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="VentanaPrincipal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

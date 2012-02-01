@@ -20,6 +20,7 @@
             </MenuItem>
             <MenuItem Header="Clientes">
                 <MenuItem Header="Ver" Click="VerMenuItem_Click"></MenuItem>
+                <MenuItem Header="Consultar Pagos" Click="click_ConsultarPagos"></MenuItem>
             </MenuItem>
             <MenuItem Header="Cuotas">
                 <MenuItem Header="Editar" Click="menuItem_CuotasEditar" />
