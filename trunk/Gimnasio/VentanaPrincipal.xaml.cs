@@ -129,5 +129,12 @@ namespace Gimnasio
             // Show the window.
             win.Show();
         }
+
+        private void click_AboutGymAdmin(object sender, RoutedEventArgs e)
+        {
+            AboutGymAdmin windowAbout = new AboutGymAdmin();
+            windowAbout.Show();
+
+        }
     }
 }

@@ -63,7 +63,7 @@ namespace Gimnasio
             else
             {
                 _PortAddress = 0;
-                MessageBox.Show("No Parallel Port Detected On This Computer.");
+                MessageBox.Show("No se detecto el puerto paralelo en la computadora, no se podra utilizar el porton electrico.");
             }
 
         }
@@ -103,36 +103,44 @@ namespace Gimnasio
                 //se selecciona el cliente en cuestion
                 string esql = "select value c from clientes as c where c.nro_cedula= '" + textBox_Cedula.Text + "\'";
                 var clientesVar = database1Entities.CreateQuery<clientes>(esql);
-                
-                
-                string fechaVencimientoQuery = "select value p from Pagos as p where p.fk_cliente=" + clientesVar.ToArray()[0].idCliente + " order by p.fecha_vencimiento desc limit 1";
-                var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
 
-                // Se aceptan el vencimiento hasta el dia actual
-                if (fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento >= System.DateTime.Today)
+                // Se controla que el cliente que se haya traido sea un cliente valido. 
+                if (clientesVar.ToList().Count == 0)
                 {
-
-                    // Abrir el porton
-                    try
-                    {
-                        D0 = !D0;
-                        Console.WriteLine("laputa madre" + this._PortAddress.ToString());
-                        MessageBox.Show("Puede ingresar al gimnasio");
-                        //mostrar foto.
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionOccured = "PD0_Click(object sender, EventArgs e) called. ERROR occured is ---> " + ex.Message;
-                        MessageBox.Show("Ocurrio un error al intentar abrir el porton, por favor contacte con los tecnicos");
-
-                    }
-
-
+                    Console.WriteLine("No hay un carajo \n");
                 }
-                else // NO ESTA HABILITADO PARA ENTRAR. 
+                else 
                 {
-                    MessageBox.Show("Debes estar al dia para poder acceder, por favor abona una cuota, Gracias");
+                    string fechaVencimientoQuery = "select value p from Pagos as p where p.fk_cliente=" + clientesVar.ToArray()[0].idCliente + " order by p.fecha_vencimiento desc limit 1";
+                    var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
+
+                    // Se aceptan el vencimiento hasta el dia actual
+                    if (fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento >= System.DateTime.Today)
+                    {
+
+                        // Abrir el porton
+                        try
+                        {
+                            D0 = !D0;
+                            Console.WriteLine("laputa madre" + this._PortAddress.ToString());
+                            MessageBox.Show("Puede ingresar al gimnasio");
+                            //mostrar foto.
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionOccured = "PD0_Click(object sender, EventArgs e) called. ERROR occured is ---> " + ex.Message;
+                            MessageBox.Show("Ocurrio un error al intentar abrir el porton, por favor contacte con los tecnicos");
+
+                        }
+
+
+                    }
+                    else // NO ESTA HABILITADO PARA ENTRAR. 
+                    {
+                        MessageBox.Show("Debes estar al dia para poder acceder, por favor abona una cuota, Gracias");
+                    }
                 }
+                
             }
             else
             {
