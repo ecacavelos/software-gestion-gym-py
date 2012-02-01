@@ -95,6 +95,9 @@
     <Compile Include="VistaIngresoManual.xaml.cs">
       <DependentUpon>VistaIngresoManual.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VistaTiposCuotas.xaml.cs">
+      <DependentUpon>VistaTiposCuotas.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model1.Designer.cs">
@@ -187,6 +190,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="VistaIngresoManual.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VistaTiposCuotas.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
