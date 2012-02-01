@@ -1,8 +1,18 @@
 ﻿<Window x:Class="Gimnasio.VistaTiposCuotas"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="VistaTiposCuotas" Height="300" Width="300">
-    <Grid>
-        
+        Title="VistaTiposCuotas" Height="300" Width="300" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance my:clientes, CreateList=True}" />
+        <CollectionViewSource x:Key="cuotasViewSource" d:DesignSource="{d:DesignInstance my:Cuotas, CreateList=True}" />
+    </Window.Resources>
+    <Grid DataContext="{StaticResource clientesViewSource}">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="237" HorizontalAlignment="Left" ItemsSource="{Binding Source={StaticResource cuotasViewSource}}" Margin="12,12,0,0" Name="cuotasDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="254">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idCuotaColumn" Binding="{Binding Path=idCuota}" Header="id Cuota" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="montoColumn" Binding="{Binding Path=monto}" Header="monto" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="diasHabilitadosColumn" Binding="{Binding Path=diasHabilitados}" Header="dias Habilitados" Width="SizeToHeader" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

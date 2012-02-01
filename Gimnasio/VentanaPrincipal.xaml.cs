@@ -118,5 +118,16 @@ namespace Gimnasio
             // Show the window.
             win.Show();
         }
+
+        private void menuItem_CuotasEditar(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of the window named
+            // by the current button.
+            Type type = this.GetType();
+            Assembly assembly = type.Assembly;
+            Window win = (Window)assembly.CreateInstance("Gimnasio.VistaTiposCuotas");
+            // Show the window.
+            win.Show();
+        }
     }
 }
