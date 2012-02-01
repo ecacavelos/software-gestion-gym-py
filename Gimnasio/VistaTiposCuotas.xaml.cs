@@ -18,6 +18,8 @@ namespace Gimnasio
     /// </summary>
     public partial class VistaTiposCuotas : Window
     {
+        Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
+
         public VistaTiposCuotas()
         {
             InitializeComponent();
@@ -35,7 +37,7 @@ namespace Gimnasio
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
+            
             // Load data into clientes. You can modify this code as needed.
             System.Windows.Data.CollectionViewSource clientesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("clientesViewSource")));
             System.Data.Objects.ObjectQuery<Gimnasio.clientes> clientesQuery = this.GetclientesQuery(database1Entities);
@@ -53,6 +55,51 @@ namespace Gimnasio
             System.Data.Objects.ObjectQuery<Gimnasio.Cuotas> cuotasQuery = database1Entities.Cuotas;
             // Returns an ObjectQuery.
             return cuotasQuery;
+        }
+
+        private void RowEditEnding_TiposCuotas(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            Cuotas obj = e.Row.Item as Cuotas;
+            if (obj.idCuota == 0)
+            {   // new record 
+                TimeSpan time = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+                obj.idCuota = (int)time.TotalSeconds;
+
+            }
+            // Se habilita el boton para poder guardar los cambios.
+            button_GuardarTiposCuotas.IsEnabled = true;
+
+        }
+
+        private void click_GuardarCambios(object sender, RoutedEventArgs e)
+        {
+
+            System.Windows.Forms.DialogResult result;
+
+            // Advertir del cambio antes de cambiar.
+            // Cuando se da click en el boton de guardar cambios, se tienen que guardar todos los objetos que fueron cambiados
+            result = System.Windows.Forms.MessageBox.Show("Está seguro de que desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNo);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                // 'DialogResult.Yes' value was returned from the MessageBox
+                //System.Console.WriteLine("Entramos al IF.");
+                database1Entities.SaveChanges();
+                label_Cuotas_CambiosGuardados.Content = "Se guardaron los cambios.";
+                button_GuardarTiposCuotas.IsEnabled = false;
+            }
+            else
+            {
+                //System.Console.WriteLine("No entramos al IF.");
+                label_Cuotas_CambiosGuardados.Content = "NO se guardaron los cambios.";
+                //database1Entities.SaveChanges();
+                // Gimnasio.Database1Entities
+            }
+        
+        }
+
+        private void unloadingRow_BorrarTipoCuota(object sender, DataGridRowEventArgs e)
+        {
+            button_GuardarTiposCuotas.IsEnabled = true;
         }
     }
 }

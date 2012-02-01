@@ -69,7 +69,7 @@ namespace Gimnasio
             else
             {
                 _PortAddress = 0;
-                MessageBox.Show("No Parallel Port Detected On This Computer.");
+                MessageBox.Show("No se detecto el puerto paralelo en la computadora, no se podra utilizar el porton electrico.");
             }
 
         }
@@ -230,7 +230,7 @@ namespace Gimnasio
         {
             InitializeComponent();
             ParallelPort();
-            label1.Content = "Dirección Puerto: " + Convert.ToString(_PortAddress);
+           
         }
 
     }
