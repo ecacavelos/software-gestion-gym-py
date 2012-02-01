@@ -15,7 +15,6 @@
         <TextBox Height="23" HorizontalAlignment="Left" Margin="107,85,0,0" Name="textBoxNroCedula" VerticalAlignment="Top" Width="89" KeyDown="textBoxNroCedula_KeyDown" />
         <Label Content="Nombre :" Height="28" HorizontalAlignment="Left" Margin="12,117,0,0" Name="label3" VerticalAlignment="Top" />
         <Label Content="Apellido :" Height="28" HorizontalAlignment="Left" Margin="12,156,0,0" Name="label4" VerticalAlignment="Top" />
-        <Button Content="Aplicar" Height="23" HorizontalAlignment="Left" Margin="215,85,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="botonAplicarPago" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="107,122,0,0" Name="textBoxNombre" Text="{Binding Path=nombre}" VerticalAlignment="Top" Width="89" Background="#12000000" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="107,156,0,0" Name="textBoxApellido" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="89" Background="#12000000" />
         <Label Content="Fecha Vto. :" Height="28" HorizontalAlignment="Left" Margin="12,190,0,0" Name="label8" VerticalAlignment="Top" />
