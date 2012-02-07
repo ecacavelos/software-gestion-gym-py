@@ -170,52 +170,46 @@ namespace Gimnasio
             // se presiono ENTER
             if (e.Key.ToString() == "Return")
             {
-
-                String numeroCedula = e.OriginalSource.ToString().Substring(33);
-                System.Console.WriteLine("substring  : " + numeroCedula + "\n");
-                // comprobar si existe este objeto y llenar el formulario
-
-
-                string esql = "select value c from clientes as c where c.nro_cedula= '" + numeroCedula + "\'";
+                string esql = "select value c from clientes as c where c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
                 var clientesVar = database1Entities.CreateQuery<clientes>(esql);
+                ClienteSeleccionado.DataContext = clientesVar; // Establecer el data context para los elementos del cliente. OJO: Esto creo que no sirve.
 
-                ClienteSeleccionado.DataContext = clientesVar; // Establecer el data context para los elementos del cliente
-                foreach (clientes result in clientesVar)
+                if (clientesVar.ToList().Count == 1) // Esta es la unica condicion correcta, que se seleccione un cliente.  
                 {
-                    Console.WriteLine("id del cliente:" + result.idCliente);
-                    this.idCliente = result.idCliente;
+                    this.idCliente = clientesVar.ToArray()[0].idCliente;
 
-                    //SETEAR FECHA DE VENCIMIENTO DE ULTIMO PAGO
-                    string fechaVencimientoQuery = "select value p from Pagos as p where p.fk_cliente=" + this.idCliente + " order by p.fecha_vencimiento desc limit 1";
-                    var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
-                    foreach (Pagos resultPagos in fechaUltimoVencimientoResult) 
+                    if (clientesVar.ToArray()[0].Pagos.ToList().Count >= 1)// Existe al menos un pago
                     {
-                        if (resultPagos.fecha_vencimiento == null)
-                        {
-                            this.fechaUltimoVencimiento = new DateTime();
-                            this.textBlockFechaVto.Text = "Sin pagos de cuotas";
-                        }
-                            
-                        else
-                        {
-                            this.fechaUltimoVencimiento = (System.DateTime)resultPagos.fecha_vencimiento;
-                            this.textBlockFechaVto.Text = this.fechaUltimoVencimiento.ToShortDateString();
-                        }
-                            
-                    
+                        /*Pagos[] arrayListPagos; 
+                        arrayListPagos = clientesVar.ToArray()[0].Pagos.ToArray();
+                        Array.Sort(arrayListPagos);
+                        this.fechaUltimoVencimiento = arrayListPagos[0].fecha_vencimiento.Value;
+                        this.textBlockFechaVto.Text = arrayListPagos[0].fecha_vencimiento.Value.ToShortDateString(); // Traer el ultimo pago.*/
+                        string fechaVencimientoQuery = "select value p from Pagos as p where p.fk_cliente=" + this.idCliente + " order by p.fecha_vencimiento desc limit 1";
+                        var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
+                        this.fechaUltimoVencimiento = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value;
+                        this.textBlockFechaVto.Text = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value.ToString("dd/MM/yyyy");
                     }
-
+                    else
+                    {
+                        this.fechaUltimoVencimiento = new DateTime();
+                        this.textBlockFechaVto.Text = "Sin pagos de cuotas";
+                    }
                 }
-                
+                else if (clientesVar.ToList().Count > 1)// Existe una inconsistencia en la base de datos. 
+                     { 
+                        MessageBox.Show("Existe mas de un usuario con este numero de cedula, por favor identifique el cliente y corriga el error.");
+                     }
+                else if (clientesVar.ToList().Count == 0)// No se selecciono ningun cliente.
+                {
+                    MessageBox.Show("No existe cliente con ese numero de cedula, por favor inserte o modifique el cliente con el numero de cedula.");
+                }
             }
             else
             {
-                System.Console.WriteLine("se presiono cualquier otra tecla que no es Return");
+                //System.Console.WriteLine("se presiono cualquier otra tecla que no es Return");
 
             }
-
-
-
         }
 
     }
