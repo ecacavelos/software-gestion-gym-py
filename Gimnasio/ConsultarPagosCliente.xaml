@@ -19,6 +19,12 @@
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="107,156,0,0" Name="textBoxApellido" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="89" Background="#12000000" />
         <Label Content="Fecha Vto. :" Height="28" HorizontalAlignment="Left" Margin="12,190,0,0" Name="label8" VerticalAlignment="Top" />
         <TextBlock Background="#12000000" Height="23" HorizontalAlignment="Left" Margin="107,190,0,0" Name="textBlockFechaVto" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="89" />
-        <DataGrid AutoGenerateColumns="False" Grid.Row="1" Height="116" HorizontalAlignment="Left" Margin="12,0,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="263" />
+        <DataGrid AutoGenerateColumns="False" Grid.Row="1" Height="116" HorizontalAlignment="Left" Margin="12,0,0,0" Name="dataGridPagos" VerticalAlignment="Top" Width="315" UnloadingRow="unLoadingRow_Pagos">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="fechaColumn" Binding="{Binding Path=fecha}" Header="Fecha" />
+                <DataGridTextColumn Binding="{Binding Path=fecha_vencimiento}" Header="Fecha vencimiento" />
+            </DataGrid.Columns>
+            
+        </DataGrid>
     </Grid>
 </Window>
