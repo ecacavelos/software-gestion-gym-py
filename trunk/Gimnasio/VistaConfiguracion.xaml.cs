@@ -24,6 +24,7 @@ namespace Gimnasio
         {
             InitializeComponent();
             this.c2 = Configuration.Deserialize("config.xml");
+            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

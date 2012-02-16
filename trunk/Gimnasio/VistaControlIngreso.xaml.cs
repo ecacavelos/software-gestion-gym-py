@@ -45,10 +45,15 @@ namespace Gimnasio
         private int _PortAddress = 0;
         string ExceptionOccured;
 
+        Configuration c2;
+        private int _TiempoApertura = 0;
+
         public VistaControlIngreso()
         {
             ParallelPort();
             InitializeComponent();
+            this.c2 = Configuration.Deserialize("config.xml");
+            _TiempoApertura = this.c2.TiempoApertura;
         }
 
         public void ParallelPort()
@@ -121,9 +126,16 @@ namespace Gimnasio
                         // Abrir el porton
                         try
                         {
-                            D0 = !D0;
-                            Console.WriteLine("laputa madre" + this._PortAddress.ToString());
-                            MessageBox.Show("Puede ingresar al gimnasio");
+                            //D0 = !D0;
+                            //MessageBox.Show("Puede ingresar al gimnasio.");
+                            D0 = true;
+                            //Console.WriteLine("laputa madre" + this._PortAddress.ToString());
+                            
+                            Console.WriteLine("Ingresaras por " + this._TiempoApertura.ToString());
+                            System.Threading.Thread.Sleep(_TiempoApertura*1000);
+                            Console.WriteLine("Listo.");
+                            //D0 = !D0;
+                            D0 = false;
                             //mostrar foto.
                         }
                         catch (Exception ex)
