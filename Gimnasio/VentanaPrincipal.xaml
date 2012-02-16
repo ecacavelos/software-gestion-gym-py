@@ -16,6 +16,7 @@
         </Grid.RowDefinitions>
         <Menu Background="#2A040417">
             <MenuItem Header="Archivo">
+                <MenuItem Header="Configuración" Click="MenuItem_Click_Configuracion" />
                 <MenuItem Header="Salir" Click="SalirMenuItem_Click"></MenuItem>
             </MenuItem>
             <MenuItem Header="Clientes">

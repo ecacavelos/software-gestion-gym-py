@@ -148,5 +148,18 @@ namespace Gimnasio
             win.Show();
 
         }
+
+        
+        
+        private void MenuItem_Click_Configuracion(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of the window named
+            // by the current button.
+            Type type = this.GetType();
+            Assembly assembly = type.Assembly;
+            Window win = (Window)assembly.CreateInstance("Gimnasio.VistaConfiguracion");
+            // Show the window.
+            win.Show();
+        }
     }
 }
