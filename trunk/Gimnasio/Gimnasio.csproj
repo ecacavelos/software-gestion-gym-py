@@ -81,6 +81,7 @@
     <Compile Include="AboutGymAdmin.Designer.cs">
       <DependentUpon>AboutGymAdmin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Configuration.cs" />
     <Compile Include="ConsultarPagosCliente.xaml.cs">
       <DependentUpon>ConsultarPagosCliente.xaml</DependentUpon>
     </Compile>
@@ -94,6 +95,9 @@
     </Compile>
     <Compile Include="VistaClientes.xaml.cs">
       <DependentUpon>VistaClientes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VistaConfiguracion.xaml.cs">
+      <DependentUpon>VistaConfiguracion.xaml</DependentUpon>
     </Compile>
     <Compile Include="VistaControlIngreso.xaml.cs">
       <DependentUpon>VistaControlIngreso.xaml</DependentUpon>
@@ -194,6 +198,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="VistaClientes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VistaConfiguracion.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
