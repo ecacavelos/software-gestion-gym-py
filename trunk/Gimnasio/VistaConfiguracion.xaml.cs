@@ -34,33 +34,14 @@ namespace Gimnasio
             this.label_SegundosApertura.Content = c2.TiempoApertura.ToString();
         }
 
-        private void valueChanged_CambioValor(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-           /* if (this.c2.TiempoApertura.ToString() != "df")
-            {
-                //HABILITAR EL BOTON DE ACEPTAR
-                this.button_AceptarConfiguracion.IsEnabled = true;
-            }
-            else
-            { 
-                //DESHABILITAR EL BOTON DE ACEPTAR
-                this.button_AceptarConfiguracion.IsEnabled = false;
-            }*/
-        }
-
-        private void slider_TiempoAperturaPorton_TargetUpdated(object sender, DataTransferEventArgs e)
-        {
-           
-        }
-
-        
+     
         
 
         private void slider_TiempoAperturaPorton_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            /*if (this.IsInitialized == true) 
+            if (this.IsInitialized == true) 
             {
-                if (this.c2.TiempoApertura == 5)
+                if (this.c2.TiempoApertura !=(int)this.slider_TiempoAperturaPorton.Value)
                 {
                     this.button_AceptarConfiguracion.IsEnabled = true;
                 }
@@ -68,9 +49,23 @@ namespace Gimnasio
                 {
                     this.button_AceptarConfiguracion.IsEnabled = false;
                 }
-            }*/
+            }
+        }
 
-            
+
+        //cerrar la ventana. 
+        private void button_CancelarConfiguracion_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+
+        //escribir en el archivo de configuracion.
+        private void button_AceptarConfiguracion_Click(object sender, RoutedEventArgs e)
+        {
+            this.c2.TiempoApertura = (int)this.slider_TiempoAperturaPorton.Value;
+            Configuration.Serialize("config.xml", this.c2);
+            this.button_AceptarConfiguracion.IsEnabled = false;
         }
     }
 }
