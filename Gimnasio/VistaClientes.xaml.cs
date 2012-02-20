@@ -41,7 +41,9 @@ namespace Gimnasio
             // Load data into clientes. You can modify this code as needed.
             System.Windows.Data.CollectionViewSource clientesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("clientesViewSource")));
             System.Data.Objects.ObjectQuery<Gimnasio.clientes> clientesQuery = this.GetclientesQuery(database1Entities);
-            clientesViewSource.Source = clientesQuery.Execute(System.Data.Objects.MergeOption.AppendOnly);
+            string esql2 = "select value c from clientes as c order by c.apellido";
+            var clientesVar2 = database1Entities.CreateQuery<clientes>(esql2);
+            clientesViewSource.Source = clientesVar2;
             database1Entities.SaveChanges();
         }
 
