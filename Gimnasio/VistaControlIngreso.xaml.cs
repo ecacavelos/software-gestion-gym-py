@@ -47,6 +47,7 @@ namespace Gimnasio
 
         Configuration c2;
         private int _TiempoApertura = 0;
+        public static bool IsOpen { get; private set; }
 
         public VistaControlIngreso()
         {
@@ -54,6 +55,7 @@ namespace Gimnasio
             InitializeComponent();
             this.c2 = Configuration.Deserialize("config.xml");
             _TiempoApertura = this.c2.TiempoApertura;
+            IsOpen = true;
         }
 
         public void ParallelPort()
@@ -267,5 +269,10 @@ namespace Gimnasio
         }
 
         #endregion
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            IsOpen = false;
+        }
     }
 }

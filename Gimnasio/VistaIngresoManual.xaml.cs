@@ -28,6 +28,8 @@ namespace Gimnasio
     public partial class VistaIngresoManual : Window
     {
 
+        public static bool IsOpen { get; private set; }
+
         #region "Imported Functions"
 
         [DllImport("ParallelPort.dll")]
@@ -104,6 +106,7 @@ namespace Gimnasio
         public VistaIngresoManual()
         {
             InitializeComponent();
+            
         }
 
         private void button1_Click(object sender, RoutedEventArgs e) {
@@ -228,9 +231,21 @@ namespace Gimnasio
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
             InitializeComponent();
             ParallelPort();
+            IsOpen = true;
            
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            D0 = false;
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            IsOpen = false;
         }
 
     }
