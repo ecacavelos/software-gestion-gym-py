@@ -22,8 +22,12 @@ namespace Gimnasio
 
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
 
+        public static bool IsOpen { get; private set; }
+
         public VistaClientes()
         {
+
+
             InitializeComponent();
         }
 
@@ -39,6 +43,7 @@ namespace Gimnasio
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Load data into clientes. You can modify this code as needed.
+            IsOpen = true;
             System.Windows.Data.CollectionViewSource clientesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("clientesViewSource")));
             System.Data.Objects.ObjectQuery<Gimnasio.clientes> clientesQuery = this.GetclientesQuery(database1Entities);
             string esql2 = "select value c from clientes as c order by c.apellido";
@@ -138,6 +143,22 @@ namespace Gimnasio
             this.Close();
             
         }
+
+         
+
+         private void Window_Unloaded(object sender, RoutedEventArgs e)
+         {
+             IsOpen = false;
+         }
+
+        
+
+         private void Window_Deactivated(object sender, EventArgs e)
+         {
+             //this.Hide();
+         }
+
+        
 
     }
 }

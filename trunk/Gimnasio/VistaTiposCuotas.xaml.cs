@@ -19,6 +19,7 @@ namespace Gimnasio
     public partial class VistaTiposCuotas : Window
     {
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
+        public static bool IsOpen { get; private set; }
 
         public VistaTiposCuotas()
         {
@@ -37,7 +38,7 @@ namespace Gimnasio
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            
+            IsOpen = true;
             // Load data into clientes. You can modify this code as needed.
             System.Windows.Data.CollectionViewSource clientesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("clientesViewSource")));
             System.Data.Objects.ObjectQuery<Gimnasio.clientes> clientesQuery = this.GetclientesQuery(database1Entities);
@@ -100,6 +101,11 @@ namespace Gimnasio
         private void unloadingRow_BorrarTipoCuota(object sender, DataGridRowEventArgs e)
         {
             button_GuardarTiposCuotas.IsEnabled = true;
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            IsOpen = false;
         }
     }
 }

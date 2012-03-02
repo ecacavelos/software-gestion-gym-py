@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Gimnasio.VentanaPrincipal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="GymAdmin" Height="320" Width="640"  mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" WindowStartupLocation="CenterScreen" WindowState="Normal" Background="#FFBECBEB" ResizeMode="CanMinimize" Icon="/Gimnasio;component/Images/colorful_chart.ico">
+        Title="GymAdmin" Height="320" Width="640"  mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" WindowStartupLocation="CenterScreen" WindowState="Normal" Background="#FFBECBEB" ResizeMode="CanMinimize" Icon="/Gimnasio;component/Images/colorful_chart.ico"  Closed="Window_Closed">
     <Window.Resources>
         <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance my:clientes, CreateList=True}" />
     </Window.Resources>
