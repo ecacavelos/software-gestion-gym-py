@@ -19,6 +19,8 @@ using System.Net.NetworkInformation;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Threading;
 
 
 namespace Gimnasio
@@ -114,46 +116,59 @@ namespace Gimnasio
                 // Se controla que el cliente que se haya traido sea un cliente valido. 
                 if (clientesVar.ToList().Count == 0)
                 {
-                    Console.WriteLine("No hay un carajo \n");
+                    MessageBox.Show("No existe cliente con ese numero de cedula.");
+                    //Console.WriteLine("No hay un carajo \n");
                 }
                 else 
                 {
+                    // TODO: Hay que controlar que solo haya un cliente.
+
                     string fechaVencimientoQuery = "select value p from Pagos as p where p.fk_cliente=" + clientesVar.ToArray()[0].idCliente + " order by p.fecha_vencimiento desc limit 1";
                     var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
 
-                    // Se aceptan el vencimiento hasta el dia actual
-                    if (fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento >= System.DateTime.Today)
+                    // Se controla que tenga por lo menos un pago el cliente
+                    if (clientesVar.ToArray()[0].Pagos.ToList().Count >= 1)
                     {
-
-                        // Abrir el porton
-                        try
+                        if (fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento >= System.DateTime.Today)
                         {
-                            //D0 = !D0;
-                            //MessageBox.Show("Puede ingresar al gimnasio.");
-                            D0 = true;
-                            //Console.WriteLine("laputa madre" + this._PortAddress.ToString());
-                            
-                            Console.WriteLine("Ingresaras por " + this._TiempoApertura.ToString());
-                            System.Threading.Thread.Sleep(_TiempoApertura*1000);
-                            Console.WriteLine("Listo.");
-                            //D0 = !D0;
-                            D0 = false;
-                            //mostrar foto.
+
+                            // Abrir el porton
+                            try
+                            {
+                               
+                               
+                                //this.label2_ResultadoIngreso.Foreground = new SolidColorBrush(Colors.Green);
+                                //this.label2_ResultadoIngreso.FontSize = 18;
+                                //this.label2_ResultadoIngreso.Content = "Ingreso Exitoso!";
+                                //this.AllowUIToUpdate();
+                                D0 = true;
+
+                                Thread.Sleep(_TiempoApertura * 1000);
+                                
+                                D0 = false;
+                                //mostrar foto.
+                            }
+                            catch (Exception ex)
+                            {
+                                ExceptionOccured = "PD0_Click(object sender, EventArgs e) called. ERROR occured is ---> " + ex.Message;
+                                MessageBox.Show("Ocurrio un error al intentar abrir el porton, por favor contacte con los tecnicos");
+
+                            }
+
+
                         }
-                        catch (Exception ex)
+                        else // NO ESTA HABILITADO PARA ENTRAR. 
                         {
-                            ExceptionOccured = "PD0_Click(object sender, EventArgs e) called. ERROR occured is ---> " + ex.Message;
-                            MessageBox.Show("Ocurrio un error al intentar abrir el porton, por favor contacte con los tecnicos");
-
+                            MessageBox.Show("Debes estar al dia para poder acceder, por favor abona una cuota, Gracias");
                         }
-
-
                     }
-                    else // NO ESTA HABILITADO PARA ENTRAR. 
-                    {
-                        MessageBox.Show("Debes estar al dia para poder acceder, por favor abona una cuota, Gracias");
+                    else {//TODAVIA NO TIENE NI UN PAGO EL CLIENTE.
+                        MessageBox.Show("Todavia no tiene ninguna cuota cargada, por favor consulte con recepcion");
                     }
+                    
+                   
                 }
+                this.textBox_Cedula.Text = "";
                 
             }
             else
@@ -274,5 +289,25 @@ namespace Gimnasio
         {
             IsOpen = false;
         }
+
+        void AllowUIToUpdate()
+        {
+
+            DispatcherFrame frame = new DispatcherFrame();
+
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new DispatcherOperationCallback(delegate(object parameter)
+            {
+
+                frame.Continue = false;
+
+                return null;
+
+            }), null);
+
+            Dispatcher.PushFrame(frame);
+
+        }
+
+
     }
 }
