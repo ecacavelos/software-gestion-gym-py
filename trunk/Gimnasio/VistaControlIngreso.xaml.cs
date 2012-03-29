@@ -30,6 +30,8 @@ namespace Gimnasio
     /// </summary>
     public partial class VistaControlIngreso : Window
     {
+        static DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+
         #region "Imported Functions"
 
         [DllImport("ParallelPort.dll")]
@@ -49,6 +51,7 @@ namespace Gimnasio
 
         Configuration c2;
         private int _TiempoApertura = 0;
+        private static int test = 0;
         public static bool IsOpen { get; private set; }
 
         public VistaControlIngreso()
@@ -98,83 +101,6 @@ namespace Gimnasio
                 }
             }
             return PortAddresses;
-        }
-
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key.ToString() == "Return")
-            {
-
-                // hacer el control de pago de cuota. Si la fecha de vencimiento en la tabla pagos es menor al dia de hoy entonces habilitar
-
-                Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
-
-                //se selecciona el cliente en cuestion
-                string esql = "select value c from clientes as c where c.nro_cedula= '" + textBox_Cedula.Text + "\'";
-                var clientesVar = database1Entities.CreateQuery<clientes>(esql);
-
-                // Se controla que el cliente que se haya traido sea un cliente valido. 
-                if (clientesVar.ToList().Count == 0)
-                {
-                    MessageBox.Show("No existe cliente con ese numero de cedula.");
-                    //Console.WriteLine("No hay un carajo \n");
-                }
-                else 
-                {
-                    // TODO: Hay que controlar que solo haya un cliente.
-
-                    string fechaVencimientoQuery = "select value p from Pagos as p where p.fk_cliente=" + clientesVar.ToArray()[0].idCliente + " order by p.fecha_vencimiento desc limit 1";
-                    var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
-
-                    // Se controla que tenga por lo menos un pago el cliente
-                    if (clientesVar.ToArray()[0].Pagos.ToList().Count >= 1)
-                    {
-                        if (fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento >= System.DateTime.Today)
-                        {
-
-                            // Abrir el porton
-                            try
-                            {
-                               
-                               
-                                //this.label2_ResultadoIngreso.Foreground = new SolidColorBrush(Colors.Green);
-                                //this.label2_ResultadoIngreso.FontSize = 18;
-                                //this.label2_ResultadoIngreso.Content = "Ingreso Exitoso!";
-                                //this.AllowUIToUpdate();
-                                D0 = true;
-
-                                Thread.Sleep(_TiempoApertura * 1000);
-                                
-                                D0 = false;
-                                //mostrar foto.
-                            }
-                            catch (Exception ex)
-                            {
-                                ExceptionOccured = "PD0_Click(object sender, EventArgs e) called. ERROR occured is ---> " + ex.Message;
-                                MessageBox.Show("Ocurrio un error al intentar abrir el porton, por favor contacte con los tecnicos");
-
-                            }
-
-
-                        }
-                        else // NO ESTA HABILITADO PARA ENTRAR. 
-                        {
-                            MessageBox.Show("Debes estar al dia para poder acceder, por favor abona una cuota, Gracias");
-                        }
-                    }
-                    else {//TODAVIA NO TIENE NI UN PAGO EL CLIENTE.
-                        MessageBox.Show("Todavia no tiene ninguna cuota cargada, por favor consulte con recepcion");
-                    }
-                    
-                   
-                }
-                this.textBox_Cedula.Text = "";
-                
-            }
-            else
-            {
-               // System.Console.WriteLine("otra tecla");
-            }
         }
 
 
@@ -290,24 +216,133 @@ namespace Gimnasio
             IsOpen = false;
         }
 
-        void AllowUIToUpdate()
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)//TIMER PARA EL INGRESO DEL USUARIO
         {
-
-            DispatcherFrame frame = new DispatcherFrame();
-
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new DispatcherOperationCallback(delegate(object parameter)
-            {
-
-                frame.Continue = false;
-
-                return null;
-
-            }), null);
-
-            Dispatcher.PushFrame(frame);
-
+            D0 = false;
+            this.label2_ResultadoIngreso.Content = "";
+            this.labelNombre.Content = "";
+            this.labelNombreCliente.Content = "";
+            this.labelApellido.Content = "";
+            this.labelApellidoCliente.Content = "";
+            this.labelMensajeCuotaVencida.Content = "";
+            //dispatcherTimer.Stop();
+            //test += 1;
+            
         }
 
+        private void textBoxNumeroCedula_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key.ToString() == "Return")
+            {
 
+                // hacer el control de pago de cuota. Si la fecha de vencimiento en la tabla pagos es menor al dia de hoy entonces habilitar
+
+                Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
+
+                //se selecciona el cliente en cuestion
+                string esql = "select value c from clientes as c where c.nro_cedula= '" + textBox_Cedula.Text + "\'";
+                var clientesVar = database1Entities.CreateQuery<clientes>(esql);
+
+                // Se controla que el cliente que se haya traido sea un cliente valido. 
+                if (clientesVar.ToList().Count == 0)
+                {
+                    MessageBox.Show("No existe cliente con ese numero de cedula.");
+                    //Console.WriteLine("No hay un carajo \n");
+                }
+                else
+                {
+                    string fechaVencimientoQuery = "select value p from Pagos as p where p.fk_cliente=" + clientesVar.ToArray()[0].idCliente + " order by p.fecha_vencimiento desc limit 1";
+                    var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
+
+                    // Se controla que tenga por lo menos un pago el cliente
+                    if (clientesVar.ToArray()[0].Pagos.ToList().Count >= 1)
+                    {
+                        if (fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento >= System.DateTime.Today)
+                        {
+
+                            // Abrir el porton
+                            try
+                            {
+                                this.labelMensajeCuotaVencida.Content = ""; // 
+
+
+                                // Seteamos  "Nombre:<NombreCliente>" 
+                                this.labelNombre.Content = "Nombre:";
+                                this.labelNombreCliente.Content = clientesVar.ToArray()[0].nombre.ToString();
+
+                                // Seteamos  "Apellido:<ApellidoCliente>" 
+                                this.labelApellido.Content = "Apellido:";
+                                this.labelApellidoCliente.Content = clientesVar.ToArray()[0].apellido.ToString();
+
+                                
+                                this.label2_ResultadoIngreso.Foreground = new SolidColorBrush(Colors.Green);
+                                this.label2_ResultadoIngreso.FontSize = 20;
+                                TimeSpan cantDias = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value - System.DateTime.Today;
+                                this.label2_ResultadoIngreso.Content = "Ingreso Exitoso -->" + "Su cuota vence en: " + cantDias.Days + " dias!.";
+                                //TODO: mostrar foto.
+
+                                //  DispatcherTimer setup
+                                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+                                dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
+                                D0 = true;//Habilitar entrada. 
+                                dispatcherTimer.Start();
+
+                                
+                            }
+                            catch (Exception ex)
+                            {
+                                ExceptionOccured = "PD0_Click(object sender, EventArgs e) called. ERROR occured is ---> " + ex.Message;
+                                MessageBox.Show("Ocurrio un error al intentar abrir el porton, por favor contacte con los tecnicos");
+
+                            }
+
+
+                        }
+                        else // CUOTA VENCIDA. NO ESTA HABILITADO PARA ENTRAR. 
+                        {
+
+                            // Seteamos  "Nombre:<NombreCliente>" 
+                            this.labelNombre.Content = "Nombre:";
+                            this.labelNombreCliente.Content = clientesVar.ToArray()[0].nombre.ToString();
+
+                            // Seteamos  "Apellido:<ApellidoCliente>" 
+                            this.labelApellido.Content = "Apellido:";
+                            this.labelApellidoCliente.Content = clientesVar.ToArray()[0].apellido.ToString();
+
+                            this.label2_ResultadoIngreso.Foreground = new SolidColorBrush(Colors.Red);
+                            this.label2_ResultadoIngreso.FontSize = 20;
+                            this.label2_ResultadoIngreso.Content = "Su cuota ha vencido el " + fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value.ToShortDateString() + "!.";
+                            this.labelMensajeCuotaVencida.Content = "Por favor realice el pago para poder acceder.";
+
+                            //  DispatcherTimer setup
+                            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+                            dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
+                            dispatcherTimer.Start();
+                        
+                        }
+                    }
+                    else
+                    {//TODAVIA NO TIENE NI UN PAGO EL CLIENTE.
+                        MessageBox.Show("Todavia no tiene ninguna cuota cargada, por favor consulte con recepcion.");
+                    }
+
+
+                }
+                this.textBox_Cedula.Text = "";
+
+            }
+            else
+            {
+                // System.Console.WriteLine("otra tecla");
+            }
+        }
+
+        private void window_ControlIngreso_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.textBox_Cedula.Focus();
+        }
+
+     
     }
 }
