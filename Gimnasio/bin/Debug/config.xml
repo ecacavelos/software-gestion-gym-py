@@ -2,5 +2,6 @@
 <Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1</Version>
   <General>My Config</General>
-  <TiempoApertura>2456</TiempoApertura>
+  <TiempoApertura>5</TiempoApertura>
+  <Keypad_usb>true</Keypad_usb>
 </Configuration>

@@ -12,12 +12,14 @@ namespace Gimnasio
         int _Version;
         string _General;
         int _TiempoApertura;
+        bool _Keypad_usb;
 
         public Configuration()
         {
             _Version = 1;
             _General = "";
             _TiempoApertura = -1;
+            _Keypad_usb = false;
         }
         public static void Serialize(string file, Configuration c)
         {
@@ -52,6 +54,11 @@ namespace Gimnasio
         {
             get { return _TiempoApertura; }
             set { _TiempoApertura = value; }
+        }
+        public bool Keypad_usb
+        {
+            get { return _Keypad_usb; }
+            set { _Keypad_usb = value; }
         }
 
     }
