@@ -281,11 +281,17 @@ namespace Gimnasio
                         {
                             if (destino.GetLineLength(0) < 8 && e.Keyboard.vKey != "Back")
                             {
-                                destino.Text += teclaObtenida.ToString();
+                                if (teclaObtenida != (-1))
+                                {
+                                    destino.Text += teclaObtenida.ToString();
+                                }
                             }
                             if (e.Keyboard.vKey == "Back")
                             {
-                                destino.Text = destino.Text.Substring(0, destino.Text.Length - 1);
+                                if (destino.Text.Length >= 1)
+                                {
+                                    destino.Text = destino.Text.Substring(0, destino.Text.Length - 1);
+                                }
                             }
                         }
                     }

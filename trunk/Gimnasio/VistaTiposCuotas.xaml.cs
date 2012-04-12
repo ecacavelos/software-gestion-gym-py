@@ -18,6 +18,8 @@ namespace Gimnasio
     /// </summary>
     public partial class VistaTiposCuotas : Window
     {
+        Configuration c2;
+
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
         public static bool IsOpen { get; private set; }
 
@@ -107,5 +109,19 @@ namespace Gimnasio
         {
             IsOpen = false;
         }
+
+
+        #region "Funciones para la captura y manejo de teclas"
+        // Esto es necesario para permitir el ingreso de numeros de cedula mediante el keypad USB
+        private void cuotasDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion
+
     }
 }

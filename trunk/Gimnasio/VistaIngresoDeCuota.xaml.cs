@@ -19,7 +19,9 @@ namespace Gimnasio
     /// </summary>
     public partial class VistaIngresoDeCuota : Window
     {
-         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
+        Configuration c2;
+
+        Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
         string esqlCuotas = "select value c from cuotas as c";
         int diasAHabilitar;
         DateTime fechaPago, fechaUltimoVencimiento;
@@ -211,6 +213,55 @@ namespace Gimnasio
 
             }
         }
+
+        #region "Funciones relativas al Keypad USB"
+        // Funciones para evitar que el keypad USB afecte los controles de esta ventana.
+
+        private void textBoxNroCedula_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void comboBoxTiposCuotas_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void datePickerFechaInicialPago_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void button1_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void button2_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion
 
     }
 }
