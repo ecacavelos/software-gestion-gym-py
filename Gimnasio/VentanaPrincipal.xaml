@@ -20,7 +20,7 @@
                 <MenuItem Header="Salir" Click="SalirMenuItem_Click"></MenuItem>
             </MenuItem>
             <MenuItem Header="Clientes">
-                <MenuItem Header="Ver" Click="VerClientesMenuItem_Click"></MenuItem>
+                <MenuItem Header="Ver" Click="VerMenuItem_Click"></MenuItem>
                 <MenuItem Header="Consultar Pagos" Click="click_ConsultarPagos"></MenuItem>
             </MenuItem>
             <MenuItem Header="Cuotas">
@@ -36,9 +36,9 @@
             <Separator></Separator>
             <Button Margin="3" Content="Ingresar Pago" Click="clickBtnIngresarPago"></Button>
             <Separator></Separator>
-            <Button Margin="3" Click="abrirVentanaControlIngreso">Control de ingreso</Button>
+            <Button Margin="3" Click="Button_Click_1">Control de ingreso</Button>
             <Separator></Separator>
-            <Button Margin="3" Click="abrirVentanaIngresoManual">Habilitar manualmente</Button>
+            <Button Margin="3" Click="Button_Click_3">Habilitar manualmente</Button>
         </ToolBar>
         <StackPanel Grid.Row="4" HorizontalAlignment="Left" Margin="12,6,0,0" Name="stackPanel1" VerticalAlignment="Top"  DataContext="{StaticResource clientesViewSource}"></StackPanel>
     </Grid>

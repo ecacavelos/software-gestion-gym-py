@@ -6,15 +6,7 @@
         <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance my:clientes, CreateList=True}" />
     </Window.Resources>
     <Grid DataContext="{StaticResource clientesViewSource}" Height="436" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="clientesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Margin="12,12,12,0" RowEditEnding="clientesDataGrid_RowEditEnding" Height="348" UnloadingRow="clientesDataGrid_UnloadingRow" LoadingRow="clientesDataGrid_LoadingRow" PreviewKeyDown="clientesDataGrid_PreviewKeyDown">
-            <DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridCell}" x:Key="MyCellStyle">
-                    <Setter Property="Background" Value="SeaGreen"/>
-                </Style>
-                <Style TargetType="{x:Type DataGridCell}" x:Key="MyCellStyle2">
-                    <Setter Property="Background" Value="Green"/>
-                </Style>
-            </DataGrid.Resources>
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="clientesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Margin="12,12,12,0" RowEditEnding="clientesDataGrid_RowEditEnding" Height="382" UnloadingRow="clientesDataGrid_UnloadingRow">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="apellidoColumn" Binding="{Binding Path=apellido}" Header="Apellido" />
                 <DataGridTextColumn x:Name="nombreColumn" Binding="{Binding Path=nombre}" Header="Nombre" /><DataGridTextColumn x:Name="nro_cedulaColumn" Binding="{Binding Path=nro_cedula}" Header="Nro. de cedula" />
@@ -39,10 +31,8 @@
                 <DataGridTextColumn x:Name="pesoColumn" Binding="{Binding Path=peso}" Header="Peso" Width="SizeToHeader" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Guardar Cambios" Height="26" HorizontalAlignment="Right" Margin="0,401,118,0" Name="button2" VerticalAlignment="Top" Width="100" Click="GuardarCambiosClientes" IsEnabled="False" PreviewKeyDown="button2_PreviewKeyDown" />
-        <Button Content="Cancelar" Height="26" HorizontalAlignment="Right" Margin="0,401,12,0" Name="button1" VerticalAlignment="Top" Width="100" Click="btnCancelarVistaClientes" PreviewKeyDown="button1_PreviewKeyDown" />
-        <Label Height="27" HorizontalAlignment="Left" Margin="12,400,0,0" Name="label1" VerticalAlignment="Top" Width="544" Content="Vista de Clientes." />
-        <Label Content="Buscar: " Height="28" HorizontalAlignment="Left" Margin="12,366,0,0" Name="label2" VerticalAlignment="Top" />
-        <TextBox Height="24" HorizontalAlignment="Stretch" Margin="68,368,12,0" Name="textBox1" VerticalAlignment="Top" TextChanged="textBox1_TextChanged" PreviewKeyDown="textBox1_PreviewKeyDown" />
+        <Button Content="Guardar Cambios" Height="26" HorizontalAlignment="Right" Margin="0,401,118,0" Name="button2" VerticalAlignment="Top" Width="100" Click="GuardarCambiosClientes" IsEnabled="False" />
+        <Button Content="Cancelar" Height="26" HorizontalAlignment="Right" Margin="0,401,12,0" Name="button1" VerticalAlignment="Top" Width="100" Click="btnCancelarVistaClientes" />
+        <Label Height="27" HorizontalAlignment="Left" Margin="12,400,0,0" Name="label1" VerticalAlignment="Top" Width="544" />
     </Grid>
 </Window>

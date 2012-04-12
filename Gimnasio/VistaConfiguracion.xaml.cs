@@ -19,7 +19,6 @@ namespace Gimnasio
     public partial class VistaConfiguracion : Window
     {
         Configuration c2;
-        public static bool IsOpen { get; private set; }
 
         public VistaConfiguracion()
         {
@@ -30,8 +29,8 @@ namespace Gimnasio
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
 
-            IsOpen = true;
             //TO DO: Testeo de si exsite el archivo de configuracion. 
             this.label_SegundosApertura.Content = c2.TiempoApertura.ToString();
         }
@@ -68,11 +67,6 @@ namespace Gimnasio
             this.c2.TiempoApertura = (int)this.slider_TiempoAperturaPorton.Value;
             Configuration.Serialize("config.xml", this.c2);
             this.button_AceptarConfiguracion.IsEnabled = false;
-        }
-
-        private void Window_Unloaded(object sender, RoutedEventArgs e)
-        {
-            IsOpen = false;
         }
     }
 }
