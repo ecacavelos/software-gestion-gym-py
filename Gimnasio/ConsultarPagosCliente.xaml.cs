@@ -18,6 +18,8 @@ namespace Gimnasio
     /// </summary>
     public partial class ConsultarPagosCliente : Window
     {
+        Configuration c2;
+
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
         Gimnasio.Database1Entities database1Entities2 = new Gimnasio.Database1Entities();
 
@@ -111,5 +113,20 @@ namespace Gimnasio
                 }
             }
         }
+
+        #region "Funciones relativas al Keypad USB"
+        // Funciones para evitar que el keypad USB afecte los controles de esta ventana.
+
+        private void textBoxNroCedula_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+
+        #endregion
+
     }
 }

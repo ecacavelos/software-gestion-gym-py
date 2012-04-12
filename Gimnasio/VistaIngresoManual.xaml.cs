@@ -27,6 +27,7 @@ namespace Gimnasio
     /// </summary>
     public partial class VistaIngresoManual : Window
     {
+        Configuration c2;
 
         public static bool IsOpen { get; private set; }
 
@@ -247,6 +248,18 @@ namespace Gimnasio
         {
             IsOpen = false;
         }
+
+        #region "Funciones relativas al Keypad USB"
+        // Funciones para evitar que el keypad USB afecte los controles de esta ventana.
+        private void button1_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion
 
     }
 }

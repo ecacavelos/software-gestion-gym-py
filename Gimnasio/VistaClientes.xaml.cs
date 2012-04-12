@@ -156,12 +156,14 @@ namespace Gimnasio
             //this.Hide();
         }
 
+        #region "Funciones relativas a la busqueda dinámica"
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
             string esql = "select value c from clientes as c";
             var clientesVar = database1Entities.CreateQuery<clientes>(esql);
 
-            if (clientesVar.ToList().Count > 0){
+            if (clientesVar.ToList().Count > 0)
+            {
 
                 int b;
                 Boolean[] RowFlag = new Boolean[i];
@@ -242,8 +244,7 @@ namespace Gimnasio
 
             return dt;
         }
-
-
+        #endregion
 
         #region "Funciones relativas al Keypad USB"
         // Funciones para evitar que el keypad USB afecte los controles de esta ventana.

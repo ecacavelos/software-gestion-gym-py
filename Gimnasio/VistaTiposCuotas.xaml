@@ -7,7 +7,7 @@
         <CollectionViewSource x:Key="cuotasViewSource" d:DesignSource="{d:DesignInstance my:Cuotas, CreateList=True}" />
     </Window.Resources>
     <Grid DataContext="{StaticResource clientesViewSource}">
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="237" HorizontalAlignment="Left" ItemsSource="{Binding Source={StaticResource cuotasViewSource}}" Margin="12,12,0,0" Name="cuotasDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="254" RowEditEnding="RowEditEnding_TiposCuotas" UnloadingRow="unloadingRow_BorrarTipoCuota">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="237" HorizontalAlignment="Left" ItemsSource="{Binding Source={StaticResource cuotasViewSource}}" Margin="12,12,0,0" Name="cuotasDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="254" RowEditEnding="RowEditEnding_TiposCuotas" UnloadingRow="unloadingRow_BorrarTipoCuota" PreviewKeyDown="cuotasDataGrid_PreviewKeyDown">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="montoColumn" Binding="{Binding Path=monto}" Header="monto" Width="SizeToHeader" />
                 <DataGridTextColumn x:Name="diasHabilitadosColumn" Binding="{Binding Path=diasHabilitados}" Header="dias Habilitados" Width="SizeToHeader" />
