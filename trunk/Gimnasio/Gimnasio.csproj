@@ -85,6 +85,7 @@
     <Compile Include="ConsultarPagosCliente.xaml.cs">
       <DependentUpon>ConsultarPagosCliente.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InputDevice.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -143,6 +144,7 @@
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="App.Config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Model1.edmx.sqlce" />
     <None Include="Properties\DataSources\Database1Entities.datasource" />
     <None Include="Properties\Settings.settings">
