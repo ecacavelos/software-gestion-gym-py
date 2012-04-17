@@ -6,13 +6,17 @@
         <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance my:clientes, CreateList=True}" />
     </Window.Resources>
     <Grid DataContext="{StaticResource clientesViewSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="clientesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" Margin="12,12,12,78" RowEditEnding="clientesDataGrid_RowEditEnding" UnloadingRow="clientesDataGrid_UnloadingRow" LoadingRow="clientesDataGrid_LoadingRow" PreviewKeyDown="clientesDataGrid_PreviewKeyDown" HorizontalGridLinesBrush="#FF404040" AlternatingRowBackground="Beige" VerticalGridLinesBrush="#FF404040" PreparingCellForEdit="clientesDataGrid_PreparingCellForEdit">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="clientesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" Margin="12,12,12,78" RowEditEnding="clientesDataGrid_RowEditEnding" UnloadingRow="clientesDataGrid_UnloadingRow" LoadingRow="clientesDataGrid_LoadingRow" PreviewKeyDown="clientesDataGrid_PreviewKeyDown" HorizontalGridLinesBrush="#FF404040" AlternatingRowBackground="Beige" VerticalGridLinesBrush="#FF404040">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}" x:Key="MyCellStyle">
                     <Setter Property="Background" Value="SeaGreen"/>
                 </Style>
                 <Style TargetType="{x:Type DataGridCell}" x:Key="MyCellStyle2">
                     <Setter Property="Background" Value="Green"/>
+                </Style>
+                <Style x:Key="DataGridCheckBoxStyle" TargetType="CheckBox">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Margin" Value="8,0,3,0" />
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
@@ -37,8 +41,14 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn x:Name="alturaColumn" Binding="{Binding Path=altura}" Header="Altura" Width="SizeToHeader" />
                 <DataGridTextColumn x:Name="pesoColumn" Binding="{Binding Path=peso}" Header="Peso" Width="SizeToHeader" />
-                <DataGridCheckBoxColumn x:Name="hasfotoColumn" Binding="{Binding Path=hasfoto}" Header="Foto" Width="SizeToHeader" CanUserReorder="False" />
-                <DataGridTextColumn x:Name="fotoColumn" Header="Nombre de Foto" Width="SizeToHeader" CanUserReorder="False" Binding="{Binding Path=foto}" />
+                <DataGridTemplateColumn x:Name="fotoColumn" Width="Auto" Header="Foto" SortMemberPath="hasfoto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox Style="{StaticResource DataGridCheckBoxStyle}" IsChecked="{Binding Path=hasfoto, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" TargetUpdated="OnFotoToggleTargetUpdated" Click="FotoToggled"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Guardar Cambios" Height="26" HorizontalAlignment="Right" Margin="0,0,118,12" Name="button2" VerticalAlignment="Bottom" Width="100" Click="GuardarCambiosClientes" IsEnabled="False" PreviewKeyDown="button2_PreviewKeyDown" />

@@ -234,6 +234,10 @@ namespace Gimnasio
             textBox_Cedula.Visibility = System.Windows.Visibility.Visible;
             //textBox_Cedula.Background = System.Windows.Media.Brushes.Transparent;
             //label2_ResultadoIngreso.Background = System.Windows.Media.Brushes.Transparent;
+            image1.Source = null;
+            if(this.IsActive){
+                textBox_Cedula.Focus();
+            }
             _Mensaje_activo = false;
             //Console.WriteLine("Termina timer.");
         }
@@ -260,8 +264,7 @@ namespace Gimnasio
         {
             if (_Mensaje_activo == true)
             {
-                //textBox_Cedula.Background = System.Windows.Media.Brushes.Yellow;
-                //label2_ResultadoIngreso.Background = System.Windows.Media.Brushes.Yellow;
+                // Si se está mostrando algún mensaje no hacemos nada, se debe esperar a que desaparezca
                 return;
             }
             else
@@ -270,11 +273,11 @@ namespace Gimnasio
                 textBox_Cedula.Visibility = System.Windows.Visibility.Hidden;
             }
 
-            // hacer el control de pago de cuota. Si la fecha de vencimiento en la tabla pagos es menor al dia de hoy entonces habilitar
+            // Hacer el control de pago de cuota. Si la fecha de vencimiento en la tabla pagos es menor al dia de hoy entonces habilitar
 
             Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
 
-            //se selecciona el cliente en cuestion
+            //Se selecciona el cliente en cuestion
             string esql = "select value c from clientes as c where c.nro_cedula= '" + textBox_Cedula.Text + "\'";
             var clientesVar = database1Entities.CreateQuery<clientes>(esql);
 
@@ -318,11 +321,23 @@ namespace Gimnasio
                             this.label2_ResultadoIngreso.FontSize = 20;
                             TimeSpan cantDias = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value - System.DateTime.Today;
                             this.label2_ResultadoIngreso.Content = "Ingreso Exitoso --> " + "Su cuota vence en: " + cantDias.Days + " días.";
-                            //TODO: mostrar foto.
+
+                            string pathfoto = String.Empty;
+                            string namefoto = String.Empty;
+                            //TODO: mostrar foto.                            
+                            pathfoto = @"C:\Users\David\Documents\CBI\gym-software\Gimnasio\Images\FotosClientes\";
+                            namefoto = "davidcara.png";
+                            // Create source
+                            BitmapImage myBitmapImage = new BitmapImage();
+                            // BitmapImage.UriSource must be in a BeginInit/EndInit block
+                            myBitmapImage.BeginInit();
+                            myBitmapImage.UriSource = new Uri(pathfoto + namefoto);
+                            myBitmapImage.EndInit();
+
+                            image1.Source = myBitmapImage;
 
                             //  DispatcherTimer setup
                             //Console.WriteLine("Inicia timer: " + _TiempoApertura.ToString());
-                            //dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
                             dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
                             D0 = true;//Habilitar entrada. 
                             dispatcherTimer.Start();
