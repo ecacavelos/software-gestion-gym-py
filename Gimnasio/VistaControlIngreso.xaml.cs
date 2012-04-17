@@ -229,6 +229,11 @@ namespace Gimnasio
             this.labelMensajeCuotaVencida.Content = "";
             dispatcherTimer.Stop();
             //test += 1;
+            this.textBox_Cedula.Text = "";
+            label1.Visibility = System.Windows.Visibility.Visible;
+            textBox_Cedula.Visibility = System.Windows.Visibility.Visible;
+            //textBox_Cedula.Background = System.Windows.Media.Brushes.Transparent;
+            //label2_ResultadoIngreso.Background = System.Windows.Media.Brushes.Transparent;
             _Mensaje_activo = false;
             //Console.WriteLine("Termina timer.");
         }
@@ -255,7 +260,14 @@ namespace Gimnasio
         {
             if (_Mensaje_activo == true)
             {
+                //textBox_Cedula.Background = System.Windows.Media.Brushes.Yellow;
+                //label2_ResultadoIngreso.Background = System.Windows.Media.Brushes.Yellow;
                 return;
+            }
+            else
+            {
+                label1.Visibility = System.Windows.Visibility.Hidden;
+                textBox_Cedula.Visibility = System.Windows.Visibility.Hidden;
             }
 
             // hacer el control de pago de cuota. Si la fecha de vencimiento en la tabla pagos es menor al dia de hoy entonces habilitar
@@ -292,21 +304,20 @@ namespace Gimnasio
                         try
                         {
                             this.labelMensajeCuotaVencida.Content = ""; // 
+                            _Mensaje_activo = true;
 
-
-                            // Seteamos  "Nombre:<NombreCliente>" 
+                            // Seteamos  "Nombre: <NombreCliente>" 
                             this.labelNombre.Content = "Nombre:";
                             this.labelNombreCliente.Content = clientesVar.ToArray()[0].nombre.ToString();
 
-                            // Seteamos  "Apellido:<ApellidoCliente>" 
+                            // Seteamos  "Apellido: <ApellidoCliente>" 
                             this.labelApellido.Content = "Apellido:";
                             this.labelApellidoCliente.Content = clientesVar.ToArray()[0].apellido.ToString();
-
 
                             this.label2_ResultadoIngreso.Foreground = new SolidColorBrush(Colors.Green);
                             this.label2_ResultadoIngreso.FontSize = 20;
                             TimeSpan cantDias = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value - System.DateTime.Today;
-                            this.label2_ResultadoIngreso.Content = "Ingreso Exitoso -->" + "Su cuota vence en: " + cantDias.Days + " dias!.";
+                            this.label2_ResultadoIngreso.Content = "Ingreso Exitoso --> " + "Su cuota vence en: " + cantDias.Days + " días.";
                             //TODO: mostrar foto.
 
                             //  DispatcherTimer setup
@@ -315,7 +326,6 @@ namespace Gimnasio
                             dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
                             D0 = true;//Habilitar entrada. 
                             dispatcherTimer.Start();
-
 
                         }
                         catch (Exception ex)
@@ -334,6 +344,7 @@ namespace Gimnasio
                     }
                     else // CUOTA VENCIDA. NO ESTA HABILITADO PARA ENTRAR. 
                     {
+                        _Mensaje_activo = true;
 
                         // Seteamos  "Nombre:<NombreCliente>" 
                         this.labelNombre.Content = "Nombre:";

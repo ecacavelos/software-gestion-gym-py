@@ -85,6 +85,7 @@
     <Compile Include="ConsultarPagosCliente.xaml.cs">
       <DependentUpon>ConsultarPagosCliente.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataGridHelper.cs" />
     <Compile Include="InputDevice.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="App.xaml.cs">
