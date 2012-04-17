@@ -287,5 +287,44 @@ namespace Gimnasio
         }
         #endregion
 
+        private void clientesDataGrid_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
+        {
+            //Console.WriteLine(clientesDataGrid.CurrentCell.Column.Header.ToString());
+            if (clientesDataGrid.CurrentCell.Column.Header.ToString() == "Foto")
+            {
+                if (clientesDataGrid.CurrentCell.Column.GetCellContent(e.Row).ToString() == "System.Windows.Controls.CheckBox Content: IsChecked:True")
+                {
+                    //Console.WriteLine("Librarian");
+                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                    dlg.FileName = "Document"; // Default file name
+                    dlg.DefaultExt = ".txt"; // Default file extension
+                    //dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
+                    // Show open file dialog box
+                    Nullable<bool> result = dlg.ShowDialog();
+
+                    // Process open file dialog box results
+                    if (result == true)
+                    {
+                        // Open document
+                        string filename = dlg.FileName;
+                    }
+
+                    //DataGridHelpers.DataGridHelper.GetCell(clientesDataGrid, e.Row, e.Column.DisplayIndex + 1).IsEditing = true;
+                    ((TextBlock)(DataGridHelpers.DataGridHelper.GetCell(clientesDataGrid, e.Row, e.Column.DisplayIndex + 1).Content)).Text = dlg.FileName;
+                }
+                else if (clientesDataGrid.CurrentCell.Column.GetCellContent(e.Row).ToString() == "System.Windows.Controls.CheckBox Content: IsChecked:False")
+                {
+                    //DataGridHelpers.DataGridHelper.GetCell(clientesDataGrid, e.Row, e.Column.DisplayIndex + 1).IsEditing = true;
+                    ((TextBlock)(DataGridHelpers.DataGridHelper.GetCell(clientesDataGrid, e.Row, e.Column.DisplayIndex + 1).Content)).Text = "";
+                }
+
+                button2.IsEnabled = true;
+
+            }
+
+
+        }
+
     }
 }

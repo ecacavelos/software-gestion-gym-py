@@ -33,6 +33,8 @@
           <Property Name="altura" Type="int" />
           <Property Name="peso" Type="int" />
           <Property Name="nro_cedula" Type="nvarchar" MaxLength="100" />
+          <Property Name="foto" Type="nvarchar" MaxLength="255" />
+          <Property Name="hasfoto" Type="bit" />
         </EntityType>
         <EntityType Name="Cuotas">
           <Key>
@@ -109,6 +111,8 @@
           <Property Type="Int32" Name="peso" />
           <Property Type="String" Name="nro_cedula" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Pagos" Relationship="Database1Model.FK_cliente_pago" FromRole="clientes" ToRole="Pagos" />
+          <Property Type="String" Name="foto" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="hasfoto" />
         </EntityType>
         <EntityType Name="Cuotas">
           <Key>
@@ -164,6 +168,8 @@
           <EntitySetMapping Name="clientes">
             <EntityTypeMapping TypeName="Database1Model.clientes">
               <MappingFragment StoreEntitySet="clientes">
+                <ScalarProperty Name="hasfoto" ColumnName="hasfoto" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
                 <ScalarProperty Name="nro_cedula" ColumnName="nro_cedula" />
                 <ScalarProperty Name="peso" ColumnName="peso" />
                 <ScalarProperty Name="altura" ColumnName="altura" />

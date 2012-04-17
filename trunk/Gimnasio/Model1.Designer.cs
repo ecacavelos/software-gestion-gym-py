@@ -444,6 +444,54 @@ namespace Gimnasio
         private global::System.String _nro_cedula;
         partial void Onnro_cedulaChanging(global::System.String value);
         partial void Onnro_cedulaChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String foto
+        {
+            get
+            {
+                return _foto;
+            }
+            set
+            {
+                OnfotoChanging(value);
+                ReportPropertyChanging("foto");
+                _foto = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("foto");
+                OnfotoChanged();
+            }
+        }
+        private global::System.String _foto;
+        partial void OnfotoChanging(global::System.String value);
+        partial void OnfotoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> hasfoto
+        {
+            get
+            {
+                return _hasfoto;
+            }
+            set
+            {
+                OnhasfotoChanging(value);
+                ReportPropertyChanging("hasfoto");
+                _hasfoto = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("hasfoto");
+                OnhasfotoChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _hasfoto;
+        partial void OnhasfotoChanging(Nullable<global::System.Boolean> value);
+        partial void OnhasfotoChanged();
 
         #endregion
     
