@@ -287,42 +287,60 @@ namespace Gimnasio
         }
         #endregion
 
-        private void clientesDataGrid_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
+        private void OnFotoToggleTargetUpdated(Object sender, DataTransferEventArgs args)
         {
-            //Console.WriteLine(clientesDataGrid.CurrentCell.Column.Header.ToString());
-            if (clientesDataGrid.CurrentCell.Column.Header.ToString() == "Foto")
+
+            //Console.WriteLine("Updated.");
+
+        }
+
+        private void FotoToggled(object sender, RoutedEventArgs e)
+        {
+
+            //Console.WriteLine(((CheckBox)e.Source).IsChecked.ToString());
+            if (((CheckBox)e.Source).IsChecked == true)
             {
-                if (clientesDataGrid.CurrentCell.Column.GetCellContent(e.Row).ToString() == "System.Windows.Controls.CheckBox Content: IsChecked:True")
+                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                dlg.FileName = ""; // Default file name
+                dlg.DefaultExt = ""; // Default file extension
+                //dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
+                // Show open file dialog box
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Process open file dialog box results
+                if (result == true)
                 {
-                    //Console.WriteLine("Librarian");
-                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-                    dlg.FileName = "Document"; // Default file name
-                    dlg.DefaultExt = ".txt"; // Default file extension
-                    //dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
-
-                    // Show open file dialog box
-                    Nullable<bool> result = dlg.ShowDialog();
-
-                    // Process open file dialog box results
-                    if (result == true)
-                    {
-                        // Open document
-                        string filename = dlg.FileName;
-                    }
-
-                    //DataGridHelpers.DataGridHelper.GetCell(clientesDataGrid, e.Row, e.Column.DisplayIndex + 1).IsEditing = true;
-                    ((TextBlock)(DataGridHelpers.DataGridHelper.GetCell(clientesDataGrid, e.Row, e.Column.DisplayIndex + 1).Content)).Text = dlg.FileName;
+                    // Open document
+                    string filename = dlg.FileName;
+                    Console.WriteLine(dlg.FileName);
                 }
-                else if (clientesDataGrid.CurrentCell.Column.GetCellContent(e.Row).ToString() == "System.Windows.Controls.CheckBox Content: IsChecked:False")
+                else
                 {
-                    //DataGridHelpers.DataGridHelper.GetCell(clientesDataGrid, e.Row, e.Column.DisplayIndex + 1).IsEditing = true;
-                    ((TextBlock)(DataGridHelpers.DataGridHelper.GetCell(clientesDataGrid, e.Row, e.Column.DisplayIndex + 1).Content)).Text = "";
-                }
-
-                button2.IsEnabled = true;
-
+                    // Se presionó 'Cancelar'
+                    //Console.WriteLine("Cancelaste.");
+                    ((CheckBox)e.Source).IsChecked = false;
+                }                
             }
-
+            else
+            {
+                System.Windows.Forms.DialogResult result;
+                result = System.Windows.Forms.MessageBox.Show("Está seguro de que desea descartar la foto actual?", "Quitar foto", System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    // Acá recien borrar o descartar el archivo!
+                    //Console.WriteLine("Confirmaste descarte de foto.");
+                    ((CheckBox)e.Source).IsChecked = false;
+                }
+                else if (result == System.Windows.Forms.DialogResult.No)
+                {
+                    // Se arrepintió. No tocar el archivo!!!
+                    //Console.WriteLine("Te arrepentiste.");
+                    ((CheckBox)e.Source).IsChecked = true;
+                }
+              
+            }
+            button2.IsEnabled = true;
 
         }
 
