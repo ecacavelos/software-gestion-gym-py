@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
 using System.Reflection;
+using System.IO;
 
 namespace Gimnasio
 {
@@ -296,31 +297,53 @@ namespace Gimnasio
 
         private void FotoToggled(object sender, RoutedEventArgs e)
         {
+            clientes obj = ((FrameworkElement)sender).DataContext as clientes;
 
             //Console.WriteLine(((CheckBox)e.Source).IsChecked.ToString());
             if (((CheckBox)e.Source).IsChecked == true)
             {
-                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-                dlg.FileName = ""; // Default file name
-                dlg.DefaultExt = ""; // Default file extension
-                //dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+                if (obj != null)
+                { // Existe el cliente con el nro. de cedula por lo menos.
 
-                // Show open file dialog box
-                Nullable<bool> result = dlg.ShowDialog();
+                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
-                // Process open file dialog box results
-                if (result == true)
-                {
-                    // Open document
-                    string filename = dlg.FileName;
-                    Console.WriteLine(dlg.FileName);
+                    // Show open file dialog box
+                    Nullable<bool> result = dlg.ShowDialog();
+
+                    // Process open file dialog box results
+                    if (result == true)
+                    {
+                        // String que contiene el path completo del archivo seleccionado, incluyendo el nombre del archivo.
+                        string filename = dlg.FileName;
+
+                        //guardar la imagen con el nombre obj.idCliente.toString() + ".jpg";
+
+                        // Create source. 
+                        BitmapImage bi = new BitmapImage();
+                        // BitmapImage.UriSource must be in a BeginInit/EndInit block.
+                        bi.BeginInit();
+                        bi.UriSource = new Uri(filename, UriKind.RelativeOrAbsolute);
+                        bi.EndInit();
+
+
+                        FileStream stream = new FileStream("fotosClientes/" + obj.idCliente.ToString() + ".jpg", FileMode.Create);
+                        JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create(bi));
+                        encoder.Save(stream);
+                    }
+                    else
+                    {
+                        // Se presionó 'Cancelar'
+                        //Console.WriteLine("Cancelaste.");
+                        ((CheckBox)e.Source).IsChecked = false;
+                    }
+
                 }
-                else
-                {
-                    // Se presionó 'Cancelar'
-                    //Console.WriteLine("Cancelaste.");
+                else {
+                    MessageBox.Show("El cliente debe tener al menos el numero de cedula para poder seleccionar una foto.");
                     ((CheckBox)e.Source).IsChecked = false;
-                }                
+                }
+                          
             }
             else
             {
