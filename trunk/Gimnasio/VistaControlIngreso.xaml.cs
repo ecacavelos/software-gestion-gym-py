@@ -322,24 +322,26 @@ namespace Gimnasio
                             TimeSpan cantDias = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value - System.DateTime.Today;
                             this.label2_ResultadoIngreso.Content = "Ingreso Exitoso --> " + "Su cuota vence en: " + cantDias.Days + " días.";
 
-                            string pathfoto = String.Empty;
-                            string namefoto = String.Empty;
-                            //TODO: mostrar foto.                            
-                            pathfoto = @"C:\Users\David\Documents\CBI\gym-software\Gimnasio\Images\FotosClientes\";
-                            namefoto = "davidcara.png";
-                            // Create source
-                            BitmapImage myBitmapImage = new BitmapImage();
-                            // BitmapImage.UriSource must be in a BeginInit/EndInit block
-                            myBitmapImage.BeginInit();
-                            myBitmapImage.UriSource = new Uri(pathfoto + namefoto);
-                            myBitmapImage.EndInit();
+                            if (clientesVar.ToArray()[0].hasfoto == true)
+                            {
+                                // Recuperamos la foto del cliente para mostrar
+                                string pathfoto = String.Empty;                            
+                                pathfoto = System.Windows.Forms.Application.ExecutablePath;
+                                pathfoto = System.IO.Path.GetDirectoryName(pathfoto);
 
-                            image1.Source = myBitmapImage;
+                                // Create source (BitmapImage.UriSource must be in a BeginInit/EndInit block)
+                                BitmapImage myBitmapImage = new BitmapImage();                            
+                                myBitmapImage.BeginInit();
+                                myBitmapImage.UriSource = new Uri(pathfoto + @"\FotosClientes\" + clientesVar.ToArray()[0].idCliente.ToString() + ".jpg");
+                                myBitmapImage.EndInit();
+
+                                image1.Source = myBitmapImage;
+                            }
 
                             //  DispatcherTimer setup
                             //Console.WriteLine("Inicia timer: " + _TiempoApertura.ToString());
                             dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
-                            D0 = true;//Habilitar entrada. 
+                            D0 = true;  //Habilitar entrada.
                             dispatcherTimer.Start();
 
                         }
