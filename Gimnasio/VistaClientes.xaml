@@ -52,7 +52,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Guardar Cambios" Height="26" HorizontalAlignment="Right" Margin="0,0,118,12" Name="button2" VerticalAlignment="Bottom" Width="100" Click="GuardarCambiosClientes" IsEnabled="False" PreviewKeyDown="button2_PreviewKeyDown" />
-        <Button Content="Cancelar" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="button1" VerticalAlignment="Bottom" Width="100" Click="btnCancelarVistaClientes" PreviewKeyDown="button1_PreviewKeyDown" />
+        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="button1" VerticalAlignment="Bottom" Width="100" Click="btnCancelarVistaClientes" PreviewKeyDown="button1_PreviewKeyDown" />
         <Label Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="label1" VerticalAlignment="Bottom" Width="544" Content="Vista de Clientes." />
         <Label Content="Buscar: " Height="28" HorizontalAlignment="Left" Margin="12,0,0,44" Name="label2" VerticalAlignment="Bottom" />
         <TextBox Height="24" HorizontalAlignment="Stretch" Margin="68,0,12,44" Name="textBox1" VerticalAlignment="Bottom" TextChanged="textBox1_TextChanged" PreviewKeyDown="textBox1_PreviewKeyDown" />

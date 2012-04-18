@@ -330,6 +330,8 @@ namespace Gimnasio
                         JpegBitmapEncoder encoder = new JpegBitmapEncoder();
                         encoder.Frames.Add(BitmapFrame.Create(bi));
                         encoder.Save(stream);
+
+                        stream.Close();
                     }
                     else
                     {
@@ -339,11 +341,12 @@ namespace Gimnasio
                     }
 
                 }
-                else {
+                else
+                {
                     MessageBox.Show("El cliente debe tener al menos el numero de cedula para poder seleccionar una foto.");
                     ((CheckBox)e.Source).IsChecked = false;
                 }
-                          
+
             }
             else
             {
@@ -361,7 +364,7 @@ namespace Gimnasio
                     //Console.WriteLine("Te arrepentiste.");
                     ((CheckBox)e.Source).IsChecked = true;
                 }
-              
+
             }
             button2.IsEnabled = true;
 
