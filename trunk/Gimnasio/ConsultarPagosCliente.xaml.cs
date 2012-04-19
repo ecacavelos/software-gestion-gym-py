@@ -24,7 +24,7 @@ namespace Gimnasio
         Gimnasio.Database1Entities database1Entities2 = new Gimnasio.Database1Entities();
 
         private System.Data.Objects.DataClasses.EntityCollection<Pagos> pagosCliente;
-        
+
 
         public ConsultarPagosCliente()
         {
@@ -45,13 +45,14 @@ namespace Gimnasio
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
-            
             // Load data into Pagos. You can modify this code as needed.
             System.Windows.Data.CollectionViewSource pagosViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("pagosViewSource")));
             System.Data.Objects.ObjectQuery<Gimnasio.Pagos> pagosQuery = this.GetPagosQuery(database1Entities);
             pagosViewSource.Source = pagosQuery.Execute(System.Data.Objects.MergeOption.AppendOnly);
+
+            textBoxNroCedula.Focus();
         }
+
         private void textBoxNroCedula_KeyDown(object sender, KeyEventArgs e)
         {
             // se presiono ENTER
@@ -78,7 +79,7 @@ namespace Gimnasio
             }
             else
             {
-                System.Console.WriteLine("se presiono cualquier otra tecla que no es Return");
+                //System.Console.WriteLine("se presiono cualquier otra tecla que no es Return");
             }
 
         }
@@ -88,9 +89,9 @@ namespace Gimnasio
             System.Windows.Forms.DialogResult result;
             string esql = "select value c from clientes as c where c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
             var clientesVar = database1Entities2.CreateQuery<clientes>(esql);
-                
 
-            if (this.pagosCliente.Count < clientesVar.ToArray()[0].Pagos.Count) 
+
+            if (this.pagosCliente.Count < clientesVar.ToArray()[0].Pagos.Count)
             {
 
                 result = System.Windows.Forms.MessageBox.Show("Desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNoCancel);
@@ -109,7 +110,7 @@ namespace Gimnasio
                         var clientesVar2 = database1Entities.CreateQuery<clientes>(esql2);
                         this.pagosCliente = clientesVar2.ToArray()[0].Pagos;
                         this.dataGridPagos.ItemsSource = clientesVar2.ToArray()[0].Pagos;
-                     }
+                    }
                 }
             }
         }

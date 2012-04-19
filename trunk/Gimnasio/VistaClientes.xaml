@@ -1,12 +1,12 @@
 ﻿<Window x:Class="Gimnasio.VistaClientes"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Vista de Clientes" Height="480" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" MinWidth="802" MinHeight="480" HorizontalContentAlignment="Stretch" Closing="Window_Closing" Icon="/Gimnasio;component/vistaClientesIcon.png" Unloaded="Window_Unloaded"  Deactivated="Window_Deactivated">
+        Title="Vista de Clientes" Height="480" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" MinWidth="802" MinHeight="480" HorizontalContentAlignment="Stretch" Closing="Window_Closing" Icon="/Gimnasio;component/vistaClientesIcon.png" Unloaded="Window_Unloaded"  Deactivated="Window_Deactivated" Background="#FFBECBEB">
     <Window.Resources>
         <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance my:clientes, CreateList=True}" />
     </Window.Resources>
     <Grid DataContext="{StaticResource clientesViewSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="clientesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" Margin="12,12,12,78" RowEditEnding="clientesDataGrid_RowEditEnding" UnloadingRow="clientesDataGrid_UnloadingRow" LoadingRow="clientesDataGrid_LoadingRow" PreviewKeyDown="clientesDataGrid_PreviewKeyDown" HorizontalGridLinesBrush="#FF404040" AlternatingRowBackground="Beige" VerticalGridLinesBrush="#FF404040">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="clientesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" Margin="12,12,12,78" RowEditEnding="clientesDataGrid_RowEditEnding" UnloadingRow="clientesDataGrid_UnloadingRow" LoadingRow="clientesDataGrid_LoadingRow" PreviewKeyDown="clientesDataGrid_PreviewKeyDown" HorizontalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" VerticalGridLinesBrush="Gainsboro" CanUserSortColumns="False">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}" x:Key="MyCellStyle">
                     <Setter Property="Background" Value="SeaGreen"/>
