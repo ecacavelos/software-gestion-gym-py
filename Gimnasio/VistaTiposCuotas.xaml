@@ -6,14 +6,14 @@
         <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance my:clientes, CreateList=True}" />
         <CollectionViewSource x:Key="cuotasViewSource" d:DesignSource="{d:DesignInstance my:Cuotas, CreateList=True}" />
     </Window.Resources>
-    <Grid DataContext="{StaticResource clientesViewSource}">
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="237" HorizontalAlignment="Left" ItemsSource="{Binding Source={StaticResource cuotasViewSource}}" Margin="12,12,0,0" Name="cuotasDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="254" RowEditEnding="RowEditEnding_TiposCuotas" UnloadingRow="unloadingRow_BorrarTipoCuota" PreviewKeyDown="cuotasDataGrid_PreviewKeyDown">
+    <Grid DataContext="{StaticResource clientesViewSource}" Background="#FFBECBEB">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="237" HorizontalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource cuotasViewSource}}" Margin="12,12,12,0" Name="cuotasDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" RowEditEnding="RowEditEnding_TiposCuotas" UnloadingRow="unloadingRow_BorrarTipoCuota" PreviewKeyDown="cuotasDataGrid_PreviewKeyDown" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="montoColumn" Binding="{Binding Path=monto}" Header="monto" Width="SizeToHeader" />
-                <DataGridTextColumn x:Name="diasHabilitadosColumn" Binding="{Binding Path=diasHabilitados}" Header="dias Habilitados" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="montoColumn" Binding="{Binding Path=monto}" Header="Monto" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="diasHabilitadosColumn" Binding="{Binding Path=diasHabilitados}" Header="Dias Habilitados" Width="SizeToHeader" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Guardar Cambios" Height="23" HorizontalAlignment="Left" Margin="164,262,0,0" Name="button_GuardarTiposCuotas" VerticalAlignment="Top" Width="101" Click="click_GuardarCambios" IsEnabled="False" />
-        <Label Height="28" HorizontalAlignment="Left" Margin="12,261,0,0" Name="label_Cuotas_CambiosGuardados" VerticalAlignment="Top" Width="146" />
+        <Button Content="Guardar Cambios" Height="24" HorizontalAlignment="Right" Name="button_GuardarTiposCuotas" VerticalAlignment="Bottom" Width="100" Click="click_GuardarCambios" IsEnabled="False" Margin="0,0,12,12" />
+        <Label Height="28" HorizontalAlignment="Left" Margin="12,0,0,10" Name="label_Cuotas_CambiosGuardados" VerticalAlignment="Bottom" Width="146" />
     </Grid>
 </Window>

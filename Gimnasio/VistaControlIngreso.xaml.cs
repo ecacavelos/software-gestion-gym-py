@@ -227,6 +227,7 @@ namespace Gimnasio
             this.labelApellido.Content = "";
             this.labelApellidoCliente.Content = "";
             this.labelMensajeCuotaVencida.Content = "";
+            this.centerlabel.Content = "";
             dispatcherTimer.Stop();
             //test += 1;
             this.textBox_Cedula.Text = "";
@@ -288,7 +289,7 @@ namespace Gimnasio
                 //Console.WriteLine("No existe cliente con ese numero de cedula.");
 
                 _Mensaje_activo = true;
-                this.label2_ResultadoIngreso.Content = "No existe cliente con ese numero de cedula.";
+                this.centerlabel.Content = "No existe cliente con ese numero de cedula.";
                 dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
                 dispatcherTimer.Start();
             }
@@ -318,7 +319,7 @@ namespace Gimnasio
                             this.labelApellidoCliente.Content = clientesVar.ToArray()[0].apellido.ToString();
 
                             this.label2_ResultadoIngreso.Foreground = new SolidColorBrush(Colors.Green);
-                            this.label2_ResultadoIngreso.FontSize = 20;
+                            //this.label2_ResultadoIngreso.FontSize = 20;
                             TimeSpan cantDias = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value - System.DateTime.Today;
                             this.label2_ResultadoIngreso.Content = "Ingreso Exitoso --> " + "Su cuota vence en: " + cantDias.Days + " días.";
 
@@ -372,7 +373,7 @@ namespace Gimnasio
                         this.labelApellidoCliente.Content = clientesVar.ToArray()[0].apellido.ToString();
 
                         this.label2_ResultadoIngreso.Foreground = new SolidColorBrush(Colors.Red);
-                        this.label2_ResultadoIngreso.FontSize = 20;
+                        //this.label2_ResultadoIngreso.FontSize = 20;
                         this.label2_ResultadoIngreso.Content = "Su cuota ha vencido el " + fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value.ToShortDateString() + "!.";
                         this.labelMensajeCuotaVencida.Content = "Por favor realice el pago para poder acceder.";
 
@@ -386,9 +387,8 @@ namespace Gimnasio
                 else
                 {//TODAVIA NO TIENE NI UN PAGO EL CLIENTE.
                     //MessageBox.Show("Todavia no tiene ninguna cuota cargada, por favor consulte con recepcion.");
-
                     _Mensaje_activo = true;
-                    this.label2_ResultadoIngreso.Content = "Todavía no tiene ninguna cuota cargada, por favor consulte con recepción.";
+                    this.centerlabel.Content = "Todavía no tiene ninguna cuota cargada, por favor consulte con recepción.";
                     dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
                     dispatcherTimer.Start();
                 }

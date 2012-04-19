@@ -24,13 +24,14 @@ namespace Gimnasio
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
         string esqlCuotas = "select value c from cuotas as c";
         int diasAHabilitar;
-        DateTime fechaPago, fechaUltimoVencimiento;
+        DateTime fechaPago, fechaTemporal, fechaUltimoVencimiento;
         int nroCedula, idCliente, cuotaId;
 
         public VistaIngresoDeCuota()
         {
             this.diasAHabilitar = new int();
             this.fechaPago = new DateTime();
+            this.fechaTemporal = new DateTime();
             this.nroCedula = new int();
             InitializeComponent();
         }
@@ -104,8 +105,16 @@ namespace Gimnasio
                             pagoAAgregar.fk_cliente = this.idCliente;
                             pagoAAgregar.idPago = timestamp;
                             pagoAAgregar.fk_tipoCuota = this.cuotaId;
-                            pagoAAgregar.fecha = this.fechaPago;
-                            pagoAAgregar.fecha_vencimiento = this.fechaPago.AddDays(this.diasAHabilitar);
+                            pagoAAgregar.fecha = this.fechaPago;                            
+                            if (this.diasAHabilitar != 30)
+                            {
+                                pagoAAgregar.fecha_vencimiento = this.fechaPago.AddDays(this.diasAHabilitar);
+                            }
+                            else
+                            {
+                                pagoAAgregar.fecha_vencimiento = this.fechaPago.AddMonths(1);
+                            }
+
                             database1Entities.AddToPagos(pagoAAgregar);
                             if (database1Entities.SaveChanges() == 0)
                             {
