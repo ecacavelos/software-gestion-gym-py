@@ -301,7 +301,7 @@ namespace Gimnasio
                 // Se controla que tenga por lo menos un pago el cliente
                 if (clientesVar.ToArray()[0].Pagos.ToList().Count >= 1)
                 {
-                    if (fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento >= System.DateTime.Today)
+                    if (fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento > System.DateTime.Today)
                     {
 
                         // Abrir el porton
