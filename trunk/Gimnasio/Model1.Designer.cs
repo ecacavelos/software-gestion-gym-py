@@ -450,30 +450,6 @@ namespace Gimnasio
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String foto
-        {
-            get
-            {
-                return _foto;
-            }
-            set
-            {
-                OnfotoChanging(value);
-                ReportPropertyChanging("foto");
-                _foto = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("foto");
-                OnfotoChanged();
-            }
-        }
-        private global::System.String _foto;
-        partial void OnfotoChanging(global::System.String value);
-        partial void OnfotoChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.Boolean> hasfoto
         {
             get

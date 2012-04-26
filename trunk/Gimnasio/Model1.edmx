@@ -111,7 +111,6 @@
           <Property Type="Int32" Name="peso" />
           <Property Type="String" Name="nro_cedula" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Pagos" Relationship="Database1Model.FK_cliente_pago" FromRole="clientes" ToRole="Pagos" />
-          <Property Type="String" Name="foto" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="Boolean" Name="hasfoto" />
         </EntityType>
         <EntityType Name="Cuotas">
@@ -169,7 +168,6 @@
             <EntityTypeMapping TypeName="Database1Model.clientes">
               <MappingFragment StoreEntitySet="clientes">
                 <ScalarProperty Name="hasfoto" ColumnName="hasfoto" />
-                <ScalarProperty Name="foto" ColumnName="foto" />
                 <ScalarProperty Name="nro_cedula" ColumnName="nro_cedula" />
                 <ScalarProperty Name="peso" ColumnName="peso" />
                 <ScalarProperty Name="altura" ColumnName="altura" />
@@ -224,7 +222,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Model1" >
-        <EntityTypeShape EntityType="Database1Model.clientes" Width="1.5" PointX="0.75" PointY="1" Height="3.3263964843750036" />
+        <EntityTypeShape EntityType="Database1Model.clientes" Width="1.5" PointX="0.75" PointY="1" Height="3.5186979166666656" />
         <EntityTypeShape EntityType="Database1Model.Cuotas" Width="1.5" PointX="0.75" PointY="5.75" Height="1.787985026041671" />
         <EntityTypeShape EntityType="Database1Model.Pagos" Width="1.5" PointX="3" PointY="1.5" Height="2.3648893229166674" />
         <AssociationConnector Association="Database1Model.FK_cliente_pago" >
