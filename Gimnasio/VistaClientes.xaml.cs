@@ -26,10 +26,12 @@ namespace Gimnasio
         //private bool _Keypad_usb = false;
 
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
+        System.Data.Objects.ObjectQuery<Gimnasio.clientes> clientesVar2;
         public static bool IsOpen { get; private set; }
 
         int i = 0;
-        DataGridRow[] myRow001 = new DataGridRow[999];
+        DataGridRow[] myRow001 = new DataGridRow[99999];
+        Boolean[] RowFlag = new Boolean[99999];
 
         public VistaClientes()
         {
@@ -53,7 +55,7 @@ namespace Gimnasio
             System.Windows.Data.CollectionViewSource clientesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("clientesViewSource")));
             System.Data.Objects.ObjectQuery<Gimnasio.clientes> clientesQuery = this.GetclientesQuery(database1Entities);
             string esql2 = "select value c from clientes as c order by c.apellido";
-            var clientesVar2 = database1Entities.CreateQuery<clientes>(esql2);
+            clientesVar2 = database1Entities.CreateQuery<clientes>(esql2);
             clientesViewSource.Source = clientesVar2;
             database1Entities.SaveChanges();
         }
@@ -87,6 +89,7 @@ namespace Gimnasio
         private void clientesDataGrid_UnloadingRow(object sender, DataGridRowEventArgs e)
         {
             // System.Console.WriteLine("Borramos.");
+            //Console.WriteLine("UnloadingRow.");
             button2.IsEnabled = true;
         }
 
@@ -107,6 +110,7 @@ namespace Gimnasio
 
             }
 
+            Console.WriteLine("RowEditEnding.");
             button2.IsEnabled = true;
 
         }
@@ -160,47 +164,63 @@ namespace Gimnasio
         #region "Funciones relativas a la busqueda dinámica"
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string esql = "select value c from clientes as c";
-            var clientesVar = database1Entities.CreateQuery<clientes>(esql);
+            //string esql = "select value c from clientes as c";
+            //var clientesVar = database1Entities.CreateQuery<clientes>(esql);
 
-            if (clientesVar.ToList().Count > 0)
+            if (clientesVar2.ToList().Count > 0)
             {
 
                 int b;
-                Boolean[] RowFlag = new Boolean[i];
 
                 if (textBox1.Text != "")
                 {
                     b = 0;
-                    DataTable main_tabla = MyRecordListToDataTable(clientesVar.ToList());
+                    DataTable main_tabla = MyRecordListToDataTable(clientesVar2.ToList());
                     foreach (DataRow row in main_tabla.Rows)
                     {
+                        //Console.WriteLine("Row " + b.ToString() + " - Nombre: " + row[0].ToString());
                         RowFlag[b] = false;
                         foreach (DataColumn x in main_tabla.Columns)
                         {
                             if (row[x].ToString().ToLower().Contains(textBox1.Text.ToLower()))
                             {
-                                myRow001[b].Visibility = Visibility.Visible;
+                                //Console.WriteLine("Hit! " + b.ToString());
                                 RowFlag[b] = true;
+                                myRow001[b].Visibility = Visibility.Visible;
+                                //validarRow(myRow001[b]);
                             }
                         }
                         b++;
+                        if (myRow001[b] == null)
+                        {
+                            break;
+                        }
                     }
                     b = 0;
                     foreach (DataRow row in main_tabla.Rows)
                     {
                         if (!RowFlag[b])
                         {
-                            myRow001[b].Style = clientesDataGrid.RowStyle;
+                            //validarRow(myRow001[b]);
                             myRow001[b].Visibility = Visibility.Collapsed;
                         }
                         b++;
+                        if (myRow001[b] == null)
+                        {
+                            break;
+                        }
                     }
                 }
                 else
                 {
                     for (b = 0; b < i; b++)
                     {
+                        RowFlag[i] = true;
+                        //validarRow(myRow001[b]);                        
+                        if (myRow001[b] == null)
+                        {
+                            break;
+                        }
                         myRow001[b].Visibility = Visibility.Visible;
                     }
                 }
@@ -212,21 +232,44 @@ namespace Gimnasio
         {
             i = clientesDataGrid.Items.Count;
             myRow001[e.Row.GetIndex()] = e.Row;
+            validarRow(e.Row);
         }
 
-        public static DataTable MyRecordListToDataTable(List<Gimnasio.clientes> list)
+        private void validarRow(DataGridRow e)
+        {
+            if (textBox1.Text != "")
+            {
+                //Console.WriteLine(e.GetIndex().ToString());
+                if (RowFlag[e.GetIndex()] == true)
+                {
+                    e.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    e.Visibility = Visibility.Collapsed;
+                }
+            }
+            else
+            {
+                e.Visibility = Visibility.Visible;
+            }
+        }
+
+        public DataTable MyRecordListToDataTable(List<Gimnasio.clientes> list)
         {
             DataTable dt = new DataTable("TablaEjemplo");
-            dt.Columns.Add("apellido", list[0].apellido.GetType());
-            dt.Columns.Add("nombre", list[0].nombre.GetType());
-            dt.Columns.Add("nro_cedula", list[0].nro_cedula.GetType());
-            dt.Columns.Add("direccion", list[0].direccion.GetType());
-            dt.Columns.Add("telefono", list[0].telefono.GetType());
-            dt.Columns.Add("email", list[0].email.GetType());
-            dt.Columns.Add("fecha_nacimiento", list[0].fecha_nacimiento.GetType());
-            dt.Columns.Add("fecha_ingreso", list[0].fecha_ingreso.GetType());
-            dt.Columns.Add("altura", list[0].altura.GetType());
-            dt.Columns.Add("peso", list[0].peso.GetType());
+
+            //dt.Columns.Add("apellido", list[0].apellido.GetType());
+            dt.Columns.Add("apellido", "string".GetType());
+            dt.Columns.Add("nombre", "string".GetType());
+            dt.Columns.Add("nro_cedula", "string".GetType());
+            dt.Columns.Add("direccion", "string".GetType());
+            dt.Columns.Add("telefono", "string".GetType());
+            dt.Columns.Add("email", "string".GetType());
+            dt.Columns.Add("fecha_nacimiento", "string".GetType());
+            dt.Columns.Add("fecha_ingreso", "string".GetType());
+            dt.Columns.Add("altura", "string".GetType());
+            dt.Columns.Add("peso", "string".GetType());
 
             foreach (Gimnasio.clientes item in list)
             {
@@ -366,6 +409,7 @@ namespace Gimnasio
                 }
 
             }
+            Console.WriteLine("FotoToggled.");
             button2.IsEnabled = true;
 
         }
