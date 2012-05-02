@@ -13,6 +13,7 @@ namespace Gimnasio
         string _General;
         int _TiempoApertura;
         bool _Keypad_usb;
+        string _MainDeviceID;
 
         public Configuration()
         {
@@ -20,6 +21,7 @@ namespace Gimnasio
             _General = "";
             _TiempoApertura = -1;
             _Keypad_usb = false;
+            _MainDeviceID = "";
         }
         public static void Serialize(string file, Configuration c)
         {
@@ -59,6 +61,11 @@ namespace Gimnasio
         {
             get { return _Keypad_usb; }
             set { _Keypad_usb = value; }
+        }
+        public string MainDeviceID
+        {
+            get { return _MainDeviceID; }
+            set { _MainDeviceID = value; }
         }
 
     }

@@ -236,7 +236,8 @@ namespace Gimnasio
             //textBox_Cedula.Background = System.Windows.Media.Brushes.Transparent;
             //label2_ResultadoIngreso.Background = System.Windows.Media.Brushes.Transparent;
             image1.Source = null;
-            if(this.IsActive){
+            if (this.IsActive)
+            {
                 textBox_Cedula.Focus();
             }
             _Mensaje_activo = false;
@@ -284,7 +285,7 @@ namespace Gimnasio
 
             // Se controla que el cliente que se haya traido sea un cliente valido. 
             if (clientesVar.ToList().Count == 0)
-            {                
+            {
                 //MessageBox.Show((Window)this, "No existe cliente con ese numero de cedula.");
                 //Console.WriteLine("No existe cliente con ese numero de cedula.");
 
@@ -326,17 +327,18 @@ namespace Gimnasio
                             if (clientesVar.ToArray()[0].hasfoto == true)
                             {
                                 // Recuperamos la foto del cliente para mostrar
-                                string pathfoto = String.Empty;                            
+                                string pathfoto = String.Empty;
                                 pathfoto = System.Windows.Forms.Application.ExecutablePath;
                                 pathfoto = System.IO.Path.GetDirectoryName(pathfoto);
 
                                 // Create source (BitmapImage.UriSource must be in a BeginInit/EndInit block)
-                                BitmapImage myBitmapImage = new BitmapImage();                            
+                                BitmapImage myBitmapImage = new BitmapImage();
                                 myBitmapImage.BeginInit();
                                 myBitmapImage.UriSource = new Uri(pathfoto + @"\FotosClientes\" + clientesVar.ToArray()[0].idCliente.ToString() + ".jpg");
                                 myBitmapImage.EndInit();
 
                                 image1.Source = myBitmapImage;
+                                myBitmapImage.UriSource = null;
                             }
 
                             //  DispatcherTimer setup

@@ -208,6 +208,9 @@ namespace RawStuff
 
         #region Variables and event handling
 
+        Gimnasio.Configuration c2;
+        int device_nro = 0;
+
         /// <summary>
         /// List of keyboard devices
         /// Key: the device handle
@@ -392,8 +395,12 @@ namespace RawStuff
                             //NumberOfDevices count
                             if (!deviceList.Contains(rid.hDevice) && IsKeyboardDevice)
                             {
+                                //this.c2 = Gimnasio.Configuration.Deserialize("config.xml");
+                                //Console.WriteLine("Handle(" + NumberOfDevices.ToString() + "): " + dInfo.deviceHandle.ToString());
+
                                 NumberOfDevices++;
                                 deviceList.Add(rid.hDevice, dInfo);
+
                             }
                         }
                         Marshal.FreeHGlobal(pData);
@@ -401,6 +408,34 @@ namespace RawStuff
                 }
 
                 Marshal.FreeHGlobal(pRawInputDeviceList);
+
+                //Console.WriteLine("Handles de los Dispositivos de Entrada: ");
+                //foreach (DictionaryEntry de in deviceList)
+                //{
+                //    Console.WriteLine(de.Key.ToString());
+                //    if (device_nro == 0)
+                //    {
+                //        this.c2.DeviceID0 = de.Key.ToString();
+                //        Gimnasio.Configuration.Serialize("config.xml", this.c2);
+                //        device_nro++;
+                //    }
+                //    else if (device_nro == 1)
+                //    {
+                //        this.c2.DeviceID1 = de.Key.ToString();
+                //        Gimnasio.Configuration.Serialize("config.xml", this.c2);
+                //    }
+                //    else if (device_nro == 2)
+                //    {
+                //        this.c2.DeviceID2 = de.Key.ToString();
+                //        Gimnasio.Configuration.Serialize("config.xml", this.c2);
+                //    }
+                //    else if (device_nro == 3)
+                //    {
+                //        this.c2.DeviceID3 = de.Key.ToString();
+                //        Gimnasio.Configuration.Serialize("config.xml", this.c2);
+                //    }
+                //}
+
                 return NumberOfDevices;
             }
             else
@@ -552,10 +587,10 @@ namespace RawStuff
             switch (message.Msg)
             {
                 case WM_INPUT:
-                {
-                    ProcessInputCommand(message);
-                }
-                break;
+                    {
+                        ProcessInputCommand(message);
+                    }
+                    break;
             }
         }
 
@@ -575,10 +610,10 @@ namespace RawStuff
             string deviceType;
             switch (device)
             {
-                case RIM_TYPEMOUSE:    deviceType = "MOUSE";    break;
+                case RIM_TYPEMOUSE: deviceType = "MOUSE"; break;
                 case RIM_TYPEKEYBOARD: deviceType = "KEYBOARD"; break;
-                case RIM_TYPEHID:      deviceType = "HID";      break;
-                default:               deviceType = "UNKNOWN";  break;
+                case RIM_TYPEHID: deviceType = "HID"; break;
+                default: deviceType = "UNKNOWN"; break;
             }
             return deviceType;
         }

@@ -33,7 +33,6 @@
           <Property Name="altura" Type="int" />
           <Property Name="peso" Type="int" />
           <Property Name="nro_cedula" Type="nvarchar" MaxLength="100" />
-          <Property Name="foto" Type="nvarchar" MaxLength="255" />
           <Property Name="hasfoto" Type="bit" />
         </EntityType>
         <EntityType Name="Cuotas">
