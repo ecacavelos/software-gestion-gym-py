@@ -98,7 +98,9 @@ namespace Gimnasio
 
             clientes obj = e.Row.Item as clientes;
             if (obj.idCliente == 0)
-            {// new record 
+            {   // new record 
+                //Console.WriteLine("Vamos a crear un nuevo registro.");
+
                 TimeSpan time = (DateTime.UtcNow - new DateTime(1970, 1, 1));
                 int timestamp = (int)time.TotalSeconds;
                 int c = clientesDataGrid.Items.Count;
@@ -110,7 +112,7 @@ namespace Gimnasio
 
             }
 
-            Console.WriteLine("RowEditEnding.");
+            //Console.WriteLine("RowEditEnding.");
             button2.IsEnabled = true;
 
         }
@@ -409,7 +411,7 @@ namespace Gimnasio
                 }
 
             }
-            Console.WriteLine("FotoToggled.");
+            //Console.WriteLine("FotoToggled.");
             button2.IsEnabled = true;
 
         }

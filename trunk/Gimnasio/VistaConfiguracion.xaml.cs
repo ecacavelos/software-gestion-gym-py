@@ -25,7 +25,7 @@ namespace Gimnasio
         {
             InitializeComponent();
             this.c2 = Configuration.Deserialize("config.xml");
-            
+            this.label4.Content = this.c2.MainDeviceID;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -36,14 +36,14 @@ namespace Gimnasio
             this.label_SegundosApertura.Content = c2.TiempoApertura.ToString();
         }
 
-     
-        
+
+
 
         private void slider_TiempoAperturaPorton_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (this.IsInitialized == true) 
+            if (this.IsInitialized == true)
             {
-                if (this.c2.TiempoApertura !=(int)this.slider_TiempoAperturaPorton.Value)
+                if (this.c2.TiempoApertura != (int)this.slider_TiempoAperturaPorton.Value)
                 {
                     this.button_AceptarConfiguracion.IsEnabled = true;
                 }
@@ -65,9 +65,15 @@ namespace Gimnasio
         //escribir en el archivo de configuracion.
         private void button_AceptarConfiguracion_Click(object sender, RoutedEventArgs e)
         {
-            this.c2.TiempoApertura = (int)this.slider_TiempoAperturaPorton.Value;
-            Configuration.Serialize("config.xml", this.c2);
-            this.button_AceptarConfiguracion.IsEnabled = false;
+            System.Windows.Forms.DialogResult result;
+            result = System.Windows.Forms.MessageBox.Show("Ha seleccionado " + this.c2.MainDeviceID + " como el teclado principal.", "Confirmar Configuración", System.Windows.Forms.MessageBoxButtons.OK);
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                this.c2.TiempoApertura = (int)this.slider_TiempoAperturaPorton.Value;
+                this.c2.MainDeviceID = this.label4.Content.ToString();
+                Configuration.Serialize("config.xml", this.c2);
+                this.button_AceptarConfiguracion.IsEnabled = false;
+            }
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -85,6 +91,12 @@ namespace Gimnasio
                 e.Handled = true;
             }
         }
+
+        private void textBox1_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
         #endregion
 
     }

@@ -215,6 +215,21 @@ namespace Gimnasio
             //Console.WriteLine(e.Keyboard.vKey);
             //Console.WriteLine(token);
 
+            if (VistaConfiguracion.IsOpen)
+            {
+                VistaConfiguracion ventana000 = Application.Current.Windows.Cast<Window>().FirstOrDefault(window => window is VistaConfiguracion) as VistaConfiguracion;
+                System.Windows.Controls.Label label_ID = ventana000.label4;
+                System.Windows.Controls.TextBox textbox_ID = ventana000.textBox1;
+                System.Windows.Controls.Button boton_aplicar = ventana000.button_AceptarConfiguracion;
+                if (textbox_ID.IsKeyboardFocused)
+                {
+                    textbox_ID.Text = e.Keyboard.vKey;
+                    label_ID.Content = e.Keyboard.deviceHandle.ToString();
+                    boton_aplicar.IsEnabled = true;
+                }
+
+            }
+
             if (e.Keyboard.vKey == "NumPad0")
             {
                 teclaObtenida = 0;
@@ -255,8 +270,14 @@ namespace Gimnasio
             {
                 teclaObtenida = 9;
             }
+            if (e.Keyboard.vKey == "NumLock")
+            {
+                teclaObtenida = -1;
+            }
 
-            if (token.Equals("Teclado PS/2 estándar"))
+            this.c2 = Configuration.Deserialize("config.xml");
+            //Console.WriteLine("Main ID: " + this.c2.MainDeviceID + ", Pressed ID: " + e.Keyboard.deviceHandle.ToString());
+            if (e.Keyboard.deviceHandle.ToString().Equals(this.c2.MainDeviceID))
             {
                 //Console.WriteLine("Teclado Principal.");
                 this.c2.Keypad_usb = false;
