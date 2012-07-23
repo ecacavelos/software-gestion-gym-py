@@ -36,11 +36,32 @@ namespace Gimnasio
         int NumberOfKeyboards;
         Message message = new Message();
 
+        bool xmlinvalido = false;
+
         public VentanaPrincipal()
         {
             //InitializeComponent();
-            Activate();
-            this.c2 = Configuration.Deserialize("config.xml");
+            //Activate();
+            try
+            {
+                this.c2 = Configuration.Deserialize("config.xml");
+            }
+            catch (System.IO.FileNotFoundException ex)
+            {
+                Console.WriteLine(ex);
+                System.Windows.MessageBox.Show("No se encontró el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.");
+                xmlinvalido = true;
+                /*this.c2 = new Gimnasio.Configuration();
+                this.c2.TiempoApertura = 5;
+                this.c2.MainDeviceID = "0000";
+                Configuration.Serialize("config.xml", this.c2);*/
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                Console.WriteLine(ex);
+                System.Windows.MessageBox.Show("Existe un error con el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.");
+                xmlinvalido = true;
+            }
         }
 
         private System.Data.Objects.ObjectQuery<clientes> GetclientesQuery(Database1Entities database1Entities)
@@ -131,6 +152,11 @@ namespace Gimnasio
             }
             else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
             {
+                if (xmlinvalido == true)
+                {
+                    System.IO.File.Delete("config.xml");
+                    xmlinvalido = false;
+                }
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
                 this.winVistaConfiguracion = (Window)assembly.CreateInstance("Gimnasio.VistaConfiguracion");
@@ -352,6 +378,17 @@ namespace Gimnasio
             StartWndProcHandler();
 
             base.OnSourceInitialized(e);
+
+            if (xmlinvalido == true)
+            {
+                System.IO.File.Delete("config.xml");
+                xmlinvalido = false;
+
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winVistaConfiguracion = (Window)assembly.CreateInstance("Gimnasio.VistaConfiguracion");
+                this.winVistaConfiguracion.Show();
+            }
         }
 
         void StartWndProcHandler()
