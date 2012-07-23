@@ -24,8 +24,21 @@ namespace Gimnasio
         public VistaConfiguracion()
         {
             InitializeComponent();
-            this.c2 = Configuration.Deserialize("config.xml");
+            try
+            {
+                this.c2 = Configuration.Deserialize("config.xml");
+            }
+            catch (System.IO.FileNotFoundException ex)
+            {
+                Console.WriteLine(ex);
+                //System.Windows.MessageBox.Show("Se restablecieron las opciones a sus valores por defecto.\nPor favor vuelva a colocar los valores deseados.");
+                this.c2 = new Gimnasio.Configuration();
+                this.c2.TiempoApertura = 5;
+                this.c2.MainDeviceID = "0000";
+                Configuration.Serialize("config.xml", this.c2);
+            }
             this.label4.Content = this.c2.MainDeviceID;
+            Activate();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -66,7 +79,7 @@ namespace Gimnasio
         private void button_AceptarConfiguracion_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.DialogResult result;
-            result = System.Windows.Forms.MessageBox.Show("Ha seleccionado " + this.c2.MainDeviceID + " como el teclado principal.", "Confirmar Configuración", System.Windows.Forms.MessageBoxButtons.OK);
+            result = System.Windows.Forms.MessageBox.Show("Ha seleccionado " + this.label4.Content.ToString() + " como el teclado principal.", "Confirmar Configuración", System.Windows.Forms.MessageBoxButtons.OK);
             if (result == System.Windows.Forms.DialogResult.OK)
             {
                 this.c2.TiempoApertura = (int)this.slider_TiempoAperturaPorton.Value;
