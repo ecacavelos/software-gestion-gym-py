@@ -27,6 +27,7 @@ namespace Gimnasio
             try
             {
                 this.c2 = Configuration.Deserialize("config.xml");
+                this.label4.Content = this.c2.MainDeviceID;
             }
             catch (System.IO.FileNotFoundException ex)
             {
@@ -34,10 +35,9 @@ namespace Gimnasio
                 //System.Windows.MessageBox.Show("Se restablecieron las opciones a sus valores por defecto.\nPor favor vuelva a colocar los valores deseados.");
                 this.c2 = new Gimnasio.Configuration();
                 this.c2.TiempoApertura = 5;
-                this.c2.MainDeviceID = "0000";
+                this.c2.MainDeviceID = "";
                 Configuration.Serialize("config.xml", this.c2);
-            }
-            this.label4.Content = this.c2.MainDeviceID;
+            }            
             Activate();
         }
 

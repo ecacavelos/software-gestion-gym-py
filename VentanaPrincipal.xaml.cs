@@ -48,17 +48,13 @@ namespace Gimnasio
             }
             catch (System.IO.FileNotFoundException ex)
             {
-                Console.WriteLine(ex);
+                //Console.WriteLine(ex);
                 System.Windows.MessageBox.Show("No se encontró el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.");
                 xmlinvalido = true;
-                /*this.c2 = new Gimnasio.Configuration();
-                this.c2.TiempoApertura = 5;
-                this.c2.MainDeviceID = "0000";
-                Configuration.Serialize("config.xml", this.c2);*/
             }
             catch (System.InvalidOperationException ex)
             {
-                Console.WriteLine(ex);
+                //Console.WriteLine(ex);
                 System.Windows.MessageBox.Show("Existe un error con el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.");
                 xmlinvalido = true;
             }

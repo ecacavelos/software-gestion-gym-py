@@ -81,6 +81,7 @@
     <Compile Include="AboutGymAdmin.Designer.cs">
       <DependentUpon>AboutGymAdmin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="ConsultarPagosCliente.xaml.cs">
       <DependentUpon>ConsultarPagosCliente.xaml</DependentUpon>

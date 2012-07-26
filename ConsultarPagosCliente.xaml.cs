@@ -11,13 +11,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using System.Globalization;
+
 namespace Gimnasio
 {
     /// <summary>
     /// Interaction logic for ConsultarPagosCliente.xaml
     /// </summary>
     public partial class ConsultarPagosCliente : Window
-    {
+    {        
+
+        public ResourceDictionary Resources { get; set; }
         Configuration c2;
 
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
@@ -25,6 +29,7 @@ namespace Gimnasio
 
         private System.Data.Objects.DataClasses.EntityCollection<Pagos> pagosCliente;
 
+        DataGridRow[] PagosRow001 = new DataGridRow[99999];
 
         public ConsultarPagosCliente()
         {
@@ -115,6 +120,23 @@ namespace Gimnasio
             }
         }
 
+        private void PrintFactura(object sender, RoutedEventArgs e)
+        {
+            Pagos pago = ((FrameworkElement)sender).DataContext as Pagos;
+            Facturacion.DatosFactura(pago);
+        }
+
+        private void dataGridPagos_LoadingRow(object sender, DataGridRowEventArgs e)
+        {            
+            //if (e.Row.GetIndex() == this.pagosCliente.Count)
+            /*if (e.Row.GetIndex() == 0)
+            {
+                //System.Console.WriteLine("Ouch " + this.dataGridPagos.Columns[1].GetCellContent(e.Row));
+                e.Row.Background = Brushes.Beige;                                
+                System.Console.WriteLine("xxx " + this.buttonColumn.CellTemplate.LoadContent());
+            }*/
+        }
+
         #region "Funciones relativas al Keypad USB"
         // Funciones para evitar que el keypad USB afecte los controles de esta ventana.
 
@@ -130,4 +152,28 @@ namespace Gimnasio
         #endregion
 
     }
+
+    public class VisibilityConverter : IValueConverter
+    {
+        public object Convert(
+            object value,
+            Type targetType,
+            object parameter,
+            CultureInfo culture)
+        {
+            bool visibility = (bool)value;
+            return visibility ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(
+            object value,
+            Type targetType,
+            object parameter,
+            CultureInfo culture)
+        {
+            Visibility visibility = (Visibility)value;
+            return (visibility == Visibility.Visible);
+        }
+    }
+
 }

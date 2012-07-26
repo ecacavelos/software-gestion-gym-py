@@ -20,6 +20,7 @@ using System.Runtime.Serialization;
 
 [assembly: EdmRelationshipAttribute("Database1Model", "FK_cliente_pago", "clientes", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.clientes), "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Pagos), true)]
 [assembly: EdmRelationshipAttribute("Database1Model", "fk_tipoCuota_pago", "Cuotas", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.Cuotas), "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Pagos), true)]
+[assembly: EdmRelationshipAttribute("Database1Model", "fk_pago_factura", "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Gimnasio.Pagos), "Facturas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Facturas), true)]
 
 #endregion
 
@@ -118,6 +119,22 @@ namespace Gimnasio
             }
         }
         private ObjectSet<Pagos> _Pagos;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Facturas> Facturas
+        {
+            get
+            {
+                if ((_Facturas == null))
+                {
+                    _Facturas = base.CreateObjectSet<Facturas>("Facturas");
+                }
+                return _Facturas;
+            }
+        }
+        private ObjectSet<Facturas> _Facturas;
 
         #endregion
         #region AddTo Methods
@@ -144,6 +161,14 @@ namespace Gimnasio
         public void AddToPagos(Pagos pagos)
         {
             base.AddObject("Pagos", pagos);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Facturas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFacturas(Facturas facturas)
+        {
+            base.AddObject("Facturas", facturas);
         }
 
         #endregion
@@ -629,6 +654,200 @@ namespace Gimnasio
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Database1Model", Name="Facturas")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Facturas : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Facturas object.
+        /// </summary>
+        /// <param name="idFactura">Initial value of the idFactura property.</param>
+        /// <param name="fk_pago">Initial value of the fk_pago property.</param>
+        public static Facturas CreateFacturas(global::System.Int32 idFactura, global::System.Int64 fk_pago)
+        {
+            Facturas facturas = new Facturas();
+            facturas.idFactura = idFactura;
+            facturas.fk_pago = fk_pago;
+            return facturas;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 idFactura
+        {
+            get
+            {
+                return _idFactura;
+            }
+            set
+            {
+                if (_idFactura != value)
+                {
+                    OnidFacturaChanging(value);
+                    ReportPropertyChanging("idFactura");
+                    _idFactura = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("idFactura");
+                    OnidFacturaChanged();
+                }
+            }
+        }
+        private global::System.Int32 _idFactura;
+        partial void OnidFacturaChanging(global::System.Int32 value);
+        partial void OnidFacturaChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Monto
+        {
+            get
+            {
+                return _Monto;
+            }
+            set
+            {
+                OnMontoChanging(value);
+                ReportPropertyChanging("Monto");
+                _Monto = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Monto");
+                OnMontoChanged();
+            }
+        }
+        private global::System.String _Monto;
+        partial void OnMontoChanging(global::System.String value);
+        partial void OnMontoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 fk_pago
+        {
+            get
+            {
+                return _fk_pago;
+            }
+            set
+            {
+                Onfk_pagoChanging(value);
+                ReportPropertyChanging("fk_pago");
+                _fk_pago = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("fk_pago");
+                Onfk_pagoChanged();
+            }
+        }
+        private global::System.Int64 _fk_pago;
+        partial void Onfk_pagoChanging(global::System.Int64 value);
+        partial void Onfk_pagoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Nombre_Pagador
+        {
+            get
+            {
+                return _Nombre_Pagador;
+            }
+            set
+            {
+                OnNombre_PagadorChanging(value);
+                ReportPropertyChanging("Nombre_Pagador");
+                _Nombre_Pagador = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Nombre_Pagador");
+                OnNombre_PagadorChanged();
+            }
+        }
+        private global::System.String _Nombre_Pagador;
+        partial void OnNombre_PagadorChanging(global::System.String value);
+        partial void OnNombre_PagadorChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> Fecha_Emision
+        {
+            get
+            {
+                return _Fecha_Emision;
+            }
+            set
+            {
+                OnFecha_EmisionChanging(value);
+                ReportPropertyChanging("Fecha_Emision");
+                _Fecha_Emision = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Fecha_Emision");
+                OnFecha_EmisionChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _Fecha_Emision;
+        partial void OnFecha_EmisionChanging(Nullable<global::System.DateTime> value);
+        partial void OnFecha_EmisionChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Database1Model", "fk_pago_factura", "Pagos")]
+        public Pagos Pagos
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Pagos>("Database1Model.fk_pago_factura", "Pagos").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Pagos>("Database1Model.fk_pago_factura", "Pagos").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Pagos> PagosReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Pagos>("Database1Model.fk_pago_factura", "Pagos");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Pagos>("Database1Model.fk_pago_factura", "Pagos", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="Database1Model", Name="Pagos")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -849,6 +1068,28 @@ namespace Gimnasio
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Cuotas>("Database1Model.fk_tipoCuota_pago", "Cuotas", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Database1Model", "fk_pago_factura", "Facturas")]
+        public EntityCollection<Facturas> Facturas
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Facturas>("Database1Model.fk_pago_factura", "Facturas");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Facturas>("Database1Model.fk_pago_factura", "Facturas", value);
                 }
             }
         }
