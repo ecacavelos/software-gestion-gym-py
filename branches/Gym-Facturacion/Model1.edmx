@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Database1Model.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="clientes" EntityType="Database1Model.Store.clientes" store:Type="Tables" />
+          <EntitySet Name="Cuotas" EntityType="Database1Model.Store.Cuotas" store:Type="Tables" />
+          <EntitySet Name="Facturas" EntityType="Database1Model.Store.Facturas" store:Type="Tables" />
+          <EntitySet Name="Pagos" EntityType="Database1Model.Store.Pagos" store:Type="Tables" />
+          <AssociationSet Name="FK_cliente_pago" Association="Database1Model.Store.FK_cliente_pago">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pago_factura" Association="Database1Model.Store.fk_pago_factura">
+            <End Role="Pagos" EntitySet="Pagos" />
+            <End Role="Facturas" EntitySet="Facturas" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tipoCuota_pago" Association="Database1Model.Store.fk_tipoCuota_pago">
+            <End Role="Cuotas" EntitySet="Cuotas" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="clientes">
+          <Key>
+            <PropertyRef Name="idCliente" />
+          </Key>
+          <Property Name="idCliente" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="100" />
+          <Property Name="apellido" Type="nvarchar" MaxLength="100" />
+          <Property Name="direccion" Type="nvarchar" MaxLength="100" />
+          <Property Name="telefono" Type="nvarchar" MaxLength="100" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="fecha_nacimiento" Type="datetime" />
+          <Property Name="fecha_ingreso" Type="datetime" />
+          <Property Name="altura" Type="int" />
+          <Property Name="peso" Type="int" />
+          <Property Name="nro_cedula" Type="nvarchar" MaxLength="100" />
+          <Property Name="hasfoto" Type="bit" />
+        </EntityType>
+        <EntityType Name="Cuotas">
+          <Key>
+            <PropertyRef Name="idCuota" />
+          </Key>
+          <Property Name="idCuota" Type="int" Nullable="false" />
+          <Property Name="monto" Type="nvarchar" MaxLength="100" />
+          <Property Name="diasHabilitados" Type="int" />
+        </EntityType>
+        <EntityType Name="Facturas">
+          <Key>
+            <PropertyRef Name="idFactura" />
+          </Key>
+          <Property Name="idFactura" Type="int" Nullable="false" />
+          <Property Name="Monto" Type="nvarchar" MaxLength="100" />
+          <Property Name="fk_pago" Type="bigint" Nullable="false" />
+          <Property Name="Nombre_Pagador" Type="nvarchar" MaxLength="100" />
+          <Property Name="Fecha_Emision" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Pagos">
+          <Key>
+            <PropertyRef Name="idPago" />
+          </Key>
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="idPago" Type="bigint" Nullable="false" />
+          <Property Name="fk_cliente" Type="int" />
+          <Property Name="fk_tipoCuota" Type="int" />
+          <Property Name="fecha_vencimiento" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_cliente_pago">
+          <End Role="clientes" Type="Database1Model.Store.clientes" Multiplicity="0..1" />
+          <End Role="Pagos" Type="Database1Model.Store.Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="fk_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pago_factura">
+          <End Role="Pagos" Type="Database1Model.Store.Pagos" Multiplicity="1" />
+          <End Role="Facturas" Type="Database1Model.Store.Facturas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pagos">
+              <PropertyRef Name="idPago" />
+            </Principal>
+            <Dependent Role="Facturas">
+              <PropertyRef Name="fk_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tipoCuota_pago">
+          <End Role="Cuotas" Type="Database1Model.Store.Cuotas" Multiplicity="0..1" />
+          <End Role="Pagos" Type="Database1Model.Store.Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuotas">
+              <PropertyRef Name="idCuota" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="fk_tipoCuota" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="clientes" EntityType="Database1Model.clientes" />
+          <EntitySet Name="Cuotas" EntityType="Database1Model.Cuotas" />
+          <EntitySet Name="Pagos" EntityType="Database1Model.Pagos" />
+          <AssociationSet Name="FK_cliente_pago" Association="Database1Model.FK_cliente_pago">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tipoCuota_pago" Association="Database1Model.fk_tipoCuota_pago">
+            <End Role="Cuotas" EntitySet="Cuotas" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <EntitySet Name="Facturas" EntityType="Database1Model.Facturas" />
+          <AssociationSet Name="fk_pago_factura" Association="Database1Model.fk_pago_factura">
+            <End Role="Pagos" EntitySet="Pagos" />
+            <End Role="Facturas" EntitySet="Facturas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="clientes">
+          <Key>
+            <PropertyRef Name="idCliente" />
+          </Key>
+          <Property Type="Int32" Name="idCliente" Nullable="false" />
+          <Property Type="String" Name="nombre" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="apellido" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="direccion" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="telefono" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="email" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="fecha_nacimiento" />
+          <Property Type="DateTime" Name="fecha_ingreso" />
+          <Property Type="Int32" Name="altura" />
+          <Property Type="Int32" Name="peso" />
+          <Property Type="String" Name="nro_cedula" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pagos" Relationship="Database1Model.FK_cliente_pago" FromRole="clientes" ToRole="Pagos" />
+          <Property Type="Boolean" Name="hasfoto" />
+        </EntityType>
+        <EntityType Name="Cuotas">
+          <Key>
+            <PropertyRef Name="idCuota" />
+          </Key>
+          <Property Type="Int32" Name="idCuota" Nullable="false" />
+          <Property Type="String" Name="monto" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="diasHabilitados" />
+          <NavigationProperty Name="Pagos" Relationship="Database1Model.fk_tipoCuota_pago" FromRole="Cuotas" ToRole="Pagos" />
+        </EntityType>
+        <EntityType Name="Pagos">
+          <Key>
+            <PropertyRef Name="idPago" />
+          </Key>
+          <Property Type="DateTime" Name="fecha" />
+          <Property Type="Int64" Name="idPago" Nullable="false" />
+          <Property Type="Int32" Name="fk_cliente" />
+          <Property Type="Int32" Name="fk_tipoCuota" />
+          <Property Type="DateTime" Name="fecha_vencimiento" />
+          <NavigationProperty Name="clientes" Relationship="Database1Model.FK_cliente_pago" FromRole="Pagos" ToRole="clientes" />
+          <NavigationProperty Name="Cuotas" Relationship="Database1Model.fk_tipoCuota_pago" FromRole="Pagos" ToRole="Cuotas" />
+          <NavigationProperty Name="Facturas" Relationship="Database1Model.fk_pago_factura" FromRole="Pagos" ToRole="Facturas" />
+        </EntityType>
+        <Association Name="FK_cliente_pago">
+          <End Type="Database1Model.clientes" Role="clientes" Multiplicity="0..1" />
+          <End Type="Database1Model.Pagos" Role="Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="fk_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tipoCuota_pago">
+          <End Type="Database1Model.Cuotas" Role="Cuotas" Multiplicity="0..1" />
+          <End Type="Database1Model.Pagos" Role="Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuotas">
+              <PropertyRef Name="idCuota" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="fk_tipoCuota" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Facturas">
+          <Key>
+            <PropertyRef Name="idFactura" />
+          </Key>
+          <Property Type="Int32" Name="idFactura" Nullable="false" />
+          <Property Type="String" Name="Monto" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="fk_pago" Nullable="false" />
+          <NavigationProperty Name="Pagos" Relationship="Database1Model.fk_pago_factura" FromRole="Facturas" ToRole="Pagos" />
+          <Property Type="String" Name="Nombre_Pagador" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Fecha_Emision" />
+        </EntityType>
+        <Association Name="fk_pago_factura">
+          <End Type="Database1Model.Pagos" Role="Pagos" Multiplicity="1" />
+          <End Type="Database1Model.Facturas" Role="Facturas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pagos">
+              <PropertyRef Name="idPago" />
+            </Principal>
+            <Dependent Role="Facturas">
+              <PropertyRef Name="fk_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
+          <EntitySetMapping Name="clientes">
+            <EntityTypeMapping TypeName="Database1Model.clientes">
+              <MappingFragment StoreEntitySet="clientes">
+                <ScalarProperty Name="hasfoto" ColumnName="hasfoto" />
+                <ScalarProperty Name="nro_cedula" ColumnName="nro_cedula" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+                <ScalarProperty Name="altura" ColumnName="altura" />
+                <ScalarProperty Name="fecha_ingreso" ColumnName="fecha_ingreso" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cuotas">
+            <EntityTypeMapping TypeName="Database1Model.Cuotas">
+              <MappingFragment StoreEntitySet="Cuotas">
+                <ScalarProperty Name="diasHabilitados" ColumnName="diasHabilitados" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+                <ScalarProperty Name="idCuota" ColumnName="idCuota" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pagos">
+            <EntityTypeMapping TypeName="Database1Model.Pagos">
+              <MappingFragment StoreEntitySet="Pagos">
+                <ScalarProperty Name="fecha_vencimiento" ColumnName="fecha_vencimiento" />
+                <ScalarProperty Name="fk_tipoCuota" ColumnName="fk_tipoCuota" />
+                <ScalarProperty Name="fk_cliente" ColumnName="fk_cliente" />
+                <ScalarProperty Name="idPago" ColumnName="idPago" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facturas">
+            <EntityTypeMapping TypeName="Database1Model.Facturas">
+              <MappingFragment StoreEntitySet="Facturas">
+                <ScalarProperty Name="Fecha_Emision" ColumnName="Fecha_Emision" />
+                <ScalarProperty Name="Nombre_Pagador" ColumnName="Nombre_Pagador" />
+                <ScalarProperty Name="fk_pago" ColumnName="fk_pago" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="idFactura" ColumnName="idFactura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1" >
+        <EntityTypeShape EntityType="Database1Model.clientes" Width="1.5" PointX="0.5" PointY="0.5" Height="3.5186979166666656" />
+        <EntityTypeShape EntityType="Database1Model.Cuotas" Width="1.5" PointX="4.875" PointY="3" Height="1.787985026041671" />
+        <EntityTypeShape EntityType="Database1Model.Pagos" Width="1.5" PointX="2.75" PointY="0.5" Height="2.5571907552083326" />
+        <AssociationConnector Association="Database1Model.FK_cliente_pago" >
+          <ConnectorPoint PointX="2" PointY="1.7785953776041663" />
+          <ConnectorPoint PointX="2.75" PointY="1.7785953776041663" />
+        </AssociationConnector>
+        <AssociationConnector Association="Database1Model.fk_tipoCuota_pago" >
+          <ConnectorPoint PointX="4.875" PointY="3.9225883906250019" />
+          <ConnectorPoint PointX="3.5" PointY="3.9225883906250019" />
+          <ConnectorPoint PointX="3.5" PointY="3.0571907552083326" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Database1Model.Facturas" Width="1.5" PointX="4.875" PointY="0.5" Height="1.787985026041667" />
+        <AssociationConnector Association="Database1Model.fk_pago_factura" >
+          <ConnectorPoint PointX="4.25" PointY="1.3939925130208335" />
+          <ConnectorPoint PointX="4.875" PointY="1.3939925130208335" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

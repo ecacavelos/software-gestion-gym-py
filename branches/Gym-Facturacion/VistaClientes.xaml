@@ -1,0 +1,60 @@
+﻿<Window x:Class="Gimnasio.VistaClientes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Vista de Clientes" Height="480" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" MinWidth="802" MinHeight="480" HorizontalContentAlignment="Stretch" Closing="Window_Closing" Icon="/Gimnasio;component/vistaClientesIcon.png" Unloaded="Window_Unloaded"  Deactivated="Window_Deactivated" Background="#FFBECBEB">
+    <Window.Resources>
+        <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance my:clientes, CreateList=True}" />
+    </Window.Resources>
+    <Grid DataContext="{StaticResource clientesViewSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="clientesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" Margin="12,12,12,78" RowEditEnding="clientesDataGrid_RowEditEnding" UnloadingRow="clientesDataGrid_UnloadingRow" LoadingRow="clientesDataGrid_LoadingRow" PreviewKeyDown="clientesDataGrid_PreviewKeyDown" HorizontalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" VerticalGridLinesBrush="Gainsboro" CanUserSortColumns="False">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}" x:Key="MyCellStyle">
+                    <Setter Property="Background" Value="SeaGreen"/>
+                </Style>
+                <Style TargetType="{x:Type DataGridCell}" x:Key="MyCellStyle2">
+                    <Setter Property="Background" Value="Green"/>
+                </Style>
+                <Style x:Key="DataGridCheckBoxStyle" TargetType="CheckBox">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Margin" Value="8,0,3,0" />
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="apellidoColumn" Binding="{Binding Path=apellido}" Header="Apellido" />
+                <DataGridTextColumn x:Name="nombreColumn" Binding="{Binding Path=nombre}" Header="Nombre" /><DataGridTextColumn x:Name="nro_cedulaColumn" Binding="{Binding Path=nro_cedula}" Header="Nro. de cedula" />
+                <DataGridTextColumn x:Name="direccionColumn" Binding="{Binding Path=direccion}" Header="Dirección"  />
+                <DataGridTextColumn x:Name="telefonoColumn" Binding="{Binding Path=telefono}" Header="Teléfono"  />
+                <DataGridTextColumn x:Name="emailColumn" Binding="{Binding Path=email}" Header="email" />
+                <DataGridTemplateColumn x:Name="fecha_nacimientoColumn" Header="Fecha de nacimiento" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path=fecha_nacimiento, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="fecha_ingresoColumn" Header="Fecha de ingreso" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path=fecha_ingreso, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="alturaColumn" Binding="{Binding Path=altura}" Header="Altura" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="pesoColumn" Binding="{Binding Path=peso}" Header="Peso" Width="SizeToHeader" />
+                <DataGridTemplateColumn x:Name="fotoColumn" Width="Auto" Header="Foto" SortMemberPath="hasfoto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox Style="{StaticResource DataGridCheckBoxStyle}" IsChecked="{Binding Path=hasfoto, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" TargetUpdated="OnFotoToggleTargetUpdated" Click="FotoToggled"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Guardar Cambios" Height="26" HorizontalAlignment="Right" Margin="0,0,118,12" Name="button2" VerticalAlignment="Bottom" Width="100" Click="GuardarCambiosClientes" IsEnabled="False" PreviewKeyDown="button2_PreviewKeyDown" />
+        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="button1" VerticalAlignment="Bottom" Width="100" Click="btnCancelarVistaClientes" PreviewKeyDown="button1_PreviewKeyDown" />
+        <Label Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="label1" VerticalAlignment="Bottom" Width="544" Content="Vista de Clientes." />
+        <Label Content="Buscar: " Height="28" HorizontalAlignment="Left" Margin="12,0,0,44" Name="label2" VerticalAlignment="Bottom" />
+        <TextBox Height="24" HorizontalAlignment="Stretch" Margin="68,0,12,44" Name="textBox1" VerticalAlignment="Bottom" TextChanged="textBox1_TextChanged" PreviewKeyDown="textBox1_PreviewKeyDown" />
+    </Grid>
+</Window>
