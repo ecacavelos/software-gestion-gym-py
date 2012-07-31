@@ -10,6 +10,10 @@
           <EntitySet Name="Cuotas" EntityType="Database1Model.Store.Cuotas" store:Type="Tables" />
           <EntitySet Name="Facturas" EntityType="Database1Model.Store.Facturas" store:Type="Tables" />
           <EntitySet Name="Pagos" EntityType="Database1Model.Store.Pagos" store:Type="Tables" />
+          <AssociationSet Name="fk_cliente_factura" Association="Database1Model.Store.fk_cliente_factura">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="Facturas" EntitySet="Facturas" />
+          </AssociationSet>
           <AssociationSet Name="FK_cliente_pago" Association="Database1Model.Store.FK_cliente_pago">
             <End Role="clientes" EntitySet="clientes" />
             <End Role="Pagos" EntitySet="Pagos" />
@@ -57,6 +61,8 @@
           <Property Name="fk_pago" Type="bigint" Nullable="false" />
           <Property Name="Nombre_Pagador" Type="nvarchar" MaxLength="100" />
           <Property Name="Fecha_Emision" Type="datetime" />
+          <Property Name="fk_cliente" Type="int" />
+          <Property Name="RUC" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Pagos">
           <Key>
@@ -68,6 +74,18 @@
           <Property Name="fk_tipoCuota" Type="int" />
           <Property Name="fecha_vencimiento" Type="datetime" />
         </EntityType>
+        <Association Name="fk_cliente_factura">
+          <End Role="clientes" Type="Database1Model.Store.clientes" Multiplicity="0..1" />
+          <End Role="Facturas" Type="Database1Model.Store.Facturas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="Facturas">
+              <PropertyRef Name="fk_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_cliente_pago">
           <End Role="clientes" Type="Database1Model.Store.clientes" Multiplicity="0..1" />
           <End Role="Pagos" Type="Database1Model.Store.Pagos" Multiplicity="*" />
@@ -125,6 +143,10 @@
             <End Role="Pagos" EntitySet="Pagos" />
             <End Role="Facturas" EntitySet="Facturas" />
           </AssociationSet>
+          <AssociationSet Name="fk_cliente_factura" Association="Database1Model.fk_cliente_factura">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="Facturas" EntitySet="Facturas" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="clientes">
           <Key>
@@ -143,6 +165,7 @@
           <Property Type="String" Name="nro_cedula" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Pagos" Relationship="Database1Model.FK_cliente_pago" FromRole="clientes" ToRole="Pagos" />
           <Property Type="Boolean" Name="hasfoto" />
+          <NavigationProperty Name="Facturas" Relationship="Database1Model.fk_cliente_factura" FromRole="clientes" ToRole="Facturas" />
         </EntityType>
         <EntityType Name="Cuotas">
           <Key>
@@ -200,6 +223,9 @@
           <NavigationProperty Name="Pagos" Relationship="Database1Model.fk_pago_factura" FromRole="Facturas" ToRole="Pagos" />
           <Property Type="String" Name="Nombre_Pagador" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="Fecha_Emision" />
+          <Property Type="Int32" Name="fk_cliente" />
+          <NavigationProperty Name="clientes" Relationship="Database1Model.fk_cliente_factura" FromRole="Facturas" ToRole="clientes" />
+          <Property Type="String" Name="RUC" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="fk_pago_factura">
           <End Type="Database1Model.Pagos" Role="Pagos" Multiplicity="1" />
@@ -210,6 +236,18 @@
             </Principal>
             <Dependent Role="Facturas">
               <PropertyRef Name="fk_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cliente_factura">
+          <End Type="Database1Model.clientes" Role="clientes" Multiplicity="0..1" />
+          <End Type="Database1Model.Facturas" Role="Facturas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="Facturas">
+              <PropertyRef Name="fk_cliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -260,6 +298,8 @@
           <EntitySetMapping Name="Facturas">
             <EntityTypeMapping TypeName="Database1Model.Facturas">
               <MappingFragment StoreEntitySet="Facturas">
+                <ScalarProperty Name="RUC" ColumnName="RUC" />
+                <ScalarProperty Name="fk_cliente" ColumnName="fk_cliente" />
                 <ScalarProperty Name="Fecha_Emision" ColumnName="Fecha_Emision" />
                 <ScalarProperty Name="Nombre_Pagador" ColumnName="Nombre_Pagador" />
                 <ScalarProperty Name="fk_pago" ColumnName="fk_pago" />
@@ -289,21 +329,28 @@
     <Diagrams>
       <Diagram Name="Model1" >
         <EntityTypeShape EntityType="Database1Model.clientes" Width="1.5" PointX="0.5" PointY="0.5" Height="3.5186979166666656" />
-        <EntityTypeShape EntityType="Database1Model.Cuotas" Width="1.5" PointX="4.875" PointY="3" Height="1.787985026041671" />
+        <EntityTypeShape EntityType="Database1Model.Cuotas" Width="1.5" PointX="4.875" PointY="4" Height="1.787985026041671" />
         <EntityTypeShape EntityType="Database1Model.Pagos" Width="1.5" PointX="2.75" PointY="0.5" Height="2.5571907552083326" />
         <AssociationConnector Association="Database1Model.FK_cliente_pago" >
-          <ConnectorPoint PointX="2" PointY="1.7785953776041663" />
-          <ConnectorPoint PointX="2.75" PointY="1.7785953776041663" />
+          <ConnectorPoint PointX="2" PointY="1.7785953776041665" />
+          <ConnectorPoint PointX="2.75" PointY="1.7785953776041665" />
         </AssociationConnector>
         <AssociationConnector Association="Database1Model.fk_tipoCuota_pago" >
-          <ConnectorPoint PointX="4.875" PointY="3.9225883906250019" />
-          <ConnectorPoint PointX="3.5" PointY="3.9225883906250019" />
+          <ConnectorPoint PointX="4.875" PointY="4.8939925130208355" />
+          <ConnectorPoint PointX="3.5" PointY="4.8939925130208355" />
           <ConnectorPoint PointX="3.5" PointY="3.0571907552083326" />
         </AssociationConnector>
         <EntityTypeShape EntityType="Database1Model.Facturas" Width="1.5" PointX="4.875" PointY="0.5" Height="1.787985026041667" />
         <AssociationConnector Association="Database1Model.fk_pago_factura" >
-          <ConnectorPoint PointX="4.25" PointY="1.3939925130208335" />
-          <ConnectorPoint PointX="4.875" PointY="1.3939925130208335" />
+          <ConnectorPoint PointX="4.25" PointY="1.7785953776041665" />
+          <ConnectorPoint PointX="4.875" PointY="1.7785953776041665" />
+        </AssociationConnector>
+        <AssociationConnector Association="Database1Model.fk_cliente_factura" ManuallyRouted="true" >
+          <ConnectorPoint PointX="2" PointY="3.5518839356546632" />
+          <ConnectorPoint PointX="3.4166666666666665" PointY="3.5518839356546628" />
+          <ConnectorPoint PointX="3.5833333333333335" PointY="3.5518839356546632" />
+          <ConnectorPoint PointX="5.59509246574508" PointY="3.5518839356546632" />
+          <ConnectorPoint PointX="5.59509246574508" PointY="3.0571907552083331" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

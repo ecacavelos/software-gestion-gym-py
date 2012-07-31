@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("Database1Model", "FK_cliente_pago", "clientes", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.clientes), "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Pagos), true)]
 [assembly: EdmRelationshipAttribute("Database1Model", "fk_tipoCuota_pago", "Cuotas", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.Cuotas), "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Pagos), true)]
 [assembly: EdmRelationshipAttribute("Database1Model", "fk_pago_factura", "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Gimnasio.Pagos), "Facturas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Facturas), true)]
+[assembly: EdmRelationshipAttribute("Database1Model", "fk_cliente_factura", "clientes", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.clientes), "Facturas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Facturas), true)]
 
 #endregion
 
@@ -519,6 +520,28 @@ namespace Gimnasio
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Database1Model", "fk_cliente_factura", "Facturas")]
+        public EntityCollection<Facturas> Facturas
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Facturas>("Database1Model.fk_cliente_factura", "Facturas");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Facturas>("Database1Model.fk_cliente_factura", "Facturas", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -799,6 +822,54 @@ namespace Gimnasio
         private Nullable<global::System.DateTime> _Fecha_Emision;
         partial void OnFecha_EmisionChanging(Nullable<global::System.DateTime> value);
         partial void OnFecha_EmisionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> fk_cliente
+        {
+            get
+            {
+                return _fk_cliente;
+            }
+            set
+            {
+                Onfk_clienteChanging(value);
+                ReportPropertyChanging("fk_cliente");
+                _fk_cliente = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("fk_cliente");
+                Onfk_clienteChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _fk_cliente;
+        partial void Onfk_clienteChanging(Nullable<global::System.Int32> value);
+        partial void Onfk_clienteChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String RUC
+        {
+            get
+            {
+                return _RUC;
+            }
+            set
+            {
+                OnRUCChanging(value);
+                ReportPropertyChanging("RUC");
+                _RUC = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("RUC");
+                OnRUCChanged();
+            }
+        }
+        private global::System.String _RUC;
+        partial void OnRUCChanging(global::System.String value);
+        partial void OnRUCChanged();
 
         #endregion
     
@@ -838,6 +909,44 @@ namespace Gimnasio
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Pagos>("Database1Model.fk_pago_factura", "Pagos", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Database1Model", "fk_cliente_factura", "clientes")]
+        public clientes clientes
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clientes>("Database1Model.fk_cliente_factura", "clientes").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clientes>("Database1Model.fk_cliente_factura", "clientes").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<clientes> clientesReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clientes>("Database1Model.fk_cliente_factura", "clientes");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<clientes>("Database1Model.fk_cliente_factura", "clientes", value);
                 }
             }
         }
