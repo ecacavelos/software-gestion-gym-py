@@ -30,10 +30,6 @@ namespace Gimnasio
                 // Se cargan los datos correspondientes de la factura en el nuevo registro de la BD.
                 current_factura.fk_pago = pago.idPago;
                 current_factura.fk_cliente = pago.clientes.idCliente;
-                current_factura.Fecha_Emision = DateTime.Now;
-                current_factura.Nombre_Pagador = pago.clientes.nombre + " " + pago.clientes.apellido;
-                current_factura.RUC = pago.clientes.nro_cedula;
-                current_factura.Monto = pago.Cuotas.monto;
 
                 // Se hace el query a la BD de facturas, para conocer si el pago ya fue facturado.
                 string esql = "select value f from Facturas as f where f.fk_pago = " + (current_factura.fk_pago);
@@ -42,6 +38,18 @@ namespace Gimnasio
                 // Si no se encontró este pago entre los facturados.
                 if (facturasVar.ToList().Count == 0)
                 {
+                    System.Windows.Forms.DialogResult result;
+                    result = System.Windows.Forms.MessageBox.Show("Factura Nro: " + "001-001", "Número de Factura", System.Windows.Forms.MessageBoxButtons.OK);
+                    if (result == System.Windows.Forms.DialogResult.OK)
+                    {
+                        current_factura.Nro_Factura = "001-001";
+                    }
+
+                    current_factura.Fecha_Emision = DateTime.Now;
+                    current_factura.Nombre_Pagador = pago.clientes.nombre + " " + pago.clientes.apellido;
+                    //current_factura.RUC = pago.clientes.nro_cedula;
+                    //current_factura.Monto = pago.Cuotas.monto;
+
                     // Se genera el texto de la factura.
                     // TODO: Llamar al modulo de impresión.
                     System.Console.WriteLine();
@@ -55,6 +63,11 @@ namespace Gimnasio
                     // Se agrega la factura a la BD en la tabla "Facturas".
                     database1Entities.Facturas.AddObject(current_factura);
                     database1Entities.SaveChanges();
+
+                    // Se actualiza el campo "ya_facturado" de la tabla Pagos para indicar que ese pago ya fue facturado.
+                    database1Entities.ExecuteStoreCommand("UPDATE Pagos SET ya_facturado = 1 WHERE (Pagos.idPago = {0})", current_factura.fk_pago);
+                    database1Entities.SaveChanges();
+
                 }
                 else
                 {

@@ -19,7 +19,7 @@ namespace Gimnasio
     /// Interaction logic for ConsultarPagosCliente.xaml
     /// </summary>
     public partial class ConsultarPagosCliente : Window
-    {        
+    {
 
         public ResourceDictionary Resources { get; set; }
         Configuration c2;
@@ -124,17 +124,24 @@ namespace Gimnasio
         {
             Pagos pago = ((FrameworkElement)sender).DataContext as Pagos;
             Facturacion.DatosFactura(pago);
+
+            // Se actualiza el Datagrid, para que se refleje que ya se facturó el pago.
+            database1Entities = new Gimnasio.Database1Entities();
+            string esql3 = "select value c from clientes as c where c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
+            var clientesVar3 = database1Entities.CreateQuery<clientes>(esql3);
+            this.dataGridPagos.ItemsSource = clientesVar3.ToArray()[0].Pagos;
+
         }
 
         private void dataGridPagos_LoadingRow(object sender, DataGridRowEventArgs e)
-        {            
+        {
             //if (e.Row.GetIndex() == this.pagosCliente.Count)
-            /*if (e.Row.GetIndex() == 0)
-            {
-                //System.Console.WriteLine("Ouch " + this.dataGridPagos.Columns[1].GetCellContent(e.Row));
-                e.Row.Background = Brushes.Beige;                                
-                System.Console.WriteLine("xxx " + this.buttonColumn.CellTemplate.LoadContent());
-            }*/
+            //if (e.Row.GetIndex() == 0)
+            //{
+            //System.Console.WriteLine("Ouch " + this.dataGridPagos.Columns[1].GetCellContent(e.Row));
+            //e.Row.Background = Brushes.Beige;                                
+            //System.Console.WriteLine("xxx " + this.buttonColumn.CellTemplate.LoadContent().GetValue(ContentProperty));                                
+            //}
         }
 
         #region "Funciones relativas al Keypad USB"
@@ -174,6 +181,29 @@ namespace Gimnasio
             Visibility visibility = (Visibility)value;
             return (visibility == Visibility.Visible);
         }
+    }
+
+    [ValueConversion(typeof(bool), typeof(bool))]
+    public class InverseBooleanConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            if (targetType != typeof(bool))
+                throw new InvalidOperationException("The target must be a boolean");
+
+            return !(bool)value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
     }
 
 }

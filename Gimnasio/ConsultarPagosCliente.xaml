@@ -5,7 +5,7 @@
         Title="Consulta de pagos de clientes" Height="380" Width="420" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" ResizeMode="NoResize" Icon="/Gimnasio;component/iconoCuotas.jpg">
     <Window.Resources>
         <CollectionViewSource x:Key="pagosViewSource" d:DesignSource="{d:DesignInstance my:Pagos, CreateList=True}" />
-        <local:VisibilityConverter x:Key="VisibilityConverter" />
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </Window.Resources>    
     <Grid Name="ClienteSeleccionado" Background="#FFBECBEB">
         <Grid.RowDefinitions>
@@ -26,7 +26,7 @@
                 <DataGridTemplateColumn x:Name="buttonColumn" Width="Auto" Header="">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="facturaButton" Content="Imprimir Factura" Click="PrintFactura" />
+                            <Button x:Name="facturaButton" Content="Imprimir Factura" Click="PrintFactura" IsEnabled="{Binding Path=ya_facturado, Converter={StaticResource InverseBooleanConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
