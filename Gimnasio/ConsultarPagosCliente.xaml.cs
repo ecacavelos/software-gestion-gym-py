@@ -160,6 +160,7 @@ namespace Gimnasio
 
     }
 
+    #region "Conversores para los data bindings de esta ventana."
     public class VisibilityConverter : IValueConverter
     {
         public object Convert(
@@ -205,5 +206,6 @@ namespace Gimnasio
 
         #endregion
     }
+    #endregion
 
 }

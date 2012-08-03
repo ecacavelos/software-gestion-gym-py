@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace Gimnasio
 {
@@ -38,11 +39,26 @@ namespace Gimnasio
                 // Si no se encontró este pago entre los facturados.
                 if (facturasVar.ToList().Count == 0)
                 {
-                    System.Windows.Forms.DialogResult result;
-                    result = System.Windows.Forms.MessageBox.Show("Factura Nro: " + "001-001", "Número de Factura", System.Windows.Forms.MessageBoxButtons.OK);
-                    if (result == System.Windows.Forms.DialogResult.OK)
+                    //System.Windows.Forms.DialogResult result;
+                    //result = System.Windows.Forms.MessageBox.Show("Factura Nro: " + "001-001", "Número de Factura", System.Windows.Forms.MessageBoxButtons.OK);
+                    //if (result == System.Windows.Forms.DialogResult.OK)
+                    //{
+                    //    current_factura.Nro_Factura = "001-001";
+                    //}
+
+                    FacturaDialog dlg = new FacturaDialog();
+                    Nullable<bool> result = dlg.ShowDialog();
+
+                    if (result == true)
                     {
-                        current_factura.Nro_Factura = "001-001";
+                        //System.Console.WriteLine("Yes");
+                        //System.Console.WriteLine(dlg.ResponseText);
+                        current_factura.Nro_Factura = dlg.ResponseText;
+                    }
+                    else
+                    {
+                        //System.Console.WriteLine("No");
+                        return;
                     }
 
                     current_factura.Fecha_Emision = DateTime.Now;
