@@ -43,6 +43,7 @@
           <Property Name="peso" Type="int" />
           <Property Name="nro_cedula" Type="nvarchar" MaxLength="100" />
           <Property Name="hasfoto" Type="bit" />
+          <Property Name="RUC" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Cuotas">
           <Key>
@@ -59,7 +60,7 @@
           <Property Name="idFactura" Type="int" Nullable="false" />
           <Property Name="fk_pago" Type="bigint" Nullable="false" />
           <Property Name="fk_cliente" Type="int" />
-          <Property Name="Nro_Factura" Type="nvarchar" MaxLength="30" />
+          <Property Name="Nro_Factura" Type="nvarchar" Nullable="false" MaxLength="30" />
           <Property Name="Fecha_Emision" Type="datetime" />
           <Property Name="Nombre_Pagador" Type="nvarchar" MaxLength="100" />
         </EntityType>
@@ -166,6 +167,7 @@
           <NavigationProperty Name="Pagos" Relationship="Database1Model.FK_cliente_pago" FromRole="clientes" ToRole="Pagos" />
           <Property Type="Boolean" Name="hasfoto" />
           <NavigationProperty Name="Facturas" Relationship="Database1Model.fk_cliente_factura" FromRole="clientes" ToRole="Facturas" />
+          <Property Type="String" Name="RUC" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Cuotas">
           <Key>
@@ -223,7 +225,7 @@
           <Property Type="Int32" Name="fk_cliente" />
           <NavigationProperty Name="clientes" Relationship="Database1Model.fk_cliente_factura" FromRole="Facturas" ToRole="clientes" />
           <NavigationProperty Name="Pagos" Relationship="Database1Model.fk_pago_factura" FromRole="Facturas" ToRole="Pagos" />
-          <Property Type="String" Name="Nro_Factura" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Nro_Factura" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Type="DateTime" Name="Fecha_Emision" />
           <Property Type="String" Name="Nombre_Pagador" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -260,6 +262,7 @@
           <EntitySetMapping Name="clientes">
             <EntityTypeMapping TypeName="Database1Model.clientes">
               <MappingFragment StoreEntitySet="clientes">
+                <ScalarProperty Name="RUC" ColumnName="RUC" />
                 <ScalarProperty Name="hasfoto" ColumnName="hasfoto" />
                 <ScalarProperty Name="nro_cedula" ColumnName="nro_cedula" />
                 <ScalarProperty Name="peso" ColumnName="peso" />
