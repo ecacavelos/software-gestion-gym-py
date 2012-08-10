@@ -494,6 +494,30 @@ namespace Gimnasio
         private Nullable<global::System.Boolean> _hasfoto;
         partial void OnhasfotoChanging(Nullable<global::System.Boolean> value);
         partial void OnhasfotoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String RUC
+        {
+            get
+            {
+                return _RUC;
+            }
+            set
+            {
+                OnRUCChanging(value);
+                ReportPropertyChanging("RUC");
+                _RUC = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("RUC");
+                OnRUCChanged();
+            }
+        }
+        private global::System.String _RUC;
+        partial void OnRUCChanging(global::System.String value);
+        partial void OnRUCChanged();
 
         #endregion
     
@@ -689,11 +713,13 @@ namespace Gimnasio
         /// </summary>
         /// <param name="idFactura">Initial value of the idFactura property.</param>
         /// <param name="fk_pago">Initial value of the fk_pago property.</param>
-        public static Facturas CreateFacturas(global::System.Int32 idFactura, global::System.Int64 fk_pago)
+        /// <param name="nro_Factura">Initial value of the Nro_Factura property.</param>
+        public static Facturas CreateFacturas(global::System.Int32 idFactura, global::System.Int64 fk_pago, global::System.String nro_Factura)
         {
             Facturas facturas = new Facturas();
             facturas.idFactura = idFactura;
             facturas.fk_pago = fk_pago;
+            facturas.Nro_Factura = nro_Factura;
             return facturas;
         }
 
@@ -778,7 +804,7 @@ namespace Gimnasio
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String Nro_Factura
         {
@@ -790,7 +816,7 @@ namespace Gimnasio
             {
                 OnNro_FacturaChanging(value);
                 ReportPropertyChanging("Nro_Factura");
-                _Nro_Factura = StructuralObject.SetValidValue(value, true);
+                _Nro_Factura = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("Nro_Factura");
                 OnNro_FacturaChanged();
             }
