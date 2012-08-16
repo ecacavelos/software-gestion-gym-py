@@ -668,6 +668,30 @@ namespace Gimnasio
         private Nullable<global::System.Int32> _diasHabilitados;
         partial void OndiasHabilitadosChanging(Nullable<global::System.Int32> value);
         partial void OndiasHabilitadosChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String tipoIVA
+        {
+            get
+            {
+                return _tipoIVA;
+            }
+            set
+            {
+                OntipoIVAChanging(value);
+                ReportPropertyChanging("tipoIVA");
+                _tipoIVA = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("tipoIVA");
+                OntipoIVAChanged();
+            }
+        }
+        private global::System.String _tipoIVA;
+        partial void OntipoIVAChanging(global::System.String value);
+        partial void OntipoIVAChanged();
 
         #endregion
     
@@ -872,6 +896,198 @@ namespace Gimnasio
         private global::System.String _Nombre_Pagador;
         partial void OnNombre_PagadorChanging(global::System.String value);
         partial void OnNombre_PagadorChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String RUC_Pagador
+        {
+            get
+            {
+                return _RUC_Pagador;
+            }
+            set
+            {
+                OnRUC_PagadorChanging(value);
+                ReportPropertyChanging("RUC_Pagador");
+                _RUC_Pagador = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("RUC_Pagador");
+                OnRUC_PagadorChanged();
+            }
+        }
+        private global::System.String _RUC_Pagador;
+        partial void OnRUC_PagadorChanging(global::System.String value);
+        partial void OnRUC_PagadorChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Monto_Total
+        {
+            get
+            {
+                return _Monto_Total;
+            }
+            set
+            {
+                OnMonto_TotalChanging(value);
+                ReportPropertyChanging("Monto_Total");
+                _Monto_Total = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Monto_Total");
+                OnMonto_TotalChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Monto_Total;
+        partial void OnMonto_TotalChanging(Nullable<global::System.Int32> value);
+        partial void OnMonto_TotalChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> IVA10_Total
+        {
+            get
+            {
+                return _IVA10_Total;
+            }
+            set
+            {
+                OnIVA10_TotalChanging(value);
+                ReportPropertyChanging("IVA10_Total");
+                _IVA10_Total = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IVA10_Total");
+                OnIVA10_TotalChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _IVA10_Total;
+        partial void OnIVA10_TotalChanging(Nullable<global::System.Int32> value);
+        partial void OnIVA10_TotalChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> IVA05_Total
+        {
+            get
+            {
+                return _IVA05_Total;
+            }
+            set
+            {
+                OnIVA05_TotalChanging(value);
+                ReportPropertyChanging("IVA05_Total");
+                _IVA05_Total = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IVA05_Total");
+                OnIVA05_TotalChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _IVA05_Total;
+        partial void OnIVA05_TotalChanging(Nullable<global::System.Int32> value);
+        partial void OnIVA05_TotalChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Concepto
+        {
+            get
+            {
+                return _Concepto;
+            }
+            set
+            {
+                OnConceptoChanging(value);
+                ReportPropertyChanging("Concepto");
+                _Concepto = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Concepto");
+                OnConceptoChanged();
+            }
+        }
+        private global::System.String _Concepto;
+        partial void OnConceptoChanging(global::System.String value);
+        partial void OnConceptoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Exentas_Total
+        {
+            get
+            {
+                return _Exentas_Total;
+            }
+            set
+            {
+                OnExentas_TotalChanging(value);
+                ReportPropertyChanging("Exentas_Total");
+                _Exentas_Total = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Exentas_Total");
+                OnExentas_TotalChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Exentas_Total;
+        partial void OnExentas_TotalChanging(Nullable<global::System.Int32> value);
+        partial void OnExentas_TotalChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Liquidacion_IVA05
+        {
+            get
+            {
+                return _Liquidacion_IVA05;
+            }
+            set
+            {
+                OnLiquidacion_IVA05Changing(value);
+                ReportPropertyChanging("Liquidacion_IVA05");
+                _Liquidacion_IVA05 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Liquidacion_IVA05");
+                OnLiquidacion_IVA05Changed();
+            }
+        }
+        private Nullable<global::System.Int32> _Liquidacion_IVA05;
+        partial void OnLiquidacion_IVA05Changing(Nullable<global::System.Int32> value);
+        partial void OnLiquidacion_IVA05Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Liquidacion_IVA10
+        {
+            get
+            {
+                return _Liquidacion_IVA10;
+            }
+            set
+            {
+                OnLiquidacion_IVA10Changing(value);
+                ReportPropertyChanging("Liquidacion_IVA10");
+                _Liquidacion_IVA10 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Liquidacion_IVA10");
+                OnLiquidacion_IVA10Changed();
+            }
+        }
+        private Nullable<global::System.Int32> _Liquidacion_IVA10;
+        partial void OnLiquidacion_IVA10Changing(Nullable<global::System.Int32> value);
+        partial void OnLiquidacion_IVA10Changed();
 
         #endregion
     

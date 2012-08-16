@@ -81,6 +81,7 @@
     <Compile Include="AboutGymAdmin.Designer.cs">
       <DependentUpon>AboutGymAdmin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Impresion.cs" />
     <Compile Include="Facturacion.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="ConsultarPagosCliente.xaml.cs">
@@ -91,6 +92,7 @@
       <DependentUpon>FacturaDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="InputDevice.cs" />
+    <Compile Include="Numalet.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
