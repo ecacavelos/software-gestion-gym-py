@@ -20,23 +20,38 @@ namespace Gimnasio
     {
 
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
+        bool validRUC = false;
+        Pagos thisPago;
+
+        public string ResponseText_NroFactura
+        {
+            get { return textBoxNroFactura.Text; }
+            set { textBoxNroFactura.Text = value; }
+        }
+
+        public string ResponseText_RUC
+        {
+            get { return textBoxRUC.Text; }
+            set { textBoxRUC.Text = value; }
+        }
 
         public FacturaDialog(Pagos pago)
         {
             InitializeComponent();
 
+            thisPago = pago;
             int lastNroFactura = 0;
             textBoxNroFactura.Text = "0000001";
 
-            textBoxNombre.Text = pago.clientes.nombre + " " + pago.clientes.apellido;
-            if (pago.clientes.RUC != null)
+            textBoxNombre.Text = thisPago.clientes.nombre + " " + thisPago.clientes.apellido;
+            // Si existe un RUC cargado en la tabla clientes, se usa dicho RUC, si no, usamos el Nro de Cédula.
+            if (thisPago.clientes.RUC != null)
             {
-                textBoxRUC.Text = pago.clientes.RUC;
+                textBoxRUC.Text = thisPago.clientes.RUC;
             }
             else
             {
-                System.Console.WriteLine("RUC es null, se sugiere nrodecedula.");
-                textBoxRUC.Text = pago.clientes.nro_cedula;
+                textBoxRUC.Text = thisPago.clientes.nro_cedula;
                 textBoxRUC.Background = Brushes.MistyRose;
             }
 
@@ -54,12 +69,6 @@ namespace Gimnasio
                 textBoxNroFactura.Text = lastNroFactura.ToString("0000000");
             }
 
-        }
-
-        public string ResponseText
-        {
-            get { return textBoxNroFactura.Text; }
-            set { textBoxNroFactura.Text = value; }
         }
 
         private void buttonOK_Click(object sender, RoutedEventArgs e)
@@ -83,6 +92,14 @@ namespace Gimnasio
                 // Si ya no existe una factura con ese número.
                 if (facturasVar.ToList().Count == 0)
                 {
+
+                    if (validRUC == true)
+                    {
+                        // Se actualiza el campo "RUC" de la tabla Clientes si el RUC incluye digito verificador.                                        
+                        database1Entities.ExecuteStoreCommand("UPDATE clientes SET RUC = {0} WHERE (clientes.idCliente = {1})", textBoxRUC.Text, thisPago.clientes.idCliente);
+                        database1Entities.SaveChanges();
+                    }
+
                     this.DialogResult = true;
                 }
                 else
@@ -102,6 +119,7 @@ namespace Gimnasio
             this.Close();
         }
 
+        #region "Funciones de validación para el RUC"
         private void textBoxRUC_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Verificamos que haya al menos 2 caracteres en el cuadro de RUC.
@@ -113,11 +131,13 @@ namespace Gimnasio
                 // Si el RUC termina en un guión seguido de un número, indicamos en verde.
                 if (last2.IndexOf("-") == 0 && Char.IsNumber(lastChar))
                 {
+                    validRUC = true;
                     textBoxRUC.Background = Brushes.MintCream;
                 }
                 else
                 // Si estimamos que el RUC es incorrecto, indicamos en rojo.
                 {
+                    validRUC = false;
                     textBoxRUC.Background = Brushes.MistyRose;
                 }
             }
@@ -155,6 +175,7 @@ namespace Gimnasio
                 e.Handled = true;
             }
         }
+        #endregion
 
     }
 }
