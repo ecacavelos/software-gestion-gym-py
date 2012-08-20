@@ -229,8 +229,8 @@ namespace Gimnasio
             int teclaObtenida = -1;
             //Console.WriteLine("Presionaste una Tecla.");
 
-            string[] tokens = e.Keyboard.Name.Split(';');
-            string token = tokens[1];
+            //string[] tokens = e.Keyboard.Name.Split(';');
+            //string token = tokens[0];
 
             //Console.WriteLine(e.Keyboard.deviceHandle.ToString());
             //Console.WriteLine(e.Keyboard.deviceType);
