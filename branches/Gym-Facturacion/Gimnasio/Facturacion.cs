@@ -15,7 +15,7 @@ namespace Gimnasio
     public static class Facturacion
     {
 
-        static int[] myMontosArray = new int[1];
+        //static int[] myMontosArray = new int[1];
         static int[] myIVAsExArray = new int[1];
         static int[] myIVAs05Array = new int[1];
         static int[] myIVAs10Array = new int[1];
@@ -67,56 +67,54 @@ namespace Gimnasio
                     myIVAsExArray[0] = 0;
                     myIVAs05Array[0] = 0;
                     myIVAs10Array[0] = 0;
-                    int thisMonto = Convert.ToInt32(pago.Cuotas.monto);
-                    //myMontosArray[0] = thisMonto;
-                    if (pago.Cuotas.tipoIVA == "10%")
-                    {
-                        myIVAs10Array[0] = thisMonto;
-                    }
-                    else if (pago.Cuotas.tipoIVA == "5%")
-                    {
-                        myIVAs05Array[0] = thisMonto;
-                    }
-                    else if (pago.Cuotas.tipoIVA == "Exentas")
-                    {
-                        myIVAsExArray[0] = thisMonto;
-                    }
+                    current_factura.Exentas_Total = 0;
+                    current_factura.IVA05_Total = 0;
+                    current_factura.IVA10_Total = 0;
 
-                    current_factura.Exentas_Total = myIVAsExArray[0];
-                    current_factura.IVA05_Total = myIVAs05Array[0];
-                    current_factura.IVA10_Total = myIVAs10Array[0];
+                    for (int i = 0; i < 1; i++)
+                    {
+                        int thisMonto = Convert.ToInt32(pago.Cuotas.monto);
+                        //myMontosArray[0] = thisMonto;
+                        if (pago.Cuotas.tipoIVA == "10%")
+                        {
+                            myIVAs10Array[i] = thisMonto;
+                        }
+                        else if (pago.Cuotas.tipoIVA == "5%")
+                        {
+                            myIVAs05Array[i] = thisMonto;
+                        }
+                        else if (pago.Cuotas.tipoIVA == "Exentas")
+                        {
+                            myIVAsExArray[i] = thisMonto;
+                        }
+
+                        current_factura.Exentas_Total += myIVAsExArray[i];
+                        current_factura.IVA05_Total += myIVAs05Array[i];
+                        current_factura.IVA10_Total += myIVAs10Array[i];
+                    }
 
                     // Total a Pagar
-                    current_factura.Monto_Total = current_factura.Exentas_Total + current_factura.IVA05_Total + current_factura.IVA10_Total;
+                    current_factura.Monto_Total = current_factura.Exentas_Total + current_factura.IVA05_Total +
+                        current_factura.IVA10_Total;
                     // Liquidacion de IVA 5% y 10%
                     current_factura.Liquidacion_IVA05 = current_factura.IVA05_Total / 21;
                     current_factura.Liquidacion_IVA10 = current_factura.IVA10_Total / 11;
 
-                    current_factura.Concepto = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", pago.fecha) + " a " + String.Format("{0:dd/MM/yyyy}", pago.fecha_vencimiento);
-
-                    // Se genera el texto de la factura.
-                    // TODO: Llamar al modulo de impresión.                    
-                    System.Console.WriteLine();
-                    System.Console.WriteLine("Fecha de Emisión: " + current_factura.Fecha_Emision);
-                    System.Console.WriteLine("Nombre:           " + current_factura.Nombre_Pagador);
-                    System.Console.WriteLine("RUC:              " + current_factura.RUC_Pagador);
-                    System.Console.WriteLine("Nro de Factura:   " + current_factura.Nro_Factura);
-                    System.Console.WriteLine("Concepto:         " + current_factura.Concepto);
-                    System.Console.WriteLine("Total a Pagar:    " + current_factura.Monto_Total);
-                    System.Console.WriteLine("Liq  5% Total:    " + current_factura.Liquidacion_IVA05);
-                    System.Console.WriteLine("Liq 10% Total:    " + current_factura.Liquidacion_IVA10);
-
-                    System.Console.WriteLine(Numalet.ToCardinal((int)current_factura.Monto_Total));
+                    current_factura.Concepto = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", pago.fecha) +
+                        " a " + String.Format("{0:dd/MM/yyyy}", pago.fecha_vencimiento);
 
                     // Se agrega la factura a la BD en la tabla "Facturas".
                     database1Entities.Facturas.AddObject(current_factura);
                     database1Entities.SaveChanges();
 
-                    // Se actualiza el campo "ya_facturado" de la tabla Pagos para indicar que ese pago ya fue facturado.
-                    database1Entities.ExecuteStoreCommand("UPDATE Pagos SET ya_facturado = 1 WHERE (Pagos.idPago = {0})", current_factura.fk_pago);
+                    // Se actualiza el campo "ya_facturado" de la tabla Pagos
+                    // para indicar que ese pago ya fue facturado.
+                    database1Entities.ExecuteStoreCommand(
+                        "UPDATE Pagos SET ya_facturado = 1 WHERE (Pagos.idPago = {0})", current_factura.fk_pago);
                     database1Entities.SaveChanges();
 
-                    Impresion.ImprimirFactura(current_factura);
+                    // Se llama al módulo de Impresión.
+                    Impresion.ImprimirFactura(current_factura, myIVAsExArray, myIVAs05Array, myIVAs10Array);
 
                 }
                 else

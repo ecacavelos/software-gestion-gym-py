@@ -31,6 +31,7 @@ namespace Gimnasio
         Window winVistaTiposCuotas = new Window();
         Window winVistaControlIngreso = new Window();
         Window winVistaConfiguracion = new Window();
+        Window winVistaFacturas = new Window();
 
         RawStuff.InputDevice id;
         int NumberOfKeyboards;
@@ -117,6 +118,22 @@ namespace Gimnasio
                 Assembly assembly = type.Assembly;
                 this.winVistaTiposCuotas = (Window)assembly.CreateInstance("Gimnasio.VistaTiposCuotas");
                 this.winVistaTiposCuotas.Show();
+            }
+        }
+
+        private void menuItem_FacturasVer(object sender, RoutedEventArgs e)
+        {
+            if (VistaFacturas.IsOpen)
+            {
+                this.winVistaFacturas.Activate();
+                return;
+            }
+            else
+            {
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winVistaFacturas = (Window)assembly.CreateInstance("Gimnasio.VistaFacturas");
+                this.winVistaFacturas.Show();
             }
         }
 

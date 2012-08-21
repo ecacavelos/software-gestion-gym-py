@@ -110,6 +110,9 @@
     <Compile Include="VistaControlIngreso.xaml.cs">
       <DependentUpon>VistaControlIngreso.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VistaFacturas.xaml.cs">
+      <DependentUpon>VistaFacturas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VistaIngresoDeCuota.xaml.cs">
       <DependentUpon>VistaIngresoDeCuota.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,10 @@
     <Page Include="VistaControlIngreso.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VistaFacturas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VistaIngresoDeCuota.xaml">
       <Generator>MSBuild:Compile</Generator>

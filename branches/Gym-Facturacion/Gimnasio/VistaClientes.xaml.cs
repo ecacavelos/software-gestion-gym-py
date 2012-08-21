@@ -145,7 +145,7 @@ namespace Gimnasio
             }
         }
 
-        //BOTON PARA CANCELAR TODO EN LA VISTA CLIENES. 
+        //BOTON PARA CANCELAR TODO EN LA VISTA CLIENTES. 
         private void btnCancelarVistaClientes(object sender, RoutedEventArgs e)
         {
             // Cuando se da cancelar simplemente no hacer nada y cerrar la ventana. 
