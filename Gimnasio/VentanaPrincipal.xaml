@@ -25,6 +25,7 @@
             </MenuItem>
             <MenuItem Header="Cuotas">
                 <MenuItem Header="Editar" Click="menuItem_CuotasEditar" />
+                <MenuItem Header="Ver Facturas" Click="menuItem_FacturasVer" />
             </MenuItem>
             <MenuItem Header="Ayuda">
                 <MenuItem Header="Ayuda" />
