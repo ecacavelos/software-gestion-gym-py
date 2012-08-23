@@ -99,6 +99,7 @@ namespace Gimnasio
                     // Liquidacion de IVA 5% y 10%
                     current_factura.Liquidacion_IVA05 = current_factura.IVA05_Total / 21;
                     current_factura.Liquidacion_IVA10 = current_factura.IVA10_Total / 11;
+                    current_factura.Liquidacion_IVA_Total = current_factura.Liquidacion_IVA05 + current_factura.Liquidacion_IVA10;
 
                     current_factura.Concepto = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", pago.fecha) +
                         " a " + String.Format("{0:dd/MM/yyyy}", pago.fecha_vencimiento);

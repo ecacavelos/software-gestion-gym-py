@@ -50,13 +50,13 @@ namespace Gimnasio
             catch (System.IO.FileNotFoundException ex)
             {
                 //Console.WriteLine(ex);
-                System.Windows.MessageBox.Show("No se encontró el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.");
+                System.Windows.MessageBox.Show("No se encontró el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.", "Archivo de Configuración");
                 xmlinvalido = true;
             }
             catch (System.InvalidOperationException ex)
             {
                 //Console.WriteLine(ex);
-                System.Windows.MessageBox.Show("Existe un error con el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.");
+                System.Windows.MessageBox.Show("Existe un error con el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.", "Archivo de Configuración");
                 xmlinvalido = true;
             }
         }
@@ -428,7 +428,7 @@ namespace Gimnasio
             Console.WriteLine("Teclados: " + NumberOfKeyboards.ToString());
             if (NumberOfKeyboards == 1)
             {
-                System.Windows.MessageBox.Show("No se detectó un Teclado Auxiliar.\nNo podrá utilizarlo para ingresar números de Cédula.");
+                System.Windows.MessageBox.Show("No se detectó un Teclado Auxiliar.\nNo podrá utilizarlo para ingresar números de Cédula.", "Teclado Auxiliar");
             }
             id.KeyPressed += new RawStuff.InputDevice.DeviceEventHandler(_KeyPressed);
         }

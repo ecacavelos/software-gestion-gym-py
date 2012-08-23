@@ -37,7 +37,7 @@ namespace Gimnasio
                 this.c2.TiempoApertura = 5;
                 this.c2.MainDeviceID = "";
                 Configuration.Serialize("config.xml", this.c2);
-            }            
+            }
             Activate();
         }
 

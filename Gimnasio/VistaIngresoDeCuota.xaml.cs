@@ -105,7 +105,7 @@ namespace Gimnasio
                             pagoAAgregar.fk_cliente = this.idCliente;
                             pagoAAgregar.idPago = timestamp;
                             pagoAAgregar.fk_tipoCuota = this.cuotaId;
-                            pagoAAgregar.fecha = this.fechaPago;                            
+                            pagoAAgregar.fecha = this.fechaPago;
                             if (this.diasAHabilitar != 30)
                             {
                                 pagoAAgregar.fecha_vencimiento = this.fechaPago.AddDays(this.diasAHabilitar);
@@ -128,13 +128,12 @@ namespace Gimnasio
                                 this.Close();
                             }
                         }
-                        else {
+                        else
+                        {
 
                             MessageBox.Show("Debe seleccionar una fecha posterior a la fecha del vencimiento de la cuota anterior");
                         }
-                        
-                        //pagoAAgregar.fech
-                        //pagoAAgregar.fk_tipoCuota = 
+
                     }
                 }
 
@@ -153,11 +152,11 @@ namespace Gimnasio
             {
                 this.fechaPago = (System.DateTime)datePickerFechaInicialPago.SelectedDate;
             }
-            else 
+            else
             {
                 MessageBox.Show("Debe seleccionar una fecha posterior a la fecha del vencimiento de la ultima cuota");
             }
-            
+
         }
 
         private void comboBoxTiposCuotas_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -208,9 +207,9 @@ namespace Gimnasio
                     }
                 }
                 else if (clientesVar.ToList().Count > 1)// Existe una inconsistencia en la base de datos. 
-                     { 
-                        MessageBox.Show("Existe mas de un usuario con este numero de cedula, por favor identifique el cliente y corriga el error.");
-                     }
+                {
+                    MessageBox.Show("Existe mas de un usuario con este numero de cedula, por favor identifique el cliente y corriga el error.");
+                }
                 else if (clientesVar.ToList().Count == 0)// No se selecciono ningun cliente.
                 {
                     MessageBox.Show("No existe cliente con ese numero de cedula, por favor inserte o modifique el cliente con el numero de cedula.");

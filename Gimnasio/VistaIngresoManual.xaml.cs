@@ -61,7 +61,8 @@ namespace Gimnasio
         /// If detected than _PortAddress is set to the address of LPT1.
         /// If not detected then the whole user control gets disabled.
         /// </summary>
-        public void ParallelPort() {
+        public void ParallelPort()
+        {
             InitializeComponent();
 
             int[] PortAddresses = Detect_LPT_Ports();
@@ -81,7 +82,8 @@ namespace Gimnasio
         /// Detecs the presence of LPT ports.
         /// </summary>
         /// <returns>Returns an integer array of all detected LPT addresses.</returns>
-        private int[] Detect_LPT_Ports() {
+        private int[] Detect_LPT_Ports()
+        {
             int Number_Of_LPT_Ports = 0;
             short[] portAddresses = new short[3];
             for (int i = 0; i < 3; i++)
@@ -107,10 +109,11 @@ namespace Gimnasio
         public VistaIngresoManual()
         {
             InitializeComponent();
-            
+
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e) {
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 D0 = !D0;
@@ -232,11 +235,11 @@ namespace Gimnasio
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
             InitializeComponent();
             ParallelPort();
             IsOpen = true;
-           
+
         }
 
         private void Window_Closed(object sender, EventArgs e)

@@ -32,6 +32,7 @@ namespace Gimnasio
             System.Console.WriteLine("Total a Pagar:    " + factura.Monto_Total);
             System.Console.WriteLine("Liq  5% Total:    " + factura.Liquidacion_IVA05);
             System.Console.WriteLine("Liq 10% Total:    " + factura.Liquidacion_IVA10);
+            System.Console.WriteLine("Liq IVA Total:    " + factura.Liquidacion_IVA_Total);
             System.Console.WriteLine(Numalet.ToCardinal((int)factura.Monto_Total));
 
             // Create the parent FixedDocument
@@ -150,7 +151,7 @@ namespace Gimnasio
             FixedPage.SetTop(factLiqIVA10, 230);
 
             TextBlock factLiqIVATotal = new TextBlock();
-            factLiqIVATotal.Text = (factura.Liquidacion_IVA05 + factura.Liquidacion_IVA10).ToString();
+            factLiqIVATotal.Text = factura.Liquidacion_IVA_Total.ToString();
             page1.Children.Add(factLiqIVATotal);
             FixedPage.SetLeft(factLiqIVATotal, 380);
             FixedPage.SetTop(factLiqIVATotal, 230);

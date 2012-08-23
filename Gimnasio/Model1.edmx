@@ -72,6 +72,8 @@
           <Property Name="Exentas_Total" Type="int" />
           <Property Name="Liquidacion_IVA05" Type="int" />
           <Property Name="Liquidacion_IVA10" Type="int" />
+          <Property Name="Liquidacion_IVA_Total" Type="int" />
+          <Property Name="Anulada" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Pagos">
           <Key>
@@ -82,7 +84,7 @@
           <Property Name="fk_cliente" Type="int" />
           <Property Name="fk_tipoCuota" Type="int" />
           <Property Name="fecha_vencimiento" Type="datetime" />
-          <Property Name="ya_facturado" Type="bit" />
+          <Property Name="ya_facturado" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="fk_cliente_factura">
           <End Role="clientes" Type="Database1Model.Store.clientes" Multiplicity="0..1" />
@@ -200,7 +202,7 @@
           <NavigationProperty Name="clientes" Relationship="Database1Model.FK_cliente_pago" FromRole="Pagos" ToRole="clientes" />
           <NavigationProperty Name="Cuotas" Relationship="Database1Model.fk_tipoCuota_pago" FromRole="Pagos" ToRole="Cuotas" />
           <NavigationProperty Name="Facturas" Relationship="Database1Model.fk_pago_factura" FromRole="Pagos" ToRole="Facturas" />
-          <Property Type="Boolean" Name="ya_facturado" />
+          <Property Type="Boolean" Name="ya_facturado" Nullable="false" />
         </EntityType>
         <Association Name="FK_cliente_pago">
           <End Type="Database1Model.clientes" Role="clientes" Multiplicity="0..1" />
@@ -246,6 +248,8 @@
           <Property Type="Int32" Name="Exentas_Total" />
           <Property Type="Int32" Name="Liquidacion_IVA05" />
           <Property Type="Int32" Name="Liquidacion_IVA10" />
+          <Property Type="Int32" Name="Liquidacion_IVA_Total" />
+          <Property Type="Boolean" Name="Anulada" Nullable="false" />
         </EntityType>
         <Association Name="fk_cliente_factura">
           <End Type="Database1Model.clientes" Role="clientes" Multiplicity="0..1" />
@@ -321,6 +325,8 @@
           <EntitySetMapping Name="Facturas">
             <EntityTypeMapping TypeName="Database1Model.Facturas">
               <MappingFragment StoreEntitySet="Facturas">
+                <ScalarProperty Name="Anulada" ColumnName="Anulada" />
+                <ScalarProperty Name="Liquidacion_IVA_Total" ColumnName="Liquidacion_IVA_Total" />
                 <ScalarProperty Name="Liquidacion_IVA10" ColumnName="Liquidacion_IVA10" />
                 <ScalarProperty Name="Liquidacion_IVA05" ColumnName="Liquidacion_IVA05" />
                 <ScalarProperty Name="Exentas_Total" ColumnName="Exentas_Total" />
