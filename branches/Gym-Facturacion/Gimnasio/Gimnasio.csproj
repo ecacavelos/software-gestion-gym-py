@@ -190,13 +190,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="agregarClienteIcon.png" />
     <Content Include="Database1.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="iconoControAcceso.png" />
-    <Resource Include="iconoCuotas.jpg" />
-    <Resource Include="vistaClientesIcon.png" />
+    <Resource Include="Images\iconoConfiguracion.png" />
+    <Resource Include="Images\iconoFacturas.png" />
+    <Resource Include="Images\iconoCuotas.png" />
+    <Resource Include="Images\vistaClientesIcon.png" />
+    <Resource Include="Images\iconoControAcceso.png" />
     <Resource Include="Images\colorful_chart.ico" />
   </ItemGroup>
   <ItemGroup>

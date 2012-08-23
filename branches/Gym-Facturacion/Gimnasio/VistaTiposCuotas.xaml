@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Gimnasio.VistaTiposCuotas"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="VistaTiposCuotas" Height="336" Width="299" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" Icon="/Gimnasio;component/iconoCuotas.jpg" ResizeMode="NoResize" Unloaded="Window_Unloaded">
+        Title="VistaTiposCuotas" Height="336" Width="299" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" Icon="/Gimnasio;component/Images/iconoCuotas.png" ResizeMode="NoResize" Unloaded="Window_Unloaded">
     <Window.Resources>
         <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance my:clientes, CreateList=True}" />
         <CollectionViewSource x:Key="cuotasViewSource" d:DesignSource="{d:DesignInstance my:Cuotas, CreateList=True}" />

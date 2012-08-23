@@ -78,7 +78,7 @@ namespace Gimnasio
             {
                 temp = Convert.ToInt32(textBoxNroFactura.Text);
             }
-            catch (Exception h)
+            catch (Exception ex)
             {
                 MessageBox.Show("Por favor introduzca sólo números.");
             }

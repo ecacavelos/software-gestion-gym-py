@@ -35,7 +35,6 @@ namespace Gimnasio
 
         public VistaClientes()
         {
-
             InitializeComponent();
             this.c2 = Configuration.Deserialize("config.xml");
             //_Keypad_usb = this.c2.Keypad_usb;
@@ -48,6 +47,7 @@ namespace Gimnasio
             return clientesQuery;
         }
 
+        #region "Funciones Manejadoras de Carga y Descarga de la Ventana"
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Load data into clientes. You can modify this code as needed.
@@ -60,31 +60,46 @@ namespace Gimnasio
             database1Entities.SaveChanges();
         }
 
-        private void GuardarCambiosClientes(object sender, RoutedEventArgs e)
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            IsOpen = false;
+        }
+
+        // Al momento de cerrar la ventana verificamos si hay cambios pendientes, y preguntamos para guardar
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             System.Windows.Forms.DialogResult result;
 
-            // Advertir del cambio antes de cambiar.
-            // Cuando se da click en el boton de guardar cambios, se tienen que guardar todos los objetos que fueron cambiados
-            result = System.Windows.Forms.MessageBox.Show("Está seguro de que desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNo);
-            if (result == System.Windows.Forms.DialogResult.Yes)
+            if (button2.IsEnabled == true)
             {
-                // 'DialogResult.Yes' value was returned from the MessageBox
-                //System.Console.WriteLine("Entramos al IF.");
-                database1Entities.SaveChanges();
-                label1.Content = "Se guardaron los cambios.";
-                button2.IsEnabled = false;
+                result = System.Windows.Forms.MessageBox.Show("Desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNoCancel);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    // 'DialogResult.Yes' value was returned from the MessageBox
+                    //System.Console.WriteLine("Yes.");
+                    database1Entities.SaveChanges();
+                    //label1.Content = "Se guardaron los cambios.";                
+                }
+                else if (result == System.Windows.Forms.DialogResult.No)
+                {
+                    //System.Console.WriteLine("No.");
+                    //label1.Content = "NO se guardaron los cambios.";
+                }
+                else
+                {
+                    //System.Console.WriteLine("Cancel.");
+                    e.Cancel = true;
+                }
             }
-            else
-            {
-                //System.Console.WriteLine("No entramos al IF.");
-                label1.Content = "NO se guardaron los cambios.";
-                //database1Entities.SaveChanges();
-                // Gimnasio.Database1Entities
-            }
-
         }
 
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            //this.Hide();
+        }
+        #endregion
+
+        #region "Funciones Manejadoras de la Edición y Borrado de las Filas del DataGrid"
         // Verificamos cuando hay cambios en el registro, habilitando el boton para guardarlos.
         private void clientesDataGrid_UnloadingRow(object sender, DataGridRowEventArgs e)
         {
@@ -116,33 +131,32 @@ namespace Gimnasio
             button2.IsEnabled = true;
 
         }
+        #endregion
 
-        // Al momento de cerrar la ventana verificamos si hay cambios pendientes, y preguntamos para guardar
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        #region "Funciones Manejadoras de los Botones de la Ventana: 1) Guardar Cambios 2) Cancelar y Salir"
+        private void GuardarCambiosClientes(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.DialogResult result;
 
-            if (button2.IsEnabled == true)
+            // Advertir del cambio antes de cambiar.
+            // Cuando se da click en el boton de guardar cambios, se tienen que guardar todos los objetos que fueron cambiados
+            result = System.Windows.Forms.MessageBox.Show("Está seguro de que desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNo);
+            if (result == System.Windows.Forms.DialogResult.Yes)
             {
-                result = System.Windows.Forms.MessageBox.Show("Desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNoCancel);
-                if (result == System.Windows.Forms.DialogResult.Yes)
-                {
-                    // 'DialogResult.Yes' value was returned from the MessageBox
-                    //System.Console.WriteLine("Yes.");
-                    database1Entities.SaveChanges();
-                    //label1.Content = "Se guardaron los cambios.";                
-                }
-                else if (result == System.Windows.Forms.DialogResult.No)
-                {
-                    //System.Console.WriteLine("No.");
-                    //label1.Content = "NO se guardaron los cambios.";
-                }
-                else
-                {
-                    //System.Console.WriteLine("Cancel.");
-                    e.Cancel = true;
-                }
+                // 'DialogResult.Yes' value was returned from the MessageBox
+                //System.Console.WriteLine("Entramos al IF.");
+                database1Entities.SaveChanges();
+                label1.Content = "Se guardaron los cambios.";
+                button2.IsEnabled = false;
             }
+            else
+            {
+                //System.Console.WriteLine("No entramos al IF.");
+                label1.Content = "NO se guardaron los cambios.";
+                //database1Entities.SaveChanges();
+                // Gimnasio.Database1Entities
+            }
+
         }
 
         //BOTON PARA CANCELAR TODO EN LA VISTA CLIENTES. 
@@ -152,16 +166,7 @@ namespace Gimnasio
             this.Close();
 
         }
-
-        private void Window_Unloaded(object sender, RoutedEventArgs e)
-        {
-            IsOpen = false;
-        }
-
-        private void Window_Deactivated(object sender, EventArgs e)
-        {
-            //this.Hide();
-        }
+        #endregion
 
         #region "Funciones relativas a la busqueda dinámica"
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
@@ -292,47 +297,7 @@ namespace Gimnasio
         }
         #endregion
 
-        #region "Funciones relativas al Keypad USB"
-        // Funciones para evitar que el keypad USB afecte los controles de esta ventana.
-
-        private void clientesDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            this.c2 = Configuration.Deserialize("config.xml");
-            if (this.c2.Keypad_usb == true)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void textBox1_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            this.c2 = Configuration.Deserialize("config.xml");
-            //Console.WriteLine("C2: " + this.c2.Keypad_usb.ToString());
-            if (this.c2.Keypad_usb == true)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void button2_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            this.c2 = Configuration.Deserialize("config.xml");
-            if (this.c2.Keypad_usb == true)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void button1_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            this.c2 = Configuration.Deserialize("config.xml");
-            if (this.c2.Keypad_usb == true)
-            {
-                e.Handled = true;
-            }
-        }
-        #endregion
-
+        #region "Funciones relativas al manejo de las fotos de los clientes"
         private void OnFotoToggleTargetUpdated(Object sender, DataTransferEventArgs args)
         {
 
@@ -415,6 +380,48 @@ namespace Gimnasio
             button2.IsEnabled = true;
 
         }
+        #endregion
+
+        #region "Funciones relativas al Keypad USB"
+        // Funciones para evitar que el keypad USB afecte los controles de esta ventana.
+
+        private void clientesDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBox1_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            //Console.WriteLine("C2: " + this.c2.Keypad_usb.ToString());
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void button2_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void button1_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion
 
     }
 }

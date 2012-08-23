@@ -738,12 +738,14 @@ namespace Gimnasio
         /// <param name="idFactura">Initial value of the idFactura property.</param>
         /// <param name="fk_pago">Initial value of the fk_pago property.</param>
         /// <param name="nro_Factura">Initial value of the Nro_Factura property.</param>
-        public static Facturas CreateFacturas(global::System.Int32 idFactura, global::System.Int64 fk_pago, global::System.String nro_Factura)
+        /// <param name="anulada">Initial value of the Anulada property.</param>
+        public static Facturas CreateFacturas(global::System.Int32 idFactura, global::System.Int64 fk_pago, global::System.String nro_Factura, global::System.Boolean anulada)
         {
             Facturas facturas = new Facturas();
             facturas.idFactura = idFactura;
             facturas.fk_pago = fk_pago;
             facturas.Nro_Factura = nro_Factura;
+            facturas.Anulada = anulada;
             return facturas;
         }
 
@@ -1088,6 +1090,54 @@ namespace Gimnasio
         private Nullable<global::System.Int32> _Liquidacion_IVA10;
         partial void OnLiquidacion_IVA10Changing(Nullable<global::System.Int32> value);
         partial void OnLiquidacion_IVA10Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Liquidacion_IVA_Total
+        {
+            get
+            {
+                return _Liquidacion_IVA_Total;
+            }
+            set
+            {
+                OnLiquidacion_IVA_TotalChanging(value);
+                ReportPropertyChanging("Liquidacion_IVA_Total");
+                _Liquidacion_IVA_Total = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Liquidacion_IVA_Total");
+                OnLiquidacion_IVA_TotalChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Liquidacion_IVA_Total;
+        partial void OnLiquidacion_IVA_TotalChanging(Nullable<global::System.Int32> value);
+        partial void OnLiquidacion_IVA_TotalChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Anulada
+        {
+            get
+            {
+                return _Anulada;
+            }
+            set
+            {
+                OnAnuladaChanging(value);
+                ReportPropertyChanging("Anulada");
+                _Anulada = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Anulada");
+                OnAnuladaChanged();
+            }
+        }
+        private global::System.Boolean _Anulada;
+        partial void OnAnuladaChanging(global::System.Boolean value);
+        partial void OnAnuladaChanged();
 
         #endregion
     
@@ -1186,10 +1236,12 @@ namespace Gimnasio
         /// Create a new Pagos object.
         /// </summary>
         /// <param name="idPago">Initial value of the idPago property.</param>
-        public static Pagos CreatePagos(global::System.Int64 idPago)
+        /// <param name="ya_facturado">Initial value of the ya_facturado property.</param>
+        public static Pagos CreatePagos(global::System.Int64 idPago, global::System.Boolean ya_facturado)
         {
             Pagos pagos = new Pagos();
             pagos.idPago = idPago;
+            pagos.ya_facturado = ya_facturado;
             return pagos;
         }
 
@@ -1322,9 +1374,9 @@ namespace Gimnasio
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> ya_facturado
+        public global::System.Boolean ya_facturado
         {
             get
             {
@@ -1339,8 +1391,8 @@ namespace Gimnasio
                 Onya_facturadoChanged();
             }
         }
-        private Nullable<global::System.Boolean> _ya_facturado;
-        partial void Onya_facturadoChanging(Nullable<global::System.Boolean> value);
+        private global::System.Boolean _ya_facturado;
+        partial void Onya_facturadoChanging(global::System.Boolean value);
         partial void Onya_facturadoChanged();
 
         #endregion

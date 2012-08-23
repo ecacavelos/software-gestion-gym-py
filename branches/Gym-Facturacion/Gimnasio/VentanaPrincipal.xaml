@@ -16,20 +16,33 @@
         </Grid.RowDefinitions>
         <Menu Background="#2A040417">
             <MenuItem Header="Archivo">
-                <MenuItem Header="Configuración" Click="MenuItem_Click_Configuracion" />
+                <MenuItem Header="Configuración..." Click="MenuItem_Click_Configuracion">
+                    <MenuItem.Icon>
+                        <Image Source="/Gimnasio;component/Images/iconoConfiguracion.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Editar Cuotas..." Click="menuItem_CuotasEditar" />
+                <Separator />
                 <MenuItem Header="Salir" Click="SalirMenuItem_Click"></MenuItem>
             </MenuItem>
             <MenuItem Header="Clientes">
-                <MenuItem Header="Ver" Click="VerClientesMenuItem_Click"></MenuItem>
-                <MenuItem Header="Consultar Pagos" Click="click_ConsultarPagos"></MenuItem>
+                <MenuItem Header="Ver Clientes..." Click="VerClientesMenuItem_Click"></MenuItem>
+                <MenuItem Header="Consultar Pagos..." Click="click_ConsultarPagos">
+                    <MenuItem.Icon>
+                        <Image Source="/Gimnasio;component/Images/iconoCuotas.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
-            <MenuItem Header="Cuotas">
-                <MenuItem Header="Editar" Click="menuItem_CuotasEditar" />
-                <MenuItem Header="Ver Facturas" Click="menuItem_FacturasVer" />
+            <MenuItem Header="Facturas">                
+                <MenuItem Header="Ver Facturas..." Click="menuItem_FacturasVer">
+                    <MenuItem.Icon>
+                        <Image Source="/Gimnasio;component/Images/iconoFacturas.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Ayuda">
                 <MenuItem Header="Ayuda" />
-                <MenuItem Header="About GymAdmin" Click="click_AboutGymAdmin" />
+                <MenuItem Header="About GymAdmin..." Click="click_AboutGymAdmin" />
             </MenuItem>
         </Menu>
         <ToolBar Grid.Row="4" HorizontalAlignment="Left" Background="#5A1B1B1D" Margin="12,12,0,215" Width="594">
