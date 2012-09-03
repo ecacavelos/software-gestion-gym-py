@@ -130,7 +130,6 @@ namespace Gimnasio
             string esql3 = "select value c from clientes as c where c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
             var clientesVar3 = database1Entities.CreateQuery<clientes>(esql3);
             this.dataGridPagos.ItemsSource = clientesVar3.ToArray()[0].Pagos;
-
         }
 
         private void dataGridPagos_LoadingRow(object sender, DataGridRowEventArgs e)

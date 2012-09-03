@@ -25,9 +25,7 @@ namespace Gimnasio
 
         public static bool IsOpen { get; private set; }
 
-        static List<string> facturasPorAnular = new List<string>();
-        static bool deletingFlag = false;
-        static string deletingFKpago;
+        bool anularClicked;
 
         public VistaFacturas()
         {
@@ -50,6 +48,7 @@ namespace Gimnasio
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             IsOpen = true;
+            anularClicked = false;
 
             // Load data into Facturas. You can modify this code as needed.
             System.Windows.Data.CollectionViewSource facturasViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("facturasViewSource")));
@@ -71,11 +70,6 @@ namespace Gimnasio
                 result = System.Windows.Forms.MessageBox.Show("Desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNoCancel);
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
-                    foreach (string fk_fact in facturasPorAnular)
-                    {
-                        database1Entities.ExecuteStoreCommand("UPDATE Pagos SET ya_facturado = 0 WHERE (Pagos.idPago = {0})", fk_fact);
-                    }
-                    facturasPorAnular.Clear();
                     database1Entities.SaveChanges();
                 }
                 else if (result == System.Windows.Forms.DialogResult.No)
@@ -94,21 +88,6 @@ namespace Gimnasio
         // Al borrar una fila.
         private void facturasDataGrid_UnloadingRow(object sender, DataGridRowEventArgs e)
         {
-            if (deletingFlag == true)
-            {
-                facturasPorAnular.Add(deletingFKpago);
-
-                System.Console.WriteLine();
-                System.Console.WriteLine("Lista de Facturas a Eliminar de la Tabla: ");
-                foreach (string fk_fact in facturasPorAnular)
-                {
-                    System.Console.WriteLine(fk_fact);
-                }
-
-                deletingFlag = false;
-            }
-            // Se devuelve el campo "ya_facturado" de la tabla Pagos a "false".
-            //database1Entities.ExecuteStoreCommand("UPDATE Pagos SET ya_facturado = 0 WHERE (Pagos.idPago = {0})", current_factura.fk_pago);
             buttonGuardarCambios.IsEnabled = true;
         }
         // Al editar una fila.
@@ -128,11 +107,6 @@ namespace Gimnasio
             result = System.Windows.Forms.MessageBox.Show("Está seguro de que desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNo);
             if (result == System.Windows.Forms.DialogResult.Yes)
             {
-                foreach (string fk_fact in facturasPorAnular)
-                {
-                    database1Entities.ExecuteStoreCommand("UPDATE Pagos SET ya_facturado = 0 WHERE (Pagos.idPago = {0})", fk_fact);
-                }
-                facturasPorAnular.Clear();
                 database1Entities.SaveChanges();
                 label1.Content = "Se guardaron los cambios.";
                 buttonGuardarCambios.IsEnabled = false;
@@ -150,26 +124,44 @@ namespace Gimnasio
         }
         #endregion
 
-        private void facturasDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key.ToString() == "Delete")
-            {
-                DataGrid myDataGrid = (DataGrid)sender;
-                Gimnasio.Facturas currentCell = (Gimnasio.Facturas)myDataGrid.SelectedItem;
-                deletingFKpago = currentCell.fk_pago.ToString();
-
-                deletingFlag = true;
-            }
-            else
-            {
-                deletingFlag = false;
-            }
-
+        private void anularCheckBox_Click(object sender, RoutedEventArgs e)
+        {            
+            buttonGuardarCambios.IsEnabled = true;
         }
 
-        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        private void anularCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            buttonGuardarCambios.IsEnabled = true;
+            //System.Console.WriteLine("Checked " + anularClicked.ToString());
+            if (anularClicked.ToString() == "True")
+            {
+                DataGrid myDataGrid = facturasDataGrid;
+                Gimnasio.Facturas currentcell = (Gimnasio.Facturas)myDataGrid.SelectedItem;
+                //System.Console.WriteLine("Ponemos a FALSE el pago " + currentcell.fk_pago.ToString());
+                database1Entities.ExecuteStoreCommand("UPDATE Pagos SET ya_facturado = 0 WHERE (Pagos.idPago = {0})", currentcell.fk_pago.ToString());
+                database1Entities.SaveChanges();
+
+                anularClicked = false;
+            }
+        }
+
+        private void anularCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            //System.Console.WriteLine("Unchecked " + anularClicked.ToString());
+            if (anularClicked.ToString() == "True")
+            {
+                DataGrid myDataGrid = facturasDataGrid;
+                Gimnasio.Facturas currentcell = (Gimnasio.Facturas)myDataGrid.SelectedItem;
+                //System.Console.WriteLine("Ponemos a TRUE el pago " + currentcell.fk_pago.ToString());
+                database1Entities.ExecuteStoreCommand("UPDATE Pagos SET ya_facturado = 1 WHERE (Pagos.idPago = {0})", currentcell.fk_pago.ToString());
+                database1Entities.SaveChanges();
+
+                anularClicked = false;
+            }
+        }
+
+        private void anularCheckBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            anularClicked = true;
         }
 
     }

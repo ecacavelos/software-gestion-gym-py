@@ -69,11 +69,13 @@ namespace Gimnasio
             if (PortAddresses.Length != 0)
             {
                 _PortAddress = PortAddresses[0];
+                button1.IsEnabled = true;
             }
             else
             {
                 _PortAddress = 0;
                 MessageBox.Show("No se detecto el puerto paralelo en la computadora, no se podra utilizar el porton electrico.");
+                button1.IsEnabled = false;
             }
 
         }

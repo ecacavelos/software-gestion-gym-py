@@ -92,14 +92,12 @@ namespace Gimnasio
                 // Si ya no existe una factura con ese número.
                 if (facturasVar.ToList().Count == 0)
                 {
-
                     if (validRUC == true)
                     {
                         // Se actualiza el campo "RUC" de la tabla Clientes si el RUC incluye digito verificador.                                        
                         database1Entities.ExecuteStoreCommand("UPDATE clientes SET RUC = {0} WHERE (clientes.idCliente = {1})", textBoxRUC.Text, thisPago.clientes.idCliente);
                         database1Entities.SaveChanges();
                     }
-
                     this.DialogResult = true;
                 }
                 else
