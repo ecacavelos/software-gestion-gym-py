@@ -124,19 +124,20 @@ namespace Gimnasio
         }
         #endregion
 
+        #region "Funciones para Anular y Desanular desde la vista de Facturas"
         private void anularCheckBox_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             buttonGuardarCambios.IsEnabled = true;
         }
 
         private void anularCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            //System.Console.WriteLine("Checked " + anularClicked.ToString());
             if (anularClicked.ToString() == "True")
             {
                 DataGrid myDataGrid = facturasDataGrid;
                 Gimnasio.Facturas currentcell = (Gimnasio.Facturas)myDataGrid.SelectedItem;
-                //System.Console.WriteLine("Ponemos a FALSE el pago " + currentcell.fk_pago.ToString());
+
+                // Indicamos que el pago correspondiente deja de estar facturado.
                 database1Entities.ExecuteStoreCommand("UPDATE Pagos SET ya_facturado = 0 WHERE (Pagos.idPago = {0})", currentcell.fk_pago.ToString());
                 database1Entities.SaveChanges();
 
@@ -146,12 +147,21 @@ namespace Gimnasio
 
         private void anularCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            //System.Console.WriteLine("Unchecked " + anularClicked.ToString());
             if (anularClicked.ToString() == "True")
             {
+
                 DataGrid myDataGrid = facturasDataGrid;
                 Gimnasio.Facturas currentcell = (Gimnasio.Facturas)myDataGrid.SelectedItem;
-                //System.Console.WriteLine("Ponemos a TRUE el pago " + currentcell.fk_pago.ToString());
+
+                // Al des-anular una factura, verificamos que no hayan ya otras facturas sin anular correspondientes al mismo pago.
+                string esql = "SELECT value f FROM Facturas as f WHERE (f.fk_pago = " + currentcell.fk_pago.ToString() + ") AND (f.Anulada = False)";
+                var facturasNoAnuladas = database1Entities.CreateQuery<Facturas>(esql);
+                if (facturasNoAnuladas.ToList().Count > 0)
+                {
+                    System.Console.WriteLine("Advertencia: Ya existen facturas no anuladas para este pago. Verificar.");
+                }
+
+                // Ponemos el pago correspondiente como facturado.
                 database1Entities.ExecuteStoreCommand("UPDATE Pagos SET ya_facturado = 1 WHERE (Pagos.idPago = {0})", currentcell.fk_pago.ToString());
                 database1Entities.SaveChanges();
 
@@ -163,6 +173,7 @@ namespace Gimnasio
         {
             anularClicked = true;
         }
+        #endregion
 
     }
 }
