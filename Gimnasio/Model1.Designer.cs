@@ -136,6 +136,22 @@ namespace Gimnasio
             }
         }
         private ObjectSet<Facturas> _Facturas;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Admins> Admins
+        {
+            get
+            {
+                if ((_Admins == null))
+                {
+                    _Admins = base.CreateObjectSet<Admins>("Admins");
+                }
+                return _Admins;
+            }
+        }
+        private ObjectSet<Admins> _Admins;
 
         #endregion
         #region AddTo Methods
@@ -171,6 +187,14 @@ namespace Gimnasio
         {
             base.AddObject("Facturas", facturas);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Admins EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAdmins(Admins admins)
+        {
+            base.AddObject("Admins", admins);
+        }
 
         #endregion
     }
@@ -179,6 +203,113 @@ namespace Gimnasio
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Database1Model", Name="Admins")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Admins : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Admins object.
+        /// </summary>
+        /// <param name="nombre">Initial value of the Nombre property.</param>
+        /// <param name="idAdmin">Initial value of the idAdmin property.</param>
+        /// <param name="password">Initial value of the Password property.</param>
+        public static Admins CreateAdmins(global::System.String nombre, global::System.Int32 idAdmin, global::System.String password)
+        {
+            Admins admins = new Admins();
+            admins.Nombre = nombre;
+            admins.idAdmin = idAdmin;
+            admins.Password = password;
+            return admins;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Nombre
+        {
+            get
+            {
+                return _Nombre;
+            }
+            set
+            {
+                OnNombreChanging(value);
+                ReportPropertyChanging("Nombre");
+                _Nombre = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Nombre");
+                OnNombreChanged();
+            }
+        }
+        private global::System.String _Nombre;
+        partial void OnNombreChanging(global::System.String value);
+        partial void OnNombreChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 idAdmin
+        {
+            get
+            {
+                return _idAdmin;
+            }
+            set
+            {
+                if (_idAdmin != value)
+                {
+                    OnidAdminChanging(value);
+                    ReportPropertyChanging("idAdmin");
+                    _idAdmin = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("idAdmin");
+                    OnidAdminChanged();
+                }
+            }
+        }
+        private global::System.Int32 _idAdmin;
+        partial void OnidAdminChanging(global::System.Int32 value);
+        partial void OnidAdminChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Password
+        {
+            get
+            {
+                return _Password;
+            }
+            set
+            {
+                OnPasswordChanging(value);
+                ReportPropertyChanging("Password");
+                _Password = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Password");
+                OnPasswordChanged();
+            }
+        }
+        private global::System.String _Password;
+        partial void OnPasswordChanging(global::System.String value);
+        partial void OnPasswordChanged();
+
+        #endregion
+    
+    }
     
     /// <summary>
     /// No Metadata Documentation available.

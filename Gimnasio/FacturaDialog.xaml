@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Gimnasio.FacturaDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nueva Factura" Height="200" Width="300" WindowStartupLocation="CenterScreen">
+        Title="Nueva Factura" Height="200" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid Background="#FFBECBEB">
         <Label Content="Ingrese Número de Factura:" HorizontalAlignment="Left" Margin="12,66,0,0" Name="label1" VerticalAlignment="Top" Width="254" />
         <TextBox HorizontalAlignment="Left" Margin="12,98,0,0" Name="textBoxNroFactura" VerticalAlignment="Top" Width="254" MaxLength="7" />

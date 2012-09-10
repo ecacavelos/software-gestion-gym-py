@@ -16,9 +16,9 @@ using System.Globalization;
 namespace Gimnasio
 {
     /// <summary>
-    /// Interaction logic for ConsultarPagosCliente.xaml
+    /// Interaction logic for VistaConsultarPagos.xaml
     /// </summary>
-    public partial class ConsultarPagosCliente : Window
+    public partial class VistaConsultarPagos : Window
     {
 
         public ResourceDictionary Resources { get; set; }
@@ -31,7 +31,7 @@ namespace Gimnasio
 
         DataGridRow[] PagosRow001 = new DataGridRow[99999];
 
-        public ConsultarPagosCliente()
+        public VistaConsultarPagos()
         {
             InitializeComponent();
         }
@@ -134,13 +134,7 @@ namespace Gimnasio
 
         private void dataGridPagos_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            //if (e.Row.GetIndex() == this.pagosCliente.Count)
-            //if (e.Row.GetIndex() == 0)
-            //{
-            //System.Console.WriteLine("Ouch " + this.dataGridPagos.Columns[1].GetCellContent(e.Row));
-            //e.Row.Background = Brushes.Beige;                                
-            //System.Console.WriteLine("xxx " + this.buttonColumn.CellTemplate.LoadContent().GetValue(ContentProperty));                                
-            //}
+
         }
 
         #region "Funciones relativas al Keypad USB"

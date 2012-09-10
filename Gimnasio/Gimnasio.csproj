@@ -84,8 +84,11 @@
     <Compile Include="Impresion.cs" />
     <Compile Include="Facturacion.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="ConsultarPagosCliente.xaml.cs">
-      <DependentUpon>ConsultarPagosCliente.xaml</DependentUpon>
+    <Compile Include="VentanaLogin.xaml.cs">
+      <DependentUpon>VentanaLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VistaConsultarPagos.xaml.cs">
+      <DependentUpon>VistaConsultarPagos.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataGridHelper.cs" />
     <Compile Include="FacturaDialog.xaml.cs">
@@ -202,7 +205,11 @@
     <Resource Include="Images\colorful_chart.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ConsultarPagosCliente.xaml">
+    <Page Include="VentanaLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VistaConsultarPagos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
