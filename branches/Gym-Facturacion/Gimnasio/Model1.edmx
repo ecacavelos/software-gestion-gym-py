@@ -6,6 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="Database1Model.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="Admins" EntityType="Database1Model.Store.Admins" store:Type="Tables" />
           <EntitySet Name="clientes" EntityType="Database1Model.Store.clientes" store:Type="Tables" />
           <EntitySet Name="Cuotas" EntityType="Database1Model.Store.Cuotas" store:Type="Tables" />
           <EntitySet Name="Facturas" EntityType="Database1Model.Store.Facturas" store:Type="Tables" />
@@ -27,6 +28,14 @@
             <End Role="Pagos" EntitySet="Pagos" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="idAdmin" />
+          </Key>
+          <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="idAdmin" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
         <EntityType Name="clientes">
           <Key>
             <PropertyRef Name="idCliente" />
@@ -159,6 +168,7 @@
             <End Role="Pagos" EntitySet="Pagos" />
             <End Role="Facturas" EntitySet="Facturas" />
           </AssociationSet>
+          <EntitySet Name="Admins" EntityType="Database1Model.Admins" />
           </EntityContainer>
         <EntityType Name="clientes">
           <Key>
@@ -275,6 +285,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="idAdmin" />
+          </Key>
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="idAdmin" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -344,6 +362,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="Database1Model.Admins">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="idAdmin" ColumnName="idAdmin" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -386,6 +413,7 @@
           <ConnectorPoint PointX="4.25" PointY="1.8747460937500002" />
           <ConnectorPoint PointX="5" PointY="1.8747460937500002" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="Database1Model.Admins" Width="1.5" PointX="9" PointY="0.5" Height="1.59568359375" />
         </Diagram>
     </Diagrams>
   </Designer>
