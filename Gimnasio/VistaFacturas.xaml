@@ -11,9 +11,8 @@
                 <Style x:Key="DataGridCheckBoxStyle" TargetType="CheckBox">
                     <Setter Property="VerticalAlignment" Value="Center" />
                     <Setter Property="HorizontalAlignment" Value="Center" />
-                    
                 </Style>
-            </DataGrid.Resources>            
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nroFacturaColumn" Binding="{Binding Path=Nro_Factura}" Header="Nro. Factura" Width="100" />
                 <DataGridTextColumn x:Name="fechaEmisionColumn" Binding="{Binding Path=Fecha_Emision, StringFormat=\{0:dd/MM/yyyy\}}" Header="Fecha de Emisión" />

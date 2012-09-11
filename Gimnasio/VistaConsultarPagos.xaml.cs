@@ -95,7 +95,6 @@ namespace Gimnasio
             string esql = "select value c from clientes as c where c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
             var clientesVar = database1Entities2.CreateQuery<clientes>(esql);
 
-
             if (this.pagosCliente.Count < clientesVar.ToArray()[0].Pagos.Count)
             {
 

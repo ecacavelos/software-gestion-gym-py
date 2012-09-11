@@ -19,6 +19,7 @@ namespace Gimnasio
     public partial class VentanaLogin : Window
     {
 
+        Configuration c2;
         public static bool IsOpen { get; private set; }
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
 
@@ -40,15 +41,19 @@ namespace Gimnasio
 
         private void buttonOK_Click(object sender, RoutedEventArgs e)
         {
-
-            string esql = "SELECT value a FROM Admins as a WHERE (a.Nombre = '" + textBoxUsuario.Text + "') AND (a.Password = '" + textBoxContraseña.Text + "')";
+            string esql = "SELECT value a FROM Admins as a WHERE (a.Nombre = '" + textBoxUsuario.Text + "') AND (a.Password = '" + passwordBoxContraseña.Password + "')";
             var adminsVar = database1Entities.CreateQuery<Admins>(esql);
 
             if (adminsVar.ToList().Count == 1)
             {
                 this.DialogResult = true;
             }
-
+            else
+            {
+                System.Windows.MessageBox.Show("El usuario y/o la contraseña son incorrectos.", "Contraseña Incorrecta");
+                passwordBoxContraseña.Focus();
+                passwordBoxContraseña.SelectAll();
+            }
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
@@ -56,6 +61,40 @@ namespace Gimnasio
             this.DialogResult = false;
         }
 
+        #region "Funciones relativas al Keypad USB"
+        // Funciones para evitar que el keypad USB afecte los controles de esta ventana.
+        private void textBoxUsuario_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.Key.ToString() == "Return" && textBoxUsuario.Text.Length > 0)
+                {
+                    passwordBoxContraseña.Focus();
+                }
+            }
+        }
+
+        private void passwordBoxContraseña_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.Key.ToString() == "Return")
+                {
+                    buttonOK_Click(null, null);
+                }
+            }
+        }
+        #endregion
 
     }
 }
