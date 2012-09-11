@@ -7,7 +7,7 @@
         <Button Content="Cancelar" Height="23" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonCancel" VerticalAlignment="Bottom" Width="75" Click="buttonCancel_Click" />
         <Label Content="Usuario: " HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" Width="80" />
         <Label Content="Contraseña: " HorizontalAlignment="Left" Margin="12,36,0,0" Name="label2" VerticalAlignment="Top" Width="80" />
-        <TextBox HorizontalAlignment="Right" Margin="0,14,12,0" Name="textBoxUsuario" VerticalAlignment="Top" Width="156" />
-        <TextBox HorizontalAlignment="Right" Margin="0,38,12,0" Name="textBoxContraseña" VerticalAlignment="Top" Width="156" />
+        <TextBox HorizontalAlignment="Right" Margin="0,14,12,0" Name="textBoxUsuario" VerticalAlignment="Top" Width="156" PreviewKeyDown="textBoxUsuario_PreviewKeyDown" />
+        <PasswordBox HorizontalAlignment="Right" Margin="0,36,12,0" Name="passwordBoxContraseña" VerticalAlignment="Top" Width="156" PreviewKeyDown="passwordBoxContraseña_PreviewKeyDown" Height="22" />
     </Grid>
 </Window>

@@ -32,7 +32,7 @@ namespace Gimnasio
         Window winVistaControlIngreso = new Window();
         Window winVistaConfiguracion = new Window();
         Window winVistaFacturas = new Window();
-        Window winLogin = new Window();
+        Window winReportePagos = new Window();
 
         RawStuff.InputDevice id;
         int NumberOfKeyboards;
@@ -197,8 +197,7 @@ namespace Gimnasio
 
         private void menuItem_ConsultarPagos(object sender, RoutedEventArgs e)
         {
-            // Create an instance of the window named
-            // by the current button.
+            // Create an instance of the window named by the current button.
             Type type = this.GetType();
             Assembly assembly = type.Assembly;
             Window win = (Window)assembly.CreateInstance("Gimnasio.VistaConsultarPagos");
@@ -231,21 +230,21 @@ namespace Gimnasio
 
         private void menuItem_ReportePagos(object sender, RoutedEventArgs e)
         {
-            if (VentanaLogin.IsOpen)
+            if (VistaReportePagos.IsOpen)
             {
-                this.winLogin.Activate();
+                this.winReportePagos.Activate();
                 return;
             }
             else
             {
-                Type type = this.GetType();
-                Assembly assembly = type.Assembly;
-                this.winLogin = (Window)assembly.CreateInstance("Gimnasio.VentanaLogin");
-
+                VentanaLogin winLogin = new VentanaLogin();
                 Nullable<bool> result = winLogin.ShowDialog();
                 if (result == true)
                 {
-                    System.Console.WriteLine("true");
+                    Type type = this.GetType();
+                    Assembly assembly = type.Assembly;
+                    this.winReportePagos = (Window)assembly.CreateInstance("Gimnasio.VistaReportePagos");
+                    this.winReportePagos.Show();
                 }
                 else
                 {
