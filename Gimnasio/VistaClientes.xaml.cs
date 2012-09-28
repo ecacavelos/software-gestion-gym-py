@@ -110,7 +110,6 @@ namespace Gimnasio
 
         private void clientesDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-
             clientes obj = e.Row.Item as clientes;
             if (obj.idCliente == 0)
             {   // new record 
@@ -126,10 +125,8 @@ namespace Gimnasio
                 obj.idCliente = timestamp;
 
             }
-
             //Console.WriteLine("RowEditEnding.");
             button2.IsEnabled = true;
-
         }
         #endregion
 
@@ -137,7 +134,6 @@ namespace Gimnasio
         private void GuardarCambiosClientes(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.DialogResult result;
-
             // Advertir del cambio antes de cambiar.
             // Cuando se da click en el boton de guardar cambios, se tienen que guardar todos los objetos que fueron cambiados
             result = System.Windows.Forms.MessageBox.Show("Está seguro de que desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNo);
@@ -156,7 +152,6 @@ namespace Gimnasio
                 //database1Entities.SaveChanges();
                 // Gimnasio.Database1Entities
             }
-
         }
 
         //BOTON PARA CANCELAR TODO EN LA VISTA CLIENTES. 

@@ -21,11 +21,12 @@ namespace Gimnasio
     public partial class VistaConsultarPagos : Window
     {
 
-        public ResourceDictionary Resources { get; set; }
+        //public ResourceDictionary Resources { get; set; }
         Configuration c2;
 
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
         Gimnasio.Database1Entities database1Entities2 = new Gimnasio.Database1Entities();
+        public static bool IsOpen { get; private set; }
 
         private System.Data.Objects.DataClasses.EntityCollection<Pagos> pagosCliente;
 
@@ -48,8 +49,10 @@ namespace Gimnasio
             return pagosQuery;
         }
 
+        #region "Funciones Manejadoras de Carga y Descarga de la Ventana"
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            IsOpen = true;
             // Load data into Pagos. You can modify this code as needed.
             System.Windows.Data.CollectionViewSource pagosViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("pagosViewSource")));
             System.Data.Objects.ObjectQuery<Gimnasio.Pagos> pagosQuery = this.GetPagosQuery(database1Entities);
@@ -57,6 +60,12 @@ namespace Gimnasio
 
             textBoxNroCedula.Focus();
         }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            IsOpen = false;
+        }
+        #endregion
 
         private void textBoxNroCedula_KeyDown(object sender, KeyEventArgs e)
         {
@@ -138,7 +147,6 @@ namespace Gimnasio
 
         #region "Funciones relativas al Keypad USB"
         // Funciones para evitar que el keypad USB afecte los controles de esta ventana.
-
         private void textBoxNroCedula_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             this.c2 = Configuration.Deserialize("config.xml");
@@ -147,7 +155,6 @@ namespace Gimnasio
                 e.Handled = true;
             }
         }
-
         #endregion
 
     }

@@ -31,7 +31,7 @@ namespace Gimnasio
             }
             catch (System.IO.FileNotFoundException ex)
             {
-                Console.WriteLine(ex);
+                System.Console.WriteLine(ex.Message);
                 //System.Windows.MessageBox.Show("Se restablecieron las opciones a sus valores por defecto.\nPor favor vuelva a colocar los valores deseados.");
                 this.c2 = new Gimnasio.Configuration();
                 this.c2.TiempoApertura = 5;

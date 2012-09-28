@@ -44,7 +44,7 @@ namespace Gimnasio
 
         #endregion
 
-        bool _Activado = false;
+        //bool _Activado = false;
         private int _PortAddress = 0;
         string ExceptionOccured;
 
@@ -111,7 +111,6 @@ namespace Gimnasio
         public VistaIngresoManual()
         {
             InitializeComponent();
-
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -214,14 +213,14 @@ namespace Gimnasio
                     if (value)
                     {
                         Out32(DataBusAddress, Convert.ToInt16(Inp32(DataBusAddress) | 1));
-                        _Activado = true;
+                        //_Activado = true;
                         button1.Content = "Cerrar";
                         //label1.Content = "D0 ON";
                     }
                     else
                     {
                         Out32(DataBusAddress, Convert.ToInt16(Inp32(DataBusAddress) & (~1)));
-                        _Activado = false;
+                        //_Activado = false;
                         button1.Content = "Abrir";
                         //label1.Content = "D0 OFF";
                     }
@@ -237,11 +236,9 @@ namespace Gimnasio
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
             InitializeComponent();
             ParallelPort();
             IsOpen = true;
-
         }
 
         private void Window_Closed(object sender, EventArgs e)

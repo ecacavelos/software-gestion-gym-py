@@ -26,11 +26,12 @@ namespace Gimnasio
         Configuration c2;
         //private bool _Keypad_usb = false;
 
-        Window winClientes = new Window();
-        Window winIngresoManual = new Window();
-        Window winVistaTiposCuotas = new Window();
-        Window winVistaControlIngreso = new Window();
         Window winVistaConfiguracion = new Window();
+        Window winVistaTiposCuotas = new Window();
+        Window winClientes = new Window();
+        Window winConsultarPagos = new Window();
+        Window winIngresoManual = new Window();        
+        Window winVistaControlIngreso = new Window();        
         Window winVistaFacturas = new Window();
         Window winReportePagos = new Window();
 
@@ -48,13 +49,13 @@ namespace Gimnasio
             }
             catch (System.IO.FileNotFoundException ex)
             {
-                Console.WriteLine(ex);
+                System.Console.WriteLine(ex.Message);
                 System.Windows.MessageBox.Show("No se encontró el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.", "Archivo de Configuración");
                 xmlinvalido = true;
             }
             catch (System.InvalidOperationException ex)
             {
-                Console.WriteLine(ex);
+                System.Console.WriteLine(ex.Message);
                 System.Windows.MessageBox.Show("Existe un error con el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.", "Archivo de Configuración");
                 xmlinvalido = true;
             }
@@ -197,12 +198,21 @@ namespace Gimnasio
 
         private void menuItem_ConsultarPagos(object sender, RoutedEventArgs e)
         {
-            // Create an instance of the window named by the current button.
-            Type type = this.GetType();
-            Assembly assembly = type.Assembly;
-            Window win = (Window)assembly.CreateInstance("Gimnasio.VistaConsultarPagos");
-            // Show the window.
-            win.Show();
+            if (VistaConsultarPagos.IsOpen)
+            {
+                this.winConsultarPagos.Activate();
+                return;
+            }
+            else
+            {
+                // Create an instance of the window named by the current button.
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winConsultarPagos = (Window)assembly.CreateInstance("Gimnasio.VistaConsultarPagos");
+                this.winConsultarPagos.Show();
+                //Window win = (Window)assembly.CreateInstance("Gimnasio.VistaConsultarPagos");
+                //win.Show();
+            }
 
         }
 
@@ -437,7 +447,7 @@ namespace Gimnasio
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                System.Console.WriteLine(ex.Message);
             }
 
             //Get the Hwnd source   
