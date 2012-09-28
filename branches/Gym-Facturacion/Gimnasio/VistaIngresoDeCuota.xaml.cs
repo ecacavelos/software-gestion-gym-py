@@ -24,15 +24,15 @@ namespace Gimnasio
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
         string esqlCuotas = "select value c from cuotas as c";
         int diasAHabilitar;
-        DateTime fechaPago, fechaTemporal, fechaUltimoVencimiento;
-        int nroCedula, idCliente, cuotaId;
+        DateTime fechaPago, /*fechaTemporal,*/ fechaUltimoVencimiento;
+        int /*nroCedula,*/ idCliente, cuotaId;
 
         public VistaIngresoDeCuota()
         {
             this.diasAHabilitar = new int();
             this.fechaPago = new DateTime();
-            this.fechaTemporal = new DateTime();
-            this.nroCedula = new int();
+            //this.fechaTemporal = new DateTime();
+            //this.nroCedula = new int();
             InitializeComponent();
         }
 
@@ -124,7 +124,13 @@ namespace Gimnasio
                             }
                             else
                             {
-                                MessageBox.Show("El pago se aplico correctamente");
+                                MessageBoxResult result;
+                                //MessageBox.Show("El pago se aplico correctamente");
+                                result = MessageBox.Show("El pago se aplico correctamente. Desea imprimir una factura para el mismo?", "Pago de Cuota", MessageBoxButton.YesNo);
+                                if (result == MessageBoxResult.Yes)
+                                {
+                                    Facturacion.DatosFactura(pagoAAgregar);
+                                }
                                 this.Close();
                             }
                         }

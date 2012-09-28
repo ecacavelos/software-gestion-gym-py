@@ -80,6 +80,7 @@ namespace Gimnasio
             }
             catch (Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
                 MessageBox.Show("Por favor introduzca sólo números.");
             }
 

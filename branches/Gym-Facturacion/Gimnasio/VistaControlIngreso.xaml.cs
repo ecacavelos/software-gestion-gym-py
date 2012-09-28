@@ -46,13 +46,13 @@ namespace Gimnasio
 
         #endregion
 
-        bool _Activado = false;
+        //bool _Activado = false;
         private int _PortAddress = 0;
         string ExceptionOccured;
 
         Configuration c2;
         private int _TiempoApertura = 0;
-        private static int test = 0;
+        //private static int test = 0;
         public static bool IsOpen { get; private set; }
 
         public VistaControlIngreso()
@@ -62,6 +62,11 @@ namespace Gimnasio
             this.c2 = Configuration.Deserialize("config.xml");
             _TiempoApertura = this.c2.TiempoApertura;
             IsOpen = true;
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            IsOpen = false;
         }
 
         public void ParallelPort()
@@ -103,7 +108,6 @@ namespace Gimnasio
             }
             return PortAddresses;
         }
-
 
         #region "Data Bus"
 
@@ -193,13 +197,13 @@ namespace Gimnasio
                     if (value)
                     {
                         Out32(DataBusAddress, Convert.ToInt16(Inp32(DataBusAddress) | 1));
-                        _Activado = true;
+                        //_Activado = true;
                         //label1.Content = "D0 ON";
                     }
                     else
                     {
                         Out32(DataBusAddress, Convert.ToInt16(Inp32(DataBusAddress) & (~1)));
-                        _Activado = false;
+                        //_Activado = false;
                         //label1.Content = "D0 OFF";
                     }
                 }
@@ -211,12 +215,6 @@ namespace Gimnasio
         }
 
         #endregion
-
-        private void Window_Unloaded(object sender, RoutedEventArgs e)
-        {
-            IsOpen = false;
-        }
-
 
         public void dispatcherTimer_Tick(object sender, EventArgs e)//TIMER PARA EL INGRESO DEL USUARIO
         {

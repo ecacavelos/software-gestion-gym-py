@@ -29,8 +29,8 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" Click="buttonSalir_Click" />
-        <Button Content="Guardar Cambios" Height="26" HorizontalAlignment="Right" IsEnabled="False" Margin="0,0,118,12" Name="buttonGuardarCambios" VerticalAlignment="Bottom" Width="100" Click="buttonGuardarCambios_Click" />
+        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" Click="buttonSalir_Click" PreviewKeyDown="buttonSalir_PreviewKeyDown" />
+        <Button Content="Guardar Cambios" Height="26" HorizontalAlignment="Right" IsEnabled="False" Margin="0,0,118,12" Name="buttonGuardarCambios" VerticalAlignment="Bottom" Width="100" Click="buttonGuardarCambios_Click" PreviewKeyDown="buttonGuardarCambios_PreviewKeyDown" />
         <Label Content="Vista de Facturas." Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="label1" VerticalAlignment="Bottom" Width="462" />
     </Grid>
 </Window>
