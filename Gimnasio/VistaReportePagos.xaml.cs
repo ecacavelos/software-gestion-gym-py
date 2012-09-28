@@ -71,7 +71,6 @@ namespace Gimnasio
             }
             catch
             {
-                System.Console.WriteLine("No hay una celda seleccionada?");
             }
         }
 
@@ -94,6 +93,10 @@ namespace Gimnasio
                 buttonBuscarPagos.IsEnabled = false;
                 eliminarFiltros();
             }
+            else
+            {
+                aplicarFiltros();
+            }
         }
 
         private void checkBoxHasta_Checked(object sender, RoutedEventArgs e)
@@ -110,32 +113,56 @@ namespace Gimnasio
                 buttonBuscarPagos.IsEnabled = false;
                 eliminarFiltros();
             }
+            else
+            {
+                aplicarFiltros();
+            }
         }
 
         private void datePickerDesde_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             TimeSpan epochTime = ((DateTime)datePickerDesde.SelectedDate + new TimeSpan(4, 0, 0) - new DateTime(1970, 1, 1));
             timestampDesde = (int)epochTime.TotalSeconds;
-            System.Console.WriteLine(datePickerDesde.SelectedDate + " (" + timestampDesde + ")");
+            //System.Console.WriteLine(datePickerDesde.SelectedDate + " (" + timestampDesde + ")");
         }
 
         private void datePickerHasta_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            TimeSpan epochTime = ((DateTime)datePickerHasta.SelectedDate + new TimeSpan(4, 0, 0) - new DateTime(1970, 1, 1));
+            TimeSpan epochTime = ((DateTime)datePickerHasta.SelectedDate + new TimeSpan(28, 0, 0) - new DateTime(1970, 1, 1));
             timestampHasta = (int)epochTime.TotalSeconds;
-            System.Console.WriteLine(datePickerHasta.SelectedDate + " (" + timestampHasta + ")");
+            //System.Console.WriteLine(datePickerHasta.SelectedDate + " (" + timestampHasta + ")");
         }
 
         private void buttonBuscarPagos_Click(object sender, RoutedEventArgs e)
         {
+            aplicarFiltros();
+        }
+
+        private void aplicarFiltros()
+        {
+            int sumatoriaMonto = 0;
+            int tempMontoCuota = 0;
+
             if (datePickerDesde.IsEnabled == true)
             {
                 if (datePickerHasta.IsEnabled == true)
                 {
-                    string esql = "SELECT value p FROM Pagos as p WHERE (p.idPago > " + timestampDesde + ") AND (p.idPago < " + timestampHasta + ")";
-                    var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
-                    labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
-                    dataGridPagos.ItemsSource = pagosVar;
+                    if (datePickerDesde.SelectedDate != null && datePickerHasta.SelectedDate != null)
+                    {
+                        string esql = "SELECT value p FROM Pagos as p WHERE (p.idPago >= " + timestampDesde + ") AND (p.idPago <= " + timestampHasta + ")";
+                        var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
+                        labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
+
+                        // Calculamos el total de los montos de las cuotas resultantes del filtro.
+                        foreach (Gimnasio.Pagos tempPago in pagosVar.ToArray())
+                        {
+                            Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
+                            sumatoriaMonto += tempMontoCuota;
+                        }
+
+                        labelMontoTotal.Content = sumatoriaMonto.ToString();
+                        dataGridPagos.ItemsSource = pagosVar;
+                    }
                 }
                 else
                 {
@@ -144,36 +171,69 @@ namespace Gimnasio
                     }
                     else
                     {
-                        string esql = "SELECT value p FROM Pagos as p WHERE p.idPago > " + timestampDesde;
+                        string esql = "SELECT value p FROM Pagos as p WHERE p.idPago >= " + timestampDesde;
                         var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
                         labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
+
+                        // Calculamos el total de los montos de las cuotas resultantes del filtro.
+                        foreach (Gimnasio.Pagos tempPago in pagosVar.ToArray())
+                        {
+                            Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
+                            sumatoriaMonto += tempMontoCuota;
+                        }
+
+                        labelMontoTotal.Content = sumatoriaMonto.ToString();
                         dataGridPagos.ItemsSource = pagosVar;
                     }
                 }
             }
             else
             {
-                if (datePickerHasta.SelectedDate == null)
+                if (datePickerHasta.IsEnabled == true)
                 {
-                }
-                else
-                {
-                    string esql = "SELECT value p FROM Pagos as p WHERE p.idPago < " + timestampHasta;
-                    var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
-                    labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
-                    dataGridPagos.ItemsSource = pagosVar;
+                    if (datePickerHasta.SelectedDate == null)
+                    {
+                    }
+                    else
+                    {
+                        string esql = "SELECT value p FROM Pagos as p WHERE p.idPago <= " + timestampHasta;
+                        var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
+                        labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
+
+                        // Calculamos el total de los montos de las cuotas resultantes del filtro.
+                        foreach (Gimnasio.Pagos tempPago in pagosVar.ToArray())
+                        {
+                            Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
+                            sumatoriaMonto += tempMontoCuota;
+                        }
+
+                        labelMontoTotal.Content = sumatoriaMonto.ToString();
+                        dataGridPagos.ItemsSource = pagosVar;
+                    }
                 }
             }
         }
 
         private void eliminarFiltros()
         {
+            int sumatoriaMonto = 0;
+            int tempMontoCuota = 0;
+
             timestampDesde = 0;
             timestampHasta = 0;
 
             string esql = "SELECT value p FROM Pagos as p";
             var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
             labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
+
+            // Calculamos el total de los montos de las cuotas resultantes del filtro.
+            foreach (Gimnasio.Pagos tempPago in pagosVar.ToArray())
+            {
+                Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
+                sumatoriaMonto += tempMontoCuota;
+            }
+
+            labelMontoTotal.Content = sumatoriaMonto.ToString();
             dataGridPagos.ItemsSource = pagosVar;
         }
 
