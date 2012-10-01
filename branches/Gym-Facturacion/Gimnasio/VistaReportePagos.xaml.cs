@@ -38,9 +38,11 @@ namespace Gimnasio
             System.Data.Objects.ObjectQuery<Gimnasio.Pagos> pagosQuery = this.GetPagosQuery(database1Entities);
             pagosViewSource.Source = pagosQuery.Execute(System.Data.Objects.MergeOption.AppendOnly);
 
-            string esql = "SELECT value p FROM Pagos as p";
+            /*string esql = "SELECT value p FROM Pagos as p";
             var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
-            labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
+            labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();*/
+            eliminarFiltros();
+
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -160,7 +162,7 @@ namespace Gimnasio
                             sumatoriaMonto += tempMontoCuota;
                         }
 
-                        labelMontoTotal.Content = sumatoriaMonto.ToString();
+                        labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
                         dataGridPagos.ItemsSource = pagosVar;
                     }
                 }
@@ -182,7 +184,7 @@ namespace Gimnasio
                             sumatoriaMonto += tempMontoCuota;
                         }
 
-                        labelMontoTotal.Content = sumatoriaMonto.ToString();
+                        labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
                         dataGridPagos.ItemsSource = pagosVar;
                     }
                 }
@@ -207,7 +209,7 @@ namespace Gimnasio
                             sumatoriaMonto += tempMontoCuota;
                         }
 
-                        labelMontoTotal.Content = sumatoriaMonto.ToString();
+                        labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
                         dataGridPagos.ItemsSource = pagosVar;
                     }
                 }
@@ -218,9 +220,6 @@ namespace Gimnasio
         {
             int sumatoriaMonto = 0;
             int tempMontoCuota = 0;
-
-            timestampDesde = 0;
-            timestampHasta = 0;
 
             string esql = "SELECT value p FROM Pagos as p";
             var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
@@ -233,7 +232,7 @@ namespace Gimnasio
                 sumatoriaMonto += tempMontoCuota;
             }
 
-            labelMontoTotal.Content = sumatoriaMonto.ToString();
+            labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
             dataGridPagos.ItemsSource = pagosVar;
         }
 
@@ -247,4 +246,27 @@ namespace Gimnasio
         }
 
     }
+
+    #region "Conversores para los data bindings de esta ventana."
+    [ValueConversion(typeof(long), typeof(string))]
+    public class KeytoDateStringConverter : IValueConverter
+    {
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            //if (targetType != typeof(bool))
+            //throw new InvalidOperationException("The target must be a boolean");           
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc) - new TimeSpan(4, 0, 0);
+            return epoch.AddSeconds((long)value).ToString("dd/MM/yyyy");
+        }
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+        #endregion
+    }
+    #endregion
+
 }
