@@ -1,17 +1,20 @@
 ﻿<Window x:Class="Gimnasio.VistaReportePagos"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Gimnasio"
         Title="Reporte de Pagos" Height="480" Width="640" Loaded="Window_Loaded" Unloaded="Window_Unloaded" Icon="/Gimnasio;component/Images/iconoControAcceso.png" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" MinHeight="480" MinWidth="540">
     <Window.Resources>
         <CollectionViewSource x:Key="pagosViewSource" d:DesignSource="{d:DesignInstance my:Pagos, CreateList=True}" />
+        <local:KeytoDateStringConverter x:Key="KeytoDateStringConverter" />
     </Window.Resources>
     <Grid Background="#FFBECBEB" DataContext="{StaticResource pagosViewSource}">
         <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="12,12,12,182" Name="dataGridPagos" VerticalAlignment="Stretch" ItemsSource="{Binding}" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" CurrentCellChanged="dataGrid1_CurrentCellChanged">
             <DataGrid.Columns>
+                <DataGridTextColumn x:Name="fechaIngresoPago" Binding="{Binding Path=idPago, StringFormat=\{0:dd/MM/yyyy\}, Converter={StaticResource KeytoDateStringConverter}}" Header="Fecha del Pago" MinWidth="90" />
                 <DataGridTextColumn x:Name="nombreCliente" Binding="{Binding Path=clientes.nombre}" Header="Nombre del Cliente" />
                 <DataGridTextColumn x:Name="apellidoCliente" Binding="{Binding Path=clientes.apellido}" Header="Apellido" />
-                <DataGridTextColumn x:Name="fechaDesde" Binding="{Binding Path=fecha, StringFormat=\{0:dd/MM/yyyy\}}" Header="Fecha - Desde" />
-                <DataGridTextColumn x:Name="fechaHasta" Binding="{Binding Path=fecha_vencimiento, StringFormat=\{0:dd/MM/yyyy\}}" Header="Fecha - Hasta" />
+                <DataGridTextColumn x:Name="fechaDesde" Binding="{Binding Path=fecha, StringFormat=\{0:dd/MM/yyyy\}}" Header="Cuota - Desde" />
+                <DataGridTextColumn x:Name="fechaHasta" Binding="{Binding Path=fecha_vencimiento, StringFormat=\{0:dd/MM/yyyy\}}" Header="Cuota - Hasta" />
                 <DataGridTextColumn x:Name="montoCuota" Binding="{Binding Path=Cuotas.monto}" Header="Monto" />
             </DataGrid.Columns>
         </DataGrid>
@@ -20,17 +23,17 @@
         <Label Content="Reporte de Pagos." Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="labelSatusBar" VerticalAlignment="Bottom" Width="222" />
         <GroupBox Header="Datos de Reporte" Height="132" HorizontalAlignment="Stretch" Margin="12,0,12,44" Name="groupBox1" VerticalAlignment="Bottom">
             <Grid>
-                <Label Content="Cantidad de Pagos: " HorizontalAlignment="Right" Margin="0,6,100,0" Name="labelCantidadPagosTitle" VerticalAlignment="Top" Height="28" />
+                <Label Content="Cantidad de Pagos: " HorizontalAlignment="Right" Margin="0,13,144,0" Name="labelCantidadPagosTitle" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" />
                 <CheckBox HorizontalAlignment="Left" Margin="12,13,0,0" Name="checkBoxDesde" VerticalAlignment="Top" Checked="checkBoxDesde_Checked" Unchecked="checkBoxDesde_Unchecked" />
                 <Label Content="Desde Fecha: " Height="28" HorizontalAlignment="Left" Margin="31,6,0,0" Name="labelFechaDesde" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="94" />
-                <Label Content="---" Height="28" HorizontalAlignment="Right" Margin="0,6,8,0" Name="labelCantidadPagos" VerticalAlignment="Top" Width="86" HorizontalContentAlignment="Right" />
+                <Label Content="---" HorizontalAlignment="Right" Margin="0,14,8,0" Name="labelCantidadPagos" VerticalAlignment="Top" Width="130" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold" />
                 <DatePicker Height="28" HorizontalAlignment="Left" Margin="131,6,0,0" Name="datePickerDesde" VerticalAlignment="Top" Width="115" VerticalContentAlignment="Stretch" IsEnabled="False" SelectedDateChanged="datePickerDesde_SelectedDateChanged" />
                 <CheckBox HorizontalAlignment="Left" Margin="12,47,0,0" Name="checkBoxHasta" VerticalAlignment="Top" Checked="checkBoxHasta_Checked" Unchecked="checkBoxHasta_Unchecked" />
                 <Label Content="Hasta Fecha: " Height="28" HorizontalAlignment="Left" Margin="31,40,0,0" Name="labelFechaHasta" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="94" />
                 <DatePicker Height="28" HorizontalAlignment="Left" IsEnabled="False" Margin="131,40,0,0" Name="datePickerHasta" VerticalAlignment="Top" VerticalContentAlignment="Stretch" Width="115" SelectedDateChanged="datePickerHasta_SelectedDateChanged" />
                 <Button Content="Buscar Pagos en Rango" Height="28" HorizontalAlignment="Left" Margin="12,74,0,0" Name="buttonBuscarPagos" VerticalAlignment="Top" Width="234" IsEnabled="False" Click="buttonBuscarPagos_Click" />
-                <Label Content="Monto Total: " Height="28" HorizontalAlignment="Right" Margin="0,40,100,0" Name="labelMontoTotalTitle" VerticalAlignment="Top" />
-                <Label Content="---" Height="28" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,40,8,0" Name="labelMontoTotal" VerticalAlignment="Top" Width="86" />
+                <Label Content="Monto Total: " HorizontalAlignment="Right" Margin="0,56,144,0" Name="labelMontoTotalTitle" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" />
+                <Label Content="---" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,56,8,0" Name="labelMontoTotal" VerticalAlignment="Top" Width="130" FontSize="18" FontWeight="Bold" />
             </Grid>
         </GroupBox>
     </Grid>
