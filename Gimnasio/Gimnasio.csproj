@@ -81,6 +81,10 @@
     <Compile Include="AboutGymAdmin.Designer.cs">
       <DependentUpon>AboutGymAdmin.cs</DependentUpon>
     </Compile>
+    <Compile Include="AutoCompleteEntry.cs" />
+    <Compile Include="AutoCompleteTextBox.xaml.cs">
+      <DependentUpon>AutoCompleteTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Impresion.cs" />
     <Compile Include="Facturacion.cs" />
     <Compile Include="Configuration.cs" />
@@ -208,6 +212,10 @@
     <Resource Include="Images\colorful_chart.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AutoCompleteTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="VentanaLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
