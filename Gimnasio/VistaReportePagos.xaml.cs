@@ -167,6 +167,8 @@ namespace Gimnasio
             int sumatoriaMonto = 0;
             int tempMontoCuota = 0;
 
+            string esql = "SELECT value p FROM Pagos as p";
+
             if (autoCompleteTextBoxNombre.IsEnabled == true)
             {
                 string nombreBuscado = autoCompleteTextBoxNombre.Text;
@@ -193,98 +195,60 @@ namespace Gimnasio
                     return;
                 }
 
-                string esql = String.Format("SELECT value p FROM Pagos as p WHERE p.clientes.idCliente = {0}", foundID);
-                //System.Console.WriteLine(esql);
-
-                var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
-                labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
-
-                // Calculamos el total de los montos de las cuotas resultantes del filtro.
-                foreach (Gimnasio.Pagos tempPago in pagosVar.ToArray())
-                {
-                    Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
-                    sumatoriaMonto += tempMontoCuota;
-                }
-
-                labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
-                dataGridPagos.ItemsSource = pagosVar;
-                labelSatusBar.Content = "Búsqueda Completa.";
-
-                return;
+                esql += " WHERE ";
+                esql += String.Format("(p.clientes.idCliente = {0})", foundID);
             }
 
             if (datePickerDesde.IsEnabled == true)
             {
-                if (datePickerHasta.IsEnabled == true)
+                if (datePickerDesde.SelectedDate != null)
                 {
-                    if (datePickerDesde.SelectedDate != null && datePickerHasta.SelectedDate != null)
+                    if (esql.Contains("WHERE"))
                     {
-                        string esql = "SELECT value p FROM Pagos as p WHERE (p.idPago >= " + timestampDesde + ") AND (p.idPago <= " + timestampHasta + ")";
-                        var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
-                        labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
-
-                        // Calculamos el total de los montos de las cuotas resultantes del filtro.
-                        foreach (Gimnasio.Pagos tempPago in pagosVar.ToArray())
-                        {
-                            Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
-                            sumatoriaMonto += tempMontoCuota;
-                        }
-
-                        labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
-                        dataGridPagos.ItemsSource = pagosVar;
-                        labelSatusBar.Content = "Búsqueda Completa.";
-                    }
-                }
-                else
-                {
-                    if (datePickerDesde.SelectedDate == null)
-                    {
+                        esql += " AND ";
                     }
                     else
                     {
-                        string esql = "SELECT value p FROM Pagos as p WHERE p.idPago >= " + timestampDesde;
-                        var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
-                        labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
-
-                        // Calculamos el total de los montos de las cuotas resultantes del filtro.
-                        foreach (Gimnasio.Pagos tempPago in pagosVar.ToArray())
-                        {
-                            Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
-                            sumatoriaMonto += tempMontoCuota;
-                        }
-
-                        labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
-                        dataGridPagos.ItemsSource = pagosVar;
-                        labelSatusBar.Content = "Búsqueda Completa.";
+                        esql += " WHERE ";
                     }
+                    esql += String.Format("(p.idPago >= + {0})", timestampDesde);
                 }
             }
-            else
+
+            if (datePickerHasta.IsEnabled == true)
             {
-                if (datePickerHasta.IsEnabled == true)
+                if (datePickerHasta.SelectedDate != null)
                 {
-                    if (datePickerHasta.SelectedDate == null)
+                    if (esql.Contains("WHERE"))
                     {
+                        esql += " AND ";
                     }
                     else
                     {
-                        string esql = "SELECT value p FROM Pagos as p WHERE p.idPago <= " + timestampHasta;
-                        var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
-                        labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
-
-                        // Calculamos el total de los montos de las cuotas resultantes del filtro.
-                        foreach (Gimnasio.Pagos tempPago in pagosVar.ToArray())
-                        {
-                            Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
-                            sumatoriaMonto += tempMontoCuota;
-                        }
-
-                        labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
-                        dataGridPagos.ItemsSource = pagosVar;
-                        labelSatusBar.Content = "Búsqueda Completa.";
+                        esql += " WHERE ";
                     }
+                    esql += String.Format("(p.idPago <= + {0})", timestampHasta);
                 }
             }
+
+            //System.Console.WriteLine(esql);
+
+            var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
+            labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
+
+            // Calculamos el total de los montos de las cuotas resultantes del filtro.
+            foreach (Gimnasio.Pagos tempPago in pagosVar.ToArray())
+            {
+                Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
+                sumatoriaMonto += tempMontoCuota;
+            }
+
+            labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
+            dataGridPagos.ItemsSource = pagosVar;
+            labelSatusBar.Content = "Búsqueda Completa.";
+
+            return;
+
         }
 
         private void eliminarFiltros(bool firstTime)
