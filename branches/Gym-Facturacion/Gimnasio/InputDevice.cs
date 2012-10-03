@@ -208,8 +208,8 @@ namespace RawStuff
 
         #region Variables and event handling
 
-        Gimnasio.Configuration c2;
-        int device_nro = 0;
+        //Gimnasio.Configuration c2;
+        //int device_nro = 0;
 
         /// <summary>
         /// List of keyboard devices
