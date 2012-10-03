@@ -9,7 +9,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
 
 namespace Gimnasio
 {
@@ -24,6 +26,7 @@ namespace Gimnasio
 
         int timestampDesde;
         int timestampHasta;
+        string[] arrayClientesID;
 
         public VistaReportePagos()
         {
@@ -38,11 +41,7 @@ namespace Gimnasio
             System.Data.Objects.ObjectQuery<Gimnasio.Pagos> pagosQuery = this.GetPagosQuery(database1Entities);
             pagosViewSource.Source = pagosQuery.Execute(System.Data.Objects.MergeOption.AppendOnly);
 
-            /*string esql = "SELECT value p FROM Pagos as p";
-            var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
-            labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();*/
-            eliminarFiltros();
-
+            eliminarFiltros(true);
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -76,10 +75,9 @@ namespace Gimnasio
             }
         }
 
-        #region "Funciones relativas a los CheckBox y al Filtrado de Pagos"
-        /* Con los CheckBox se elige el criterio de filtrado, con los DatePicker se seleccionan los rangos,
-           y con el Botón se ejecuta dicha busqueda. En caso de destachar ambos CheckBox, se vuelven a mostrar
-           todos los pagos. */
+        #region "Funciones relativas a los CheckBox"
+        /* Con los CheckBox se elige el criterio de filtrado, con los DatePicker se seleccionan los rangos.
+         * En caso de destachar ambos CheckBox, se vuelven a mostrar todos los pagos. */
 
         private void checkBoxDesde_Checked(object sender, RoutedEventArgs e)
         {
@@ -90,10 +88,10 @@ namespace Gimnasio
         private void checkBoxDesde_Unchecked(object sender, RoutedEventArgs e)
         {
             datePickerDesde.IsEnabled = false;
-            if (checkBoxHasta.IsChecked == false)
+            if (checkBoxHasta.IsChecked == false && checkBoxNombre.IsChecked == false)
             {
                 buttonBuscarPagos.IsEnabled = false;
-                eliminarFiltros();
+                eliminarFiltros(false);
             }
             else
             {
@@ -110,10 +108,30 @@ namespace Gimnasio
         private void checkBoxHasta_Unchecked(object sender, RoutedEventArgs e)
         {
             datePickerHasta.IsEnabled = false;
-            if (checkBoxDesde.IsChecked == false)
+            if (checkBoxDesde.IsChecked == false && checkBoxNombre.IsChecked == false)
             {
                 buttonBuscarPagos.IsEnabled = false;
-                eliminarFiltros();
+                eliminarFiltros(false);
+            }
+            else
+            {
+                aplicarFiltros();
+            }
+        }
+
+        private void checkBoxNombre_Checked(object sender, RoutedEventArgs e)
+        {
+            autoCompleteTextBoxNombre.IsEnabled = true;
+            buttonBuscarPagos.IsEnabled = true;
+        }
+
+        private void checkBoxNombre_Unchecked(object sender, RoutedEventArgs e)
+        {
+            autoCompleteTextBoxNombre.IsEnabled = false;
+            if (checkBoxDesde.IsChecked == false && checkBoxHasta.IsChecked == false)
+            {
+                buttonBuscarPagos.IsEnabled = false;
+                eliminarFiltros(false);
             }
             else
             {
@@ -135,6 +153,10 @@ namespace Gimnasio
             //System.Console.WriteLine(datePickerHasta.SelectedDate + " (" + timestampHasta + ")");
         }
 
+        #endregion
+
+        #region "Funciones relativas al Filtrado de Pagos"
+
         private void buttonBuscarPagos_Click(object sender, RoutedEventArgs e)
         {
             aplicarFiltros();
@@ -144,6 +166,52 @@ namespace Gimnasio
         {
             int sumatoriaMonto = 0;
             int tempMontoCuota = 0;
+
+            if (autoCompleteTextBoxNombre.IsEnabled == true)
+            {
+                string nombreBuscado = autoCompleteTextBoxNombre.Text;
+
+                int totalHits = 0;
+                int foundID = 0;
+                foreach (string cacheClientes in arrayClientesID)
+                {
+                    if (cacheClientes.ToLower().Contains(nombreBuscado.ToLower()))
+                    {
+                        int startID = cacheClientes.IndexOf('(') + 1;
+                        int endID = cacheClientes.IndexOf(')');
+                        int lengthID = endID - startID;
+                        Int32.TryParse(cacheClientes.Substring(startID, lengthID), out foundID);
+                        totalHits++;
+                        //System.Console.WriteLine(cacheClientes);
+                        //System.Console.WriteLine(foundID);
+                    }
+                }
+
+                if (totalHits > 1)
+                {
+                    labelSatusBar.Content = "Existe más de un cliente con ese nombre.";
+                    return;
+                }
+
+                string esql = String.Format("SELECT value p FROM Pagos as p WHERE p.clientes.idCliente = {0}", foundID);
+                //System.Console.WriteLine(esql);
+
+                var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
+                labelCantidadPagos.Content = pagosVar.ToList().Count.ToString();
+
+                // Calculamos el total de los montos de las cuotas resultantes del filtro.
+                foreach (Gimnasio.Pagos tempPago in pagosVar.ToArray())
+                {
+                    Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
+                    sumatoriaMonto += tempMontoCuota;
+                }
+
+                labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
+                dataGridPagos.ItemsSource = pagosVar;
+                labelSatusBar.Content = "Búsqueda Completa.";
+
+                return;
+            }
 
             if (datePickerDesde.IsEnabled == true)
             {
@@ -164,6 +232,7 @@ namespace Gimnasio
 
                         labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
                         dataGridPagos.ItemsSource = pagosVar;
+                        labelSatusBar.Content = "Búsqueda Completa.";
                     }
                 }
                 else
@@ -186,6 +255,7 @@ namespace Gimnasio
 
                         labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
                         dataGridPagos.ItemsSource = pagosVar;
+                        labelSatusBar.Content = "Búsqueda Completa.";
                     }
                 }
             }
@@ -211,12 +281,13 @@ namespace Gimnasio
 
                         labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
                         dataGridPagos.ItemsSource = pagosVar;
+                        labelSatusBar.Content = "Búsqueda Completa.";
                     }
                 }
             }
         }
 
-        private void eliminarFiltros()
+        private void eliminarFiltros(bool firstTime)
         {
             int sumatoriaMonto = 0;
             int tempMontoCuota = 0;
@@ -231,14 +302,37 @@ namespace Gimnasio
                 Int32.TryParse(tempPago.Cuotas.monto, out tempMontoCuota);
                 sumatoriaMonto += tempMontoCuota;
             }
-
             labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
             dataGridPagos.ItemsSource = pagosVar;
+
+            if (firstTime)
+            {
+                string esql_clientes = "SELECT value c FROM clientes as c";
+                var clientesVar = database1Entities.CreateQuery<clientes>(esql_clientes);
+
+                int i = 0;
+                arrayClientesID = new string[clientesVar.ToList().Count];
+                foreach (Gimnasio.clientes tempCliente in clientesVar.ToArray())
+                {
+                    arrayClientesID[i] = tempCliente.nombre + " " + tempCliente.apellido + " (" + tempCliente.idCliente + ")";
+                    //System.Console.WriteLine(arrayClientesID[i]);
+                    autoCompleteTextBoxNombre.AddItem(new WPFAutoCompleteTextbox.AutoCompleteEntry(tempCliente.nombre + " " + tempCliente.apellido, tempCliente.nombre, tempCliente.apellido));
+                    i++;
+                }
+
+                //System.Console.WriteLine(clientesVar.ToList().Count.ToString() + " clientes. " + arrayClientesID.Count() + " sugerencias agregadas.");
+            }
+
+        }
+
+        private void autoCompleteTextBoxNombre_LostFocus(object sender, RoutedEventArgs e)
+        {
+
         }
 
         #endregion
 
-        // Funcion que Convierte un long int desde UnixTime a una estructura DateTime
+        // Funcion que Convierte un long int de UnixTime a una estructura DateTime
         public DateTime FromUnixTime(long unixTime)
         {
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
