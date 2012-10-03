@@ -116,11 +116,7 @@ namespace Gimnasio
                 // Se llama al módulo de Impresión.
                 Impresion.ImprimirFactura(current_factura, myIVAsExArray, myIVAs05Array, myIVAs10Array);
 
-                /*}
-                else
-                {
-                    System.Console.WriteLine("No puede volver a facturar esto.");
-                }*/
+                MessageBox.Show("Se ingresó la factura al sistema.", "Nueva Factura");
 
             }
             else

@@ -36,8 +36,7 @@ namespace Gimnasio
         public VistaClientes()
         {
             InitializeComponent();
-            this.c2 = Configuration.Deserialize("config.xml");
-            //_Keypad_usb = this.c2.Keypad_usb;
+            this.c2 = Configuration.Deserialize("config.xml");            
         }
 
         private System.Data.Objects.ObjectQuery<clientes> GetclientesQuery(Database1Entities database1Entities)

@@ -22,7 +22,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
 
-
 namespace Gimnasio
 {
     /// <summary>
@@ -344,6 +343,13 @@ namespace Gimnasio
                             dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
                             D0 = true;  //Habilitar entrada.
                             dispatcherTimer.Start();
+
+                            TimeSpan time = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+                            int timestamp = (int)time.TotalSeconds;
+
+                            database1Entities.ExecuteStoreCommand(
+                                "INSERT INTO Ingresos(idIngreso, fecha, fk_cliente) VALUES({0},{1},{2})", timestamp, DateTime.Now, clientesVar.ToArray()[0].idCliente);
+                            database1Entities.SaveChanges();
 
                         }
                         catch (Exception ex)

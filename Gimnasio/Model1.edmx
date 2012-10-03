@@ -10,10 +10,15 @@
           <EntitySet Name="clientes" EntityType="Database1Model.Store.clientes" store:Type="Tables" />
           <EntitySet Name="Cuotas" EntityType="Database1Model.Store.Cuotas" store:Type="Tables" />
           <EntitySet Name="Facturas" EntityType="Database1Model.Store.Facturas" store:Type="Tables" />
+          <EntitySet Name="Ingresos" EntityType="Database1Model.Store.Ingresos" store:Type="Tables" />
           <EntitySet Name="Pagos" EntityType="Database1Model.Store.Pagos" store:Type="Tables" />
           <AssociationSet Name="fk_cliente_factura" Association="Database1Model.Store.fk_cliente_factura">
             <End Role="clientes" EntitySet="clientes" />
             <End Role="Facturas" EntitySet="Facturas" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cliente_ingreso" Association="Database1Model.Store.fk_cliente_ingreso">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="Ingresos" EntitySet="Ingresos" />
           </AssociationSet>
           <AssociationSet Name="FK_cliente_pago" Association="Database1Model.Store.FK_cliente_pago">
             <End Role="clientes" EntitySet="clientes" />
@@ -84,6 +89,14 @@
           <Property Name="Liquidacion_IVA_Total" Type="int" />
           <Property Name="Anulada" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Ingresos">
+          <Key>
+            <PropertyRef Name="idIngreso" />
+          </Key>
+          <Property Name="idIngreso" Type="bigint" Nullable="false" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="fk_cliente" Type="int" />
+        </EntityType>
         <EntityType Name="Pagos">
           <Key>
             <PropertyRef Name="idPago" />
@@ -103,6 +116,18 @@
               <PropertyRef Name="idCliente" />
             </Principal>
             <Dependent Role="Facturas">
+              <PropertyRef Name="fk_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cliente_ingreso">
+          <End Role="clientes" Type="Database1Model.Store.clientes" Multiplicity="0..1" />
+          <End Role="Ingresos" Type="Database1Model.Store.Ingresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="Ingresos">
               <PropertyRef Name="fk_cliente" />
             </Dependent>
           </ReferentialConstraint>
@@ -169,6 +194,11 @@
             <End Role="Facturas" EntitySet="Facturas" />
           </AssociationSet>
           <EntitySet Name="Admins" EntityType="Database1Model.Admins" />
+          <EntitySet Name="Ingresos" EntityType="Database1Model.Ingresos" />
+          <AssociationSet Name="fk_cliente_ingreso" Association="Database1Model.fk_cliente_ingreso">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="Ingresos" EntitySet="Ingresos" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="clientes">
           <Key>
@@ -189,6 +219,7 @@
           <Property Type="Boolean" Name="hasfoto" />
           <NavigationProperty Name="Facturas" Relationship="Database1Model.fk_cliente_factura" FromRole="clientes" ToRole="Facturas" />
           <Property Type="String" Name="RUC" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ingresos" Relationship="Database1Model.fk_cliente_ingreso" FromRole="clientes" ToRole="Ingresos" />
         </EntityType>
         <EntityType Name="Cuotas">
           <Key>
@@ -293,6 +324,27 @@
           <Property Type="Int32" Name="idAdmin" Nullable="false" />
           <Property Type="String" Name="Password" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Ingresos">
+          <Key>
+            <PropertyRef Name="idIngreso" />
+          </Key>
+          <Property Type="Int64" Name="idIngreso" Nullable="false" />
+          <Property Type="DateTime" Name="fecha" />
+          <Property Type="Int32" Name="fk_cliente" />
+          <NavigationProperty Name="clientes" Relationship="Database1Model.fk_cliente_ingreso" FromRole="Ingresos" ToRole="clientes" />
+        </EntityType>
+        <Association Name="fk_cliente_ingreso">
+          <End Type="Database1Model.clientes" Role="clientes" Multiplicity="0..1" />
+          <End Type="Database1Model.Ingresos" Role="Ingresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="Ingresos">
+              <PropertyRef Name="fk_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -371,6 +423,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Ingresos">
+            <EntityTypeMapping TypeName="Database1Model.Ingresos">
+              <MappingFragment StoreEntitySet="Ingresos">
+                <ScalarProperty Name="fk_cliente" ColumnName="fk_cliente" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="idIngreso" ColumnName="idIngreso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -413,7 +474,13 @@
           <ConnectorPoint PointX="4.25" PointY="1.8747460937500002" />
           <ConnectorPoint PointX="5" PointY="1.8747460937500002" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="Database1Model.Admins" Width="1.5" PointX="9" PointY="0.5" Height="1.59568359375" />
+        <EntityTypeShape EntityType="Database1Model.Admins" Width="1.5" PointX="7.875" PointY="0.625" Height="1.59568359375" />
+        <EntityTypeShape EntityType="Database1Model.Ingresos" Width="1.5" PointX="7.875" PointY="4.125" Height="1.7879850260416657" />
+        <AssociationConnector Association="Database1Model.fk_cliente_ingreso" >
+          <ConnectorPoint PointX="1.25" PointY="4.5956022135416656" />
+          <ConnectorPoint PointX="1.25" PointY="5.8528857421875" />
+          <ConnectorPoint PointX="7.875" PointY="5.8528857421875" />
+        </AssociationConnector>
         </Diagram>
     </Diagrams>
   </Designer>

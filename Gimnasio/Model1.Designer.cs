@@ -22,6 +22,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("Database1Model", "fk_tipoCuota_pago", "Cuotas", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.Cuotas), "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Pagos), true)]
 [assembly: EdmRelationshipAttribute("Database1Model", "fk_cliente_factura", "clientes", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.clientes), "Facturas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Facturas), true)]
 [assembly: EdmRelationshipAttribute("Database1Model", "fk_pago_factura", "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Gimnasio.Pagos), "Facturas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Facturas), true)]
+[assembly: EdmRelationshipAttribute("Database1Model", "fk_cliente_ingreso", "clientes", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.clientes), "Ingresos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Ingresos), true)]
 
 #endregion
 
@@ -152,6 +153,22 @@ namespace Gimnasio
             }
         }
         private ObjectSet<Admins> _Admins;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Ingresos> Ingresos
+        {
+            get
+            {
+                if ((_Ingresos == null))
+                {
+                    _Ingresos = base.CreateObjectSet<Ingresos>("Ingresos");
+                }
+                return _Ingresos;
+            }
+        }
+        private ObjectSet<Ingresos> _Ingresos;
 
         #endregion
         #region AddTo Methods
@@ -194,6 +211,14 @@ namespace Gimnasio
         public void AddToAdmins(Admins admins)
         {
             base.AddObject("Admins", admins);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Ingresos EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToIngresos(Ingresos ingresos)
+        {
+            base.AddObject("Ingresos", ingresos);
         }
 
         #endregion
@@ -694,6 +719,28 @@ namespace Gimnasio
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Facturas>("Database1Model.fk_cliente_factura", "Facturas", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Database1Model", "fk_cliente_ingreso", "Ingresos")]
+        public EntityCollection<Ingresos> Ingresos
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Ingresos>("Database1Model.fk_cliente_ingreso", "Ingresos");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Ingresos>("Database1Model.fk_cliente_ingreso", "Ingresos", value);
                 }
             }
         }
@@ -1346,6 +1393,150 @@ namespace Gimnasio
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Pagos>("Database1Model.fk_pago_factura", "Pagos", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Database1Model", Name="Ingresos")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Ingresos : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Ingresos object.
+        /// </summary>
+        /// <param name="idIngreso">Initial value of the idIngreso property.</param>
+        public static Ingresos CreateIngresos(global::System.Int64 idIngreso)
+        {
+            Ingresos ingresos = new Ingresos();
+            ingresos.idIngreso = idIngreso;
+            return ingresos;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 idIngreso
+        {
+            get
+            {
+                return _idIngreso;
+            }
+            set
+            {
+                if (_idIngreso != value)
+                {
+                    OnidIngresoChanging(value);
+                    ReportPropertyChanging("idIngreso");
+                    _idIngreso = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("idIngreso");
+                    OnidIngresoChanged();
+                }
+            }
+        }
+        private global::System.Int64 _idIngreso;
+        partial void OnidIngresoChanging(global::System.Int64 value);
+        partial void OnidIngresoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> fecha
+        {
+            get
+            {
+                return _fecha;
+            }
+            set
+            {
+                OnfechaChanging(value);
+                ReportPropertyChanging("fecha");
+                _fecha = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("fecha");
+                OnfechaChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _fecha;
+        partial void OnfechaChanging(Nullable<global::System.DateTime> value);
+        partial void OnfechaChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> fk_cliente
+        {
+            get
+            {
+                return _fk_cliente;
+            }
+            set
+            {
+                Onfk_clienteChanging(value);
+                ReportPropertyChanging("fk_cliente");
+                _fk_cliente = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("fk_cliente");
+                Onfk_clienteChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _fk_cliente;
+        partial void Onfk_clienteChanging(Nullable<global::System.Int32> value);
+        partial void Onfk_clienteChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Database1Model", "fk_cliente_ingreso", "clientes")]
+        public clientes clientes
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clientes>("Database1Model.fk_cliente_ingreso", "clientes").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clientes>("Database1Model.fk_cliente_ingreso", "clientes").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<clientes> clientesReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clientes>("Database1Model.fk_cliente_ingreso", "clientes");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<clientes>("Database1Model.fk_cliente_ingreso", "clientes", value);
                 }
             }
         }
