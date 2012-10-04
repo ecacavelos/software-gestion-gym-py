@@ -73,8 +73,8 @@
             <PropertyRef Name="idFactura" />
           </Key>
           <Property Name="idFactura" Type="int" Nullable="false" />
-          <Property Name="fk_pago" Type="bigint" Nullable="false" />
-          <Property Name="fk_cliente" Type="int" />
+          <Property Name="fk_pago" Type="bigint" />
+          <Property Name="fk_cliente" Type="int" Nullable="false" />
           <Property Name="Nro_Factura" Type="nvarchar" Nullable="false" MaxLength="30" />
           <Property Name="Fecha_Emision" Type="datetime" />
           <Property Name="Nombre_Pagador" Type="nvarchar" MaxLength="100" />
@@ -96,6 +96,7 @@
           <Property Name="idIngreso" Type="bigint" Nullable="false" />
           <Property Name="fecha" Type="datetime" />
           <Property Name="fk_cliente" Type="int" />
+          <Property Name="exitoso" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Pagos">
           <Key>
@@ -103,13 +104,13 @@
           </Key>
           <Property Name="fecha" Type="datetime" />
           <Property Name="idPago" Type="bigint" Nullable="false" />
-          <Property Name="fk_cliente" Type="int" />
+          <Property Name="fk_cliente" Type="int" Nullable="false" />
           <Property Name="fk_tipoCuota" Type="int" />
           <Property Name="fecha_vencimiento" Type="datetime" />
           <Property Name="ya_facturado" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="fk_cliente_factura">
-          <End Role="clientes" Type="Database1Model.Store.clientes" Multiplicity="0..1" />
+          <End Role="clientes" Type="Database1Model.Store.clientes" Multiplicity="1" />
           <End Role="Facturas" Type="Database1Model.Store.Facturas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clientes">
@@ -133,7 +134,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_cliente_pago">
-          <End Role="clientes" Type="Database1Model.Store.clientes" Multiplicity="0..1" />
+          <End Role="clientes" Type="Database1Model.Store.clientes" Multiplicity="1" />
           <End Role="Pagos" Type="Database1Model.Store.Pagos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clientes">
@@ -145,7 +146,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_pago_factura">
-          <End Role="Pagos" Type="Database1Model.Store.Pagos" Multiplicity="1" />
+          <End Role="Pagos" Type="Database1Model.Store.Pagos" Multiplicity="0..1" />
           <End Role="Facturas" Type="Database1Model.Store.Facturas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pagos">
@@ -237,7 +238,7 @@
           </Key>
           <Property Type="DateTime" Name="fecha" />
           <Property Type="Int64" Name="idPago" Nullable="false" />
-          <Property Type="Int32" Name="fk_cliente" />
+          <Property Type="Int32" Name="fk_cliente" Nullable="false" />
           <Property Type="Int32" Name="fk_tipoCuota" />
           <Property Type="DateTime" Name="fecha_vencimiento" />
           <NavigationProperty Name="clientes" Relationship="Database1Model.FK_cliente_pago" FromRole="Pagos" ToRole="clientes" />
@@ -246,7 +247,7 @@
           <Property Type="Boolean" Name="ya_facturado" Nullable="false" />
         </EntityType>
         <Association Name="FK_cliente_pago">
-          <End Type="Database1Model.clientes" Role="clientes" Multiplicity="0..1" />
+          <End Type="Database1Model.clientes" Role="clientes" Multiplicity="1" />
           <End Type="Database1Model.Pagos" Role="Pagos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clientes">
@@ -274,8 +275,8 @@
             <PropertyRef Name="idFactura" />
           </Key>
           <Property Type="Int32" Name="idFactura" Nullable="false" />
-          <Property Type="Int64" Name="fk_pago" Nullable="false" />
-          <Property Type="Int32" Name="fk_cliente" />
+          <Property Type="Int64" Name="fk_pago" Nullable="true" />
+          <Property Type="Int32" Name="fk_cliente" Nullable="false" />
           <NavigationProperty Name="clientes" Relationship="Database1Model.fk_cliente_factura" FromRole="Facturas" ToRole="clientes" />
           <NavigationProperty Name="Pagos" Relationship="Database1Model.fk_pago_factura" FromRole="Facturas" ToRole="Pagos" />
           <Property Type="String" Name="Nro_Factura" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
@@ -293,7 +294,7 @@
           <Property Type="Boolean" Name="Anulada" Nullable="false" />
         </EntityType>
         <Association Name="fk_cliente_factura">
-          <End Type="Database1Model.clientes" Role="clientes" Multiplicity="0..1" />
+          <End Type="Database1Model.clientes" Role="clientes" Multiplicity="1" />
           <End Type="Database1Model.Facturas" Role="Facturas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clientes">
@@ -305,7 +306,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_pago_factura">
-          <End Type="Database1Model.Pagos" Role="Pagos" Multiplicity="1" />
+          <End Type="Database1Model.Pagos" Role="Pagos" Multiplicity="0..1" />
           <End Type="Database1Model.Facturas" Role="Facturas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pagos">
@@ -332,6 +333,7 @@
           <Property Type="DateTime" Name="fecha" />
           <Property Type="Int32" Name="fk_cliente" />
           <NavigationProperty Name="clientes" Relationship="Database1Model.fk_cliente_ingreso" FromRole="Ingresos" ToRole="clientes" />
+          <Property Type="Boolean" Name="exitoso" Nullable="false" />
         </EntityType>
         <Association Name="fk_cliente_ingreso">
           <End Type="Database1Model.clientes" Role="clientes" Multiplicity="0..1" />
@@ -426,6 +428,7 @@
           <EntitySetMapping Name="Ingresos">
             <EntityTypeMapping TypeName="Database1Model.Ingresos">
               <MappingFragment StoreEntitySet="Ingresos">
+                <ScalarProperty Name="exitoso" ColumnName="exitoso" />
                 <ScalarProperty Name="fk_cliente" ColumnName="fk_cliente" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="idIngreso" ColumnName="idIngreso" />

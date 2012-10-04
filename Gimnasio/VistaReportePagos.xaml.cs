@@ -75,6 +75,11 @@ namespace Gimnasio
             }
         }
 
+        private void buttonSalir_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         #region "Funciones relativas a los CheckBox"
         /* Con los CheckBox se elige el criterio de filtrado, con los DatePicker se seleccionan los rangos.
          * En caso de destachar ambos CheckBox, se vuelven a mostrar todos los pagos. */
@@ -245,7 +250,15 @@ namespace Gimnasio
 
             labelMontoTotal.Content = sumatoriaMonto.ToString("#,##0");
             dataGridPagos.ItemsSource = pagosVar;
-            labelSatusBar.Content = "Búsqueda Completa.";
+
+            if (pagosVar.ToList().Count > 0)
+            {
+                labelSatusBar.Content = "Búsqueda Completa.";
+            }
+            else
+            {
+                labelSatusBar.Content = "La búsqueda no arrojó resultados.";
+            }
 
             return;
 
@@ -286,11 +299,6 @@ namespace Gimnasio
 
                 //System.Console.WriteLine(clientesVar.ToList().Count.ToString() + " clientes. " + arrayClientesID.Count() + " sugerencias agregadas.");
             }
-
-        }
-
-        private void autoCompleteTextBoxNombre_LostFocus(object sender, RoutedEventArgs e)
-        {
 
         }
 

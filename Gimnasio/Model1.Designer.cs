@@ -18,10 +18,10 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("Database1Model", "FK_cliente_pago", "clientes", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.clientes), "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Pagos), true)]
+[assembly: EdmRelationshipAttribute("Database1Model", "FK_cliente_pago", "clientes", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Gimnasio.clientes), "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Pagos), true)]
 [assembly: EdmRelationshipAttribute("Database1Model", "fk_tipoCuota_pago", "Cuotas", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.Cuotas), "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Pagos), true)]
-[assembly: EdmRelationshipAttribute("Database1Model", "fk_cliente_factura", "clientes", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.clientes), "Facturas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Facturas), true)]
-[assembly: EdmRelationshipAttribute("Database1Model", "fk_pago_factura", "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Gimnasio.Pagos), "Facturas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Facturas), true)]
+[assembly: EdmRelationshipAttribute("Database1Model", "fk_cliente_factura", "clientes", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Gimnasio.clientes), "Facturas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Facturas), true)]
+[assembly: EdmRelationshipAttribute("Database1Model", "fk_pago_factura", "Pagos", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.Pagos), "Facturas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Facturas), true)]
 [assembly: EdmRelationshipAttribute("Database1Model", "fk_cliente_ingreso", "clientes", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Gimnasio.clientes), "Ingresos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Gimnasio.Ingresos), true)]
 
 #endregion
@@ -914,14 +914,14 @@ namespace Gimnasio
         /// Create a new Facturas object.
         /// </summary>
         /// <param name="idFactura">Initial value of the idFactura property.</param>
-        /// <param name="fk_pago">Initial value of the fk_pago property.</param>
+        /// <param name="fk_cliente">Initial value of the fk_cliente property.</param>
         /// <param name="nro_Factura">Initial value of the Nro_Factura property.</param>
         /// <param name="anulada">Initial value of the Anulada property.</param>
-        public static Facturas CreateFacturas(global::System.Int32 idFactura, global::System.Int64 fk_pago, global::System.String nro_Factura, global::System.Boolean anulada)
+        public static Facturas CreateFacturas(global::System.Int32 idFactura, global::System.Int32 fk_cliente, global::System.String nro_Factura, global::System.Boolean anulada)
         {
             Facturas facturas = new Facturas();
             facturas.idFactura = idFactura;
-            facturas.fk_pago = fk_pago;
+            facturas.fk_cliente = fk_cliente;
             facturas.Nro_Factura = nro_Factura;
             facturas.Anulada = anulada;
             return facturas;
@@ -960,9 +960,9 @@ namespace Gimnasio
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int64 fk_pago
+        public Nullable<global::System.Int64> fk_pago
         {
             get
             {
@@ -977,16 +977,16 @@ namespace Gimnasio
                 Onfk_pagoChanged();
             }
         }
-        private global::System.Int64 _fk_pago;
-        partial void Onfk_pagoChanging(global::System.Int64 value);
+        private Nullable<global::System.Int64> _fk_pago;
+        partial void Onfk_pagoChanging(Nullable<global::System.Int64> value);
         partial void Onfk_pagoChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> fk_cliente
+        public global::System.Int32 fk_cliente
         {
             get
             {
@@ -1001,8 +1001,8 @@ namespace Gimnasio
                 Onfk_clienteChanged();
             }
         }
-        private Nullable<global::System.Int32> _fk_cliente;
-        partial void Onfk_clienteChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _fk_cliente;
+        partial void Onfk_clienteChanging(global::System.Int32 value);
         partial void Onfk_clienteChanged();
     
         /// <summary>
@@ -1414,10 +1414,12 @@ namespace Gimnasio
         /// Create a new Ingresos object.
         /// </summary>
         /// <param name="idIngreso">Initial value of the idIngreso property.</param>
-        public static Ingresos CreateIngresos(global::System.Int64 idIngreso)
+        /// <param name="exitoso">Initial value of the exitoso property.</param>
+        public static Ingresos CreateIngresos(global::System.Int64 idIngreso, global::System.Boolean exitoso)
         {
             Ingresos ingresos = new Ingresos();
             ingresos.idIngreso = idIngreso;
+            ingresos.exitoso = exitoso;
             return ingresos;
         }
 
@@ -1498,6 +1500,30 @@ namespace Gimnasio
         private Nullable<global::System.Int32> _fk_cliente;
         partial void Onfk_clienteChanging(Nullable<global::System.Int32> value);
         partial void Onfk_clienteChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean exitoso
+        {
+            get
+            {
+                return _exitoso;
+            }
+            set
+            {
+                OnexitosoChanging(value);
+                ReportPropertyChanging("exitoso");
+                _exitoso = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("exitoso");
+                OnexitosoChanged();
+            }
+        }
+        private global::System.Boolean _exitoso;
+        partial void OnexitosoChanging(global::System.Boolean value);
+        partial void OnexitosoChanged();
 
         #endregion
     
@@ -1558,11 +1584,13 @@ namespace Gimnasio
         /// Create a new Pagos object.
         /// </summary>
         /// <param name="idPago">Initial value of the idPago property.</param>
+        /// <param name="fk_cliente">Initial value of the fk_cliente property.</param>
         /// <param name="ya_facturado">Initial value of the ya_facturado property.</param>
-        public static Pagos CreatePagos(global::System.Int64 idPago, global::System.Boolean ya_facturado)
+        public static Pagos CreatePagos(global::System.Int64 idPago, global::System.Int32 fk_cliente, global::System.Boolean ya_facturado)
         {
             Pagos pagos = new Pagos();
             pagos.idPago = idPago;
+            pagos.fk_cliente = fk_cliente;
             pagos.ya_facturado = ya_facturado;
             return pagos;
         }
@@ -1624,9 +1652,9 @@ namespace Gimnasio
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> fk_cliente
+        public global::System.Int32 fk_cliente
         {
             get
             {
@@ -1641,8 +1669,8 @@ namespace Gimnasio
                 Onfk_clienteChanged();
             }
         }
-        private Nullable<global::System.Int32> _fk_cliente;
-        partial void Onfk_clienteChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _fk_cliente;
+        partial void Onfk_clienteChanging(global::System.Int32 value);
         partial void Onfk_clienteChanged();
     
         /// <summary>

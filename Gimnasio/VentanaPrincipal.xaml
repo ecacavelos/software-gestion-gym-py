@@ -42,6 +42,7 @@
             </MenuItem>
             <MenuItem Header="Administración">
                 <MenuItem Header="Reporte de Pagos..." Click="menuItem_ReportePagos"/>
+                <MenuItem Header="Reporte de Ingresos..." Click="menuItem_ReporteIngresos"/>
             </MenuItem>
             <MenuItem Header="Ayuda">
                 <MenuItem Header="Ayuda" />
@@ -49,13 +50,13 @@
             </MenuItem>
         </Menu>
         <ToolBar Grid.Row="4" Background="#5A1B1B1D" Margin="12,12,12,215">
-            <Button Margin="3" Click="abrirVentana_Clientes" Content="Clientes"></Button>
+            <Button Margin="3" Click="abrirVentana_Clientes" Content="Clientes" Width="130"></Button>
             <Separator></Separator>
-            <Button Margin="3" Content="Ingresar Pago" Click="abrirVentana_IngresarPago"></Button>
+            <Button Margin="3" Content="Ingresar Pago" Click="abrirVentana_IngresarPago" Width="130"></Button>
             <Separator></Separator>
-            <Button Margin="3" Click="abrirVentana_ControlIngreso">Control de ingreso</Button>
+            <Button Margin="3" Click="abrirVentana_ControlIngreso" Width="130">Control de ingreso</Button>
             <Separator></Separator>
-            <Button Margin="3" Click="abrirVentana_IngresoManual">Habilitar manualmente</Button>
+            <Button Margin="3" Click="abrirVentana_IngresoManual" Width="130">Habilitar manualmente</Button>
         </ToolBar>
         <StackPanel Grid.Row="4" HorizontalAlignment="Left" Margin="12,6,0,0" Name="stackPanel1" VerticalAlignment="Top"  DataContext="{StaticResource clientesViewSource}"></StackPanel>
     </Grid>
