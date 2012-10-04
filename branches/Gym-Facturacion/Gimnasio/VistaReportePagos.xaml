@@ -8,7 +8,7 @@
         <local:KeytoDateStringConverter x:Key="KeytoDateStringConverter" />
     </Window.Resources>
     <Grid Background="#FFBECBEB" DataContext="{StaticResource pagosViewSource}">
-        <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="12,12,12,221" Name="dataGridPagos" VerticalAlignment="Stretch" ItemsSource="{Binding}" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" CurrentCellChanged="dataGrid1_CurrentCellChanged">
+        <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="12,12,12,220" Name="dataGridPagos" VerticalAlignment="Stretch" ItemsSource="{Binding}" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" CurrentCellChanged="dataGrid1_CurrentCellChanged" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="fechaIngresoPago" Binding="{Binding Path=idPago, StringFormat=\{0:dd/MM/yyyy\}, Converter={StaticResource KeytoDateStringConverter}}" Header="Fecha del Pago" MinWidth="90" />
                 <DataGridTextColumn x:Name="nombreCliente" Binding="{Binding Path=clientes.nombre}" Header="Nombre del Cliente" />
@@ -18,9 +18,8 @@
                 <DataGridTextColumn x:Name="montoCuota" Binding="{Binding Path=Cuotas.monto}" Header="Monto" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" />
-        <Button Content="Guardar Cambios" Height="26" HorizontalAlignment="Right" IsEnabled="False" Margin="0,0,118,12" Name="buttonGuardarCambios" VerticalAlignment="Bottom" Width="100" />
-        <Label Content="Reporte de Pagos." Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="labelSatusBar" VerticalAlignment="Bottom" Width="382" />
+        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" Click="buttonSalir_Click" />
+        <Label Content="Reporte de Pagos." Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="labelSatusBar" VerticalAlignment="Bottom" Width="488" />
         <GroupBox Header="Datos de Reporte" Height="171" HorizontalAlignment="Stretch" Margin="12,0,12,44" Name="groupBox1" VerticalAlignment="Bottom">
             <Grid>
                 <Label Content="Cantidad de Pagos: " HorizontalAlignment="Right" Margin="0,13,144,0" Name="labelCantidadPagosTitle" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" />
@@ -36,7 +35,7 @@
                 <Label Content="---" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,56,8,0" Name="labelMontoTotal" VerticalAlignment="Top" Width="130" FontSize="18" FontWeight="Bold" />
                 <CheckBox HorizontalAlignment="Left" Margin="12,81,0,0" Name="checkBoxNombre" VerticalAlignment="Top" Checked="checkBoxNombre_Checked" Unchecked="checkBoxNombre_Unchecked" />
                 <Label Content="Nombre: " HorizontalAlignment="Left" Margin="31,74,0,0" Name="labelNombre" VerticalAlignment="Top" Width="94" Height="28" HorizontalContentAlignment="Right" />
-                <my1:AutoCompleteTextBox HorizontalAlignment="Left" Margin="131,76,0,0" x:Name="autoCompleteTextBoxNombre" VerticalAlignment="Top" Width="115" Height="23" DelayTime="250" IsEnabled="False" LostFocus="autoCompleteTextBoxNombre_LostFocus" />
+                <my1:AutoCompleteTextBox HorizontalAlignment="Left" Margin="131,76,0,0" x:Name="autoCompleteTextBoxNombre" VerticalAlignment="Top" Width="115" Height="23" DelayTime="250" IsEnabled="False" />
             </Grid>
         </GroupBox>
     </Grid>

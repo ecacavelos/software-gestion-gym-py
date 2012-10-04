@@ -348,7 +348,7 @@ namespace Gimnasio
                             int timestamp = (int)time.TotalSeconds;
 
                             database1Entities.ExecuteStoreCommand(
-                                "INSERT INTO Ingresos(idIngreso, fecha, fk_cliente) VALUES({0},{1},{2})", timestamp, DateTime.Now, clientesVar.ToArray()[0].idCliente);
+                                "INSERT INTO Ingresos(idIngreso, fecha, fk_cliente, exitoso) VALUES({0},{1},{2},{3})", timestamp, DateTime.Now, clientesVar.ToArray()[0].idCliente, "True");
                             database1Entities.SaveChanges();
 
                         }
@@ -387,6 +387,13 @@ namespace Gimnasio
                         //dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
                         dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
                         dispatcherTimer.Start();
+
+                        TimeSpan time = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+                        int timestamp = (int)time.TotalSeconds;
+
+                        database1Entities.ExecuteStoreCommand(
+                            "INSERT INTO Ingresos(idIngreso, fecha, fk_cliente, exitoso) VALUES({0},{1},{2},{3})", timestamp, DateTime.Now, clientesVar.ToArray()[0].idCliente, "False");
+                        database1Entities.SaveChanges();
 
                     }
                 }

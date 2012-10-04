@@ -126,6 +126,9 @@
     <Compile Include="VistaIngresoManual.xaml.cs">
       <DependentUpon>VistaIngresoManual.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VistaReporteIngresos.xaml.cs">
+      <DependentUpon>VistaReporteIngresos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VistaReportePagos.xaml.cs">
       <DependentUpon>VistaReportePagos.xaml</DependentUpon>
     </Compile>
@@ -255,6 +258,10 @@
     <Page Include="VistaIngresoManual.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VistaReporteIngresos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VistaReportePagos.xaml">
       <SubType>Designer</SubType>
