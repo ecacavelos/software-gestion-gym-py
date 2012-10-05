@@ -12,7 +12,6 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
-
         </Grid.RowDefinitions>
         <Menu Background="#2A040417">
             <MenuItem Header="Archivo">
@@ -41,8 +40,16 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Administración">
-                <MenuItem Header="Reporte de Pagos..." Click="menuItem_ReportePagos"/>
-                <MenuItem Header="Reporte de Ingresos..." Click="menuItem_ReporteIngresos"/>
+                <MenuItem Header="Reporte de Pagos..." Click="menuItem_ReportePagos">
+                    <MenuItem.Icon>
+                        <Image Source="/Gimnasio;component/Images/iconoCuotas.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Reporte de Ingresos..." Click="menuItem_ReporteIngresos">
+                    <MenuItem.Icon>
+                        <Image Source="/Gimnasio;component/Images/iconoControAcceso.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Ayuda">
                 <MenuItem Header="Ayuda" />

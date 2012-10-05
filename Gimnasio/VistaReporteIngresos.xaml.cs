@@ -25,9 +25,10 @@ namespace Gimnasio
 
         int timestampDesde;
         int timestampHasta;
+        string[] arrayClientesID;
 
-        int totalExitosos = 0;
-        int totalNoExitosos = 0;
+        int totalExitosos;
+        int totalNoExitosos;
 
         public VistaReporteIngresos()
         {
@@ -156,18 +157,84 @@ namespace Gimnasio
 
         private void aplicarFiltros()
         {
+            totalExitosos = 0;
+            totalNoExitosos = 0;
 
-        }
+            string esql = "SELECT value i FROM Ingresos as i";
 
-        private void eliminarFiltros(bool firstTime)
-        {
-            if (firstTime)
+            if (autoCompleteTextBoxNombre.IsEnabled == true)
             {
-                string esql = "SELECT value i FROM Ingresos as i";
-                var ingresosVar = database1Entities.CreateQuery<Ingresos>(esql);
+                string nombreBuscado = autoCompleteTextBoxNombre.Text;
 
-                labelCantidadIngresosTotal.Content = ingresosVar.ToList().Count.ToString();
+                int totalHits = 0;
+                int foundID = 0;
+                foreach (string cacheClientes in arrayClientesID)
+                {
+                    if (cacheClientes.ToLower().Contains(nombreBuscado.ToLower()))
+                    {
+                        int startID = cacheClientes.IndexOf('(') + 1;
+                        int endID = cacheClientes.IndexOf(')');
+                        int lengthID = endID - startID;
+                        Int32.TryParse(cacheClientes.Substring(startID, lengthID), out foundID);
+                        totalHits++;
+                    }
+                }
 
+                if (totalHits > 1)
+                {
+                    labelSatusBar.Content = "Existe más de un cliente con ese nombre.";
+                    return;
+                }
+
+                esql += " WHERE ";
+                esql += String.Format("(i.clientes.idCliente = {0})", foundID);
+            }
+
+            if (datePickerDesde.IsEnabled == true)
+            {
+                if (datePickerDesde.SelectedDate != null)
+                {
+                    DateTime tempDate = (DateTime)datePickerDesde.SelectedDate;
+                    if (esql.Contains("WHERE"))
+                    {
+                        esql += " AND ";
+                    }
+                    else
+                    {
+                        esql += " WHERE ";
+                    }
+                    esql += String.Format("(i.fecha >= DATETIME'{0}')", tempDate.ToString("u").Substring(0, 16));
+                }
+            }
+
+            if (datePickerHasta.IsEnabled == true)
+            {
+                if (datePickerHasta.SelectedDate != null)
+                {
+                    DateTime tempDate = (DateTime)datePickerHasta.SelectedDate;
+                    tempDate = tempDate.AddDays(1);
+                    System.Console.WriteLine(tempDate.ToString());
+                    if (esql.Contains("WHERE"))
+                    {
+                        esql += " AND ";
+                    }
+                    else
+                    {
+                        esql += " WHERE ";
+                    }
+                    esql += String.Format("(i.fecha < DATETIME'{0}')", tempDate.ToString("u").Substring(0, 16));
+                }
+            }
+
+            System.Console.WriteLine(esql);
+
+            var ingresosVar = database1Entities.CreateQuery<Ingresos>(esql);
+            labelCantidadIngresosTotal.Content = ingresosVar.ToList().Count.ToString();
+
+            dataGridIngresos.ItemsSource = ingresosVar;
+
+            if (ingresosVar.ToList().Count > 0)
+            {
                 foreach (Gimnasio.Ingresos tempIngreso in ingresosVar.ToArray())
                 {
                     if (tempIngreso.exitoso == true)
@@ -179,18 +246,73 @@ namespace Gimnasio
                         totalNoExitosos++;
                     }
                 }
-
-                labelIngresosExitosos.Content = totalExitosos.ToString();
-                labelIngresosNoExitosos.Content = totalNoExitosos.ToString();
-
+                labelSatusBar.Content = "Búsqueda Completa.";
             }
+            else
+            {
+                labelSatusBar.Content = "La búsqueda no arrojó resultados.";
+            }
+            labelIngresosExitosos.Content = totalExitosos.ToString();
+            labelIngresosNoExitosos.Content = totalNoExitosos.ToString();
+
+        }
+
+        private void eliminarFiltros(bool firstTime)
+        {
+            totalExitosos = 0;
+            totalNoExitosos = 0;
+
+            string esql = "SELECT value i FROM Ingresos as i";
+            var ingresosVar = database1Entities.CreateQuery<Ingresos>(esql);
+            labelCantidadIngresosTotal.Content = ingresosVar.ToList().Count.ToString();
+
+            dataGridIngresos.ItemsSource = ingresosVar;
+
+            foreach (Gimnasio.Ingresos tempIngreso in ingresosVar.ToArray())
+            {
+                if (tempIngreso.exitoso == true)
+                {
+                    totalExitosos++;
+                }
+                else
+                {
+                    totalNoExitosos++;
+                }
+            }
+
+            labelIngresosExitosos.Content = totalExitosos.ToString();
+            labelIngresosNoExitosos.Content = totalNoExitosos.ToString();
+
+            if (firstTime)
+            {
+                string esql_clientes = "SELECT value c FROM clientes as c";
+                var clientesVar = database1Entities.CreateQuery<clientes>(esql_clientes);
+
+                int i = 0;
+                arrayClientesID = new string[clientesVar.ToList().Count];
+                foreach (Gimnasio.clientes tempCliente in clientesVar.ToArray())
+                {
+                    arrayClientesID[i] = tempCliente.nombre + " " + tempCliente.apellido + " (" + tempCliente.idCliente + ")";
+                    autoCompleteTextBoxNombre.AddItem(new WPFAutoCompleteTextbox.AutoCompleteEntry(tempCliente.nombre + " " + tempCliente.apellido, tempCliente.nombre, tempCliente.apellido));
+                    i++;
+                }
+            }
+
         }
 
         #endregion
 
+        // Funcion que Convierte un long int de UnixTime a una estructura DateTime
+        public DateTime FromUnixTime(long unixTime)
+        {
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return epoch.AddSeconds(unixTime);
+        }
+
     }
 
     #region "Conversores para los data bindings de esta ventana."
+    // Conversor de Booleano a String
     [ValueConversion(typeof(bool), typeof(string))]
     public class BooleantoStringConverter : IValueConverter
     {

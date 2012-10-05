@@ -25,8 +25,6 @@ namespace Gimnasio
     {
         private Configuration c2;
 
-        //private bool _Keypad_usb = false;
-
         private Window winVistaConfiguracion = new Window();
         private Window winVistaTiposCuotas = new Window();
         private Window winClientes = new Window();
@@ -45,6 +43,9 @@ namespace Gimnasio
 
         public VentanaPrincipal()
         {
+            /* Se intenta leer el archivo de Configuración, antes de mostrar las ventanas.
+             * Si el archivo 'config.xml' no existe o no posee la sintaxis correcta, 
+             * se arrojan y manejan las excepciones correspondientes. */
             try
             {
                 this.c2 = Configuration.Deserialize("config.xml");
@@ -79,11 +80,11 @@ namespace Gimnasio
 
         #region "Funciones para el Toolbar de Botones de la Ventana Principal"
 
-        private void abrirVentana_Clientes(object sender, RoutedEventArgs e) // Se controla que una instancia de esta ventana no este abierta.
+        private void abrirVentana_Clientes(object sender, RoutedEventArgs e)
         {
-            if (VistaClientes.IsOpen)// Se controla que una instancia de esta ventana no este abierta.
+            if (VistaClientes.IsOpen) // Se controla que una instancia de esta ventana no este abierta.
             {
-                this.winClientes.Activate();// Si esta abierta entonces activar, mandar al frente
+                this.winClientes.Activate(); // Si esta abierta entonces activar, mandar al frente.
                 return;
             }
             else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
@@ -108,9 +109,9 @@ namespace Gimnasio
 
         private void abrirVentana_ControlIngreso(object sender, RoutedEventArgs e)
         {
-            if (VistaControlIngreso.IsOpen)// Se controla que una instancia de esta ventana no este abierta.
+            if (VistaControlIngreso.IsOpen) // Se controla que una instancia de esta ventana no este abierta.
             {
-                this.winVistaControlIngreso.Activate();// Si esta abierta entonces activar, mandar al frente
+                this.winVistaControlIngreso.Activate(); // Si esta abierta entonces activar, mandar al frente.
                 return;
             }
             else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
@@ -126,7 +127,7 @@ namespace Gimnasio
         {
             if (VistaIngresoManual.IsOpen) // Se controla que una instancia de esta ventana no este abierta.
             {
-                this.winIngresoManual.Activate(); // Si esta abierta entonces activar, mandar al frente
+                this.winIngresoManual.Activate(); // Si esta abierta entonces activar, mandar al frente.
                 return;
             }
             else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
@@ -144,9 +145,9 @@ namespace Gimnasio
 
         private void menuItem_Configuracion(object sender, RoutedEventArgs e)
         {
-            if (VistaConfiguracion.IsOpen)// Se controla que una instancia de esta ventana no este abierta.
+            if (VistaConfiguracion.IsOpen) // Se controla que una instancia de esta ventana no este abierta.
             {
-                this.winVistaConfiguracion.Activate();// Si esta abierta entonces activar, mandar al frente
+                this.winVistaConfiguracion.Activate(); // Si esta abierta entonces activar, mandar al frente.
                 return;
             }
             else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
@@ -186,9 +187,9 @@ namespace Gimnasio
 
         private void menuItem_VerClientes(object sender, RoutedEventArgs e)
         {
-            if (VistaClientes.IsOpen)// Se controla que una instancia de esta ventana no este abierta.
+            if (VistaClientes.IsOpen) // Se controla que una instancia de esta ventana no este abierta.
             {
-                this.winClientes.Activate();// Si esta abierta entonces activar, mandar al frente
+                this.winClientes.Activate(); // Si esta abierta entonces activar, mandar al frente.
                 return;
             }
             else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
@@ -208,15 +209,11 @@ namespace Gimnasio
                 return;
             }
             else
-            {
-                // Create an instance of the window named by the current button.
+            {                
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
                 this.winConsultarPagos = (Window)assembly.CreateInstance("Gimnasio.VistaConsultarPagos");
                 this.winConsultarPagos.Show();
-
-                //Window win = (Window)assembly.CreateInstance("Gimnasio.VistaConsultarPagos");
-                //win.Show();
             }
         }
 

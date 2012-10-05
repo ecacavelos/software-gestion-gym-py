@@ -216,7 +216,7 @@ namespace Gimnasio
                     {
                         esql += " WHERE ";
                     }
-                    esql += String.Format("(p.idPago >= + {0})", timestampDesde);
+                    esql += String.Format("(p.idPago >= {0})", timestampDesde);
                 }
             }
 
@@ -232,7 +232,7 @@ namespace Gimnasio
                     {
                         esql += " WHERE ";
                     }
-                    esql += String.Format("(p.idPago <= + {0})", timestampHasta);
+                    esql += String.Format("(p.idPago <= {0})", timestampHasta);
                 }
             }
 
@@ -259,8 +259,6 @@ namespace Gimnasio
             {
                 labelSatusBar.Content = "La búsqueda no arrojó resultados.";
             }
-
-            return;
 
         }
 
@@ -292,12 +290,9 @@ namespace Gimnasio
                 foreach (Gimnasio.clientes tempCliente in clientesVar.ToArray())
                 {
                     arrayClientesID[i] = tempCliente.nombre + " " + tempCliente.apellido + " (" + tempCliente.idCliente + ")";
-                    //System.Console.WriteLine(arrayClientesID[i]);
                     autoCompleteTextBoxNombre.AddItem(new WPFAutoCompleteTextbox.AutoCompleteEntry(tempCliente.nombre + " " + tempCliente.apellido, tempCliente.nombre, tempCliente.apellido));
                     i++;
                 }
-
-                //System.Console.WriteLine(clientesVar.ToList().Count.ToString() + " clientes. " + arrayClientesID.Count() + " sugerencias agregadas.");
             }
 
         }
