@@ -81,7 +81,7 @@ namespace Gimnasio
         private void checkBoxDesde_Unchecked(object sender, RoutedEventArgs e)
         {
             datePickerDesde.IsEnabled = false;
-            if (checkBoxHasta.IsChecked == false && checkBoxNombre.IsChecked == false)
+            if (checkBoxHasta.IsChecked == false && checkBoxNombre.IsChecked == false && checkBoxExitoso.IsChecked == false)
             {
                 buttonBuscarIngresos.IsEnabled = false;
                 eliminarFiltros(false);
@@ -101,7 +101,7 @@ namespace Gimnasio
         private void checkBoxHasta_Unchecked(object sender, RoutedEventArgs e)
         {
             datePickerHasta.IsEnabled = false;
-            if (checkBoxDesde.IsChecked == false && checkBoxNombre.IsChecked == false)
+            if (checkBoxDesde.IsChecked == false && checkBoxNombre.IsChecked == false && checkBoxExitoso.IsChecked == false)
             {
                 buttonBuscarIngresos.IsEnabled = false;
                 eliminarFiltros(false);
@@ -121,7 +121,7 @@ namespace Gimnasio
         private void checkBoxNombre_Unchecked(object sender, RoutedEventArgs e)
         {
             autoCompleteTextBoxNombre.IsEnabled = false;
-            if (checkBoxDesde.IsChecked == false && checkBoxHasta.IsChecked == false)
+            if (checkBoxDesde.IsChecked == false && checkBoxHasta.IsChecked == false && checkBoxExitoso.IsChecked == false)
             {
                 buttonBuscarIngresos.IsEnabled = false;
                 eliminarFiltros(false);
@@ -130,6 +130,28 @@ namespace Gimnasio
             {
                 aplicarFiltros();
             }
+        }
+
+        private void checkBoxExitoso_Checked(object sender, RoutedEventArgs e)
+        {
+            comboBoxExitoso.IsEnabled = true;
+            buttonBuscarIngresos.IsEnabled = true;
+        }
+
+        private void checkBoxExitoso_Unchecked(object sender, RoutedEventArgs e)
+        {
+            comboBoxExitoso.IsEnabled = false;
+            if (checkBoxDesde.IsChecked == false && checkBoxHasta.IsChecked == false && checkBoxNombre.IsChecked == false)
+            {
+                buttonBuscarIngresos.IsEnabled = false;
+                eliminarFiltros(false);
+            }
+            else
+            {
+                aplicarFiltros();
+            }
+
+
         }
 
         private void datePickerDesde_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -159,12 +181,20 @@ namespace Gimnasio
         {
             totalExitosos = 0;
             totalNoExitosos = 0;
+            bool noQueryFlag = false;
 
             string esql = "SELECT value i FROM Ingresos as i";
 
             if (autoCompleteTextBoxNombre.IsEnabled == true)
             {
                 string nombreBuscado = autoCompleteTextBoxNombre.Text;
+
+                if (nombreBuscado.Length < 2)
+                {
+                    labelSatusBar.Content = "El nombre ingresado debe poseer al menos 2 caracteres.";
+                    noQueryFlag = true;
+                    return;
+                }
 
                 int totalHits = 0;
                 int foundID = 0;
@@ -205,6 +235,10 @@ namespace Gimnasio
                     }
                     esql += String.Format("(i.fecha >= DATETIME'{0}')", tempDate.ToString("u").Substring(0, 16));
                 }
+                else
+                {
+                    noQueryFlag = true;
+                }
             }
 
             if (datePickerHasta.IsEnabled == true)
@@ -224,36 +258,66 @@ namespace Gimnasio
                     }
                     esql += String.Format("(i.fecha < DATETIME'{0}')", tempDate.ToString("u").Substring(0, 16));
                 }
-            }
-
-            System.Console.WriteLine(esql);
-
-            var ingresosVar = database1Entities.CreateQuery<Ingresos>(esql);
-            labelCantidadIngresosTotal.Content = ingresosVar.ToList().Count.ToString();
-
-            dataGridIngresos.ItemsSource = ingresosVar;
-
-            if (ingresosVar.ToList().Count > 0)
-            {
-                foreach (Gimnasio.Ingresos tempIngreso in ingresosVar.ToArray())
+                else
                 {
-                    if (tempIngreso.exitoso == true)
-                    {
-                        totalExitosos++;
-                    }
-                    else
-                    {
-                        totalNoExitosos++;
-                    }
+                    noQueryFlag = true;
                 }
-                labelSatusBar.Content = "Búsqueda Completa.";
             }
-            else
+
+            if (checkBoxExitoso.IsChecked == true)
             {
-                labelSatusBar.Content = "La búsqueda no arrojó resultados.";
+                string tempExitoso;
+                if (comboBoxExitoso.SelectedIndex == 0)
+                {
+                    tempExitoso = "true";
+                }
+                else
+                {
+                    tempExitoso = "false";
+                }
+
+                if (esql.Contains("WHERE"))
+                {
+                    esql += " AND ";
+                }
+                else
+                {
+                    esql += " WHERE ";
+                }
+                esql += String.Format("(i.exitoso = {0})", tempExitoso);
             }
-            labelIngresosExitosos.Content = totalExitosos.ToString();
-            labelIngresosNoExitosos.Content = totalNoExitosos.ToString();
+
+            if (noQueryFlag != true)
+            {
+                System.Console.WriteLine(esql);
+
+                var ingresosVar = database1Entities.CreateQuery<Ingresos>(esql);
+                labelCantidadIngresosTotal.Content = ingresosVar.ToList().Count.ToString();
+
+                dataGridIngresos.ItemsSource = ingresosVar;
+
+                if (ingresosVar.ToList().Count > 0)
+                {
+                    foreach (Gimnasio.Ingresos tempIngreso in ingresosVar.ToArray())
+                    {
+                        if (tempIngreso.exitoso == true)
+                        {
+                            totalExitosos++;
+                        }
+                        else
+                        {
+                            totalNoExitosos++;
+                        }
+                    }
+                    labelSatusBar.Content = "Búsqueda Completa.";
+                }
+                else
+                {
+                    labelSatusBar.Content = "La búsqueda no arrojó resultados.";
+                }
+                labelIngresosExitosos.Content = totalExitosos.ToString();
+                labelIngresosNoExitosos.Content = totalNoExitosos.ToString();
+            }
 
         }
 
@@ -293,9 +357,17 @@ namespace Gimnasio
                 foreach (Gimnasio.clientes tempCliente in clientesVar.ToArray())
                 {
                     arrayClientesID[i] = tempCliente.nombre + " " + tempCliente.apellido + " (" + tempCliente.idCliente + ")";
-                    autoCompleteTextBoxNombre.AddItem(new WPFAutoCompleteTextbox.AutoCompleteEntry(tempCliente.nombre + " " + tempCliente.apellido, tempCliente.nombre, tempCliente.apellido));
+                    autoCompleteTextBoxNombre.AddItem(new WPFAutoCompleteTextbox.AutoCompleteEntry(tempCliente.nombre + " " + tempCliente.apellido, tempCliente.nombre, tempCliente.apellido, tempCliente.nombre + " " + tempCliente.apellido));
                     i++;
                 }
+
+                List<string> listaComboBox = new List<string>();
+                listaComboBox.Add("Exitosos");
+                listaComboBox.Add("No Exitosos");
+                System.Collections.ObjectModel.ObservableCollection<string> comboSource = new System.Collections.ObjectModel.ObservableCollection<string>(listaComboBox);
+
+                comboBoxExitoso.ItemsSource = comboSource;
+                comboBoxExitoso.SelectedIndex = 0;
             }
 
         }

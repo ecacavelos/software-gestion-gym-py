@@ -21,8 +21,9 @@
         <TextBlock Height="24" HorizontalAlignment="Center" Margin="190,130,88,0" Name="textBoxApellido" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="120" Background="#12000000" />
         <DataGrid AutoGenerateColumns="False" Height="150" HorizontalAlignment="Stretch" Margin="12,0,12,12" Name="dataGridPagos" VerticalAlignment="Bottom" UnloadingRow="unLoadingRow_Pagos" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" LoadingRow="dataGridPagos_LoadingRow" Grid.RowSpan="2" VerticalContentAlignment="Center" CanUserAddRows="False" CanUserDeleteRows="True">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="fechaColumn" Binding="{Binding Path=fecha, StringFormat={}{0:dd/MM/yyyy}}" Header="Fecha" FontSize="15" />
-                <DataGridTextColumn Binding="{Binding Path=fecha_vencimiento, StringFormat={}{0:dd/MM/yyyy}}" Header="Fecha vencimiento" FontSize="15" />
+                <DataGridTextColumn x:Name="fechaColumn" Binding="{Binding Path=fecha, StringFormat={}{0:dd/MM/yyyy}}" Header="Fecha" FontSize="15" MinWidth="100" />
+                <DataGridTextColumn Binding="{Binding Path=fecha_vencimiento, StringFormat={}{0:dd/MM/yyyy}}" Header="Fecha Vencimiento" FontSize="15" MinWidth="100" />
+                <DataGridTextColumn Binding="{Binding Path=Cuotas.monto}" Header="Monto" FontSize="15" MinWidth="50" />
                 <DataGridTemplateColumn x:Name="buttonColumn" Width="Auto" Header="">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

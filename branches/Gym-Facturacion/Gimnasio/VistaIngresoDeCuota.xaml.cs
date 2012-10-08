@@ -126,11 +126,12 @@ namespace Gimnasio
                             {
                                 MessageBoxResult result;
                                 //MessageBox.Show("El pago se aplico correctamente");
-                                result = MessageBox.Show("El pago se aplico correctamente. Desea imprimir una factura para el mismo?", "Pago de Cuota", MessageBoxButton.YesNo);
+                                result = MessageBox.Show("Desea imprimir una factura para este pago?", "Pago de Cuota", MessageBoxButton.YesNo);
                                 if (result == MessageBoxResult.Yes)
                                 {
                                     Facturacion.DatosFactura(pagoAAgregar);
                                 }
+                                MessageBox.Show("El pago se aplicó correctamente.");
                                 this.Close();
                             }
                         }

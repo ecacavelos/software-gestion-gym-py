@@ -8,7 +8,7 @@
         <local:BooleantoStringConverter x:Key="BooleantoStringConverter" />
     </Window.Resources>
     <Grid Background="#FFBECBEB" DataContext="{StaticResource ingresosViewSource}">
-        <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="12,12,12,220" Name="dataGridIngresos" VerticalAlignment="Stretch" ItemsSource="{Binding}" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" IsReadOnly="True">
+        <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="12,12,12,256" Name="dataGridIngresos" VerticalAlignment="Stretch" ItemsSource="{Binding}" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nombreCliente" Binding="{Binding Path=clientes.nombre}" Header="Nombre del Cliente" MinWidth="120" />
                 <DataGridTextColumn x:Name="apellidoCliente" Binding="{Binding Path=clientes.apellido}" Header="Apellido" MinWidth="120" />
@@ -30,7 +30,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Image.Style>
-                            </Image>                                
+                            </Image>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -38,7 +38,7 @@
         </DataGrid>
         <Label Content="Reporte de Ingresos." Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="labelSatusBar" VerticalAlignment="Bottom" Width="488" />
         <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" Click="buttonSalir_Click" />
-        <GroupBox Header="Datos de Reporte" Height="171" HorizontalAlignment="Stretch" Margin="12,0,12,43" Name="groupBox1" VerticalAlignment="Bottom">
+        <GroupBox Header="Datos de Reporte" Height="207" HorizontalAlignment="Stretch" Margin="12,0,12,43" Name="groupBox1" VerticalAlignment="Bottom">
             <Grid>
                 <Label Content="Total de Ingresos: " FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,13,124,0" Name="labelCantidadIngresosTotalTitle" VerticalAlignment="Top" />
                 <CheckBox Checked="checkBoxDesde_Checked" HorizontalAlignment="Left" Margin="12,13,0,0" Name="checkBoxDesde" Unchecked="checkBoxDesde_Unchecked" VerticalAlignment="Top" />
@@ -56,6 +56,9 @@
                 <my1:AutoCompleteTextBox DelayTime="250" Height="23" HorizontalAlignment="Left" IsEnabled="False" Margin="131,76,0,0" x:Name="autoCompleteTextBoxNombre" VerticalAlignment="Top" Width="115" />
                 <Label Content="Ingresos No Exitosos: " FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,96,123,0" Name="labelIngresosNoExitososTitle" VerticalAlignment="Top" />
                 <Label Content="---" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,96,8,0" Name="labelIngresosNoExitosos" VerticalAlignment="Top" Width="110" />
+                <CheckBox HorizontalAlignment="Left" Margin="12,115,0,0" Name="checkBoxExitoso" VerticalAlignment="Top" Checked="checkBoxExitoso_Checked" Unchecked="checkBoxExitoso_Unchecked" />
+                <Label Content="Mostrar sólo: " Height="28" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="31,108,0,0" Name="labelExitoso" VerticalAlignment="Top" Width="94" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="131,110,0,0" Name="comboBoxExitoso" VerticalAlignment="Top" Width="115" IsEnabled="False" IsEditable="False" IsReadOnly="True" />
             </Grid>
         </GroupBox>
     </Grid>

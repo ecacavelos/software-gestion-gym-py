@@ -19,7 +19,10 @@ namespace Gimnasio
         static int[] myIVAs05Array = new int[1];
         static int[] myIVAs10Array = new int[1];
 
-        // Generar, validar y almacenar las facturas. Recibe el pago a facturar.
+        /// <summary>
+        /// Genera, valida y almacena las facturas.
+        /// </summary>
+        /// <param name="pago">El pago a facturar.</param>
         public static void DatosFactura(Pagos pago)
         {
 
