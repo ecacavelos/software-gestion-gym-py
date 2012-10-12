@@ -50,9 +50,11 @@
                         <Image Source="/Gimnasio;component/Images/iconoControAcceso.png" Width="16" Height="16" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <Separator />
+                <MenuItem Header="Cambiar Contraseña de Admin..." Click="menuItem_administrarAdmins" />
             </MenuItem>
             <MenuItem Header="Ayuda">
-                <MenuItem Header="Ayuda" />
+                <!--<MenuItem Header="Ayuda" />-->
                 <MenuItem Header="About GymAdmin..." Click="menuItem_AboutGymAdmin" />
             </MenuItem>
         </Menu>

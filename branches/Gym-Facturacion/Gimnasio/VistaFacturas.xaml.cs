@@ -132,7 +132,7 @@ namespace Gimnasio
 
         private void anularCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (anularClicked.ToString() == "True")
+            /*if (anularClicked.ToString() == "True")
             {
                 DataGrid myDataGrid = facturasDataGrid;
                 Gimnasio.Facturas currentcell = (Gimnasio.Facturas)myDataGrid.SelectedItem;
@@ -142,12 +142,12 @@ namespace Gimnasio
                 database1Entities.SaveChanges();
 
                 anularClicked = false;
-            }
+            }*/
         }
 
         private void anularCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (anularClicked.ToString() == "True")
+            /*if (anularClicked.ToString() == "True")
             {
 
                 DataGrid myDataGrid = facturasDataGrid;
@@ -166,7 +166,7 @@ namespace Gimnasio
                 database1Entities.SaveChanges();
 
                 anularClicked = false;
-            }
+            }*/
         }
 
         private void anularCheckBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

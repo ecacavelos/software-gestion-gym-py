@@ -35,11 +35,14 @@ namespace Gimnasio
             set { textBoxRUC.Text = value; }
         }
 
-        public FacturaDialog(Pagos pago)
+        public FacturaDialog(Pagos[] pagos)
         {
             InitializeComponent();
 
-            thisPago = pago;
+            dataGridFacturaPreview.ItemsSource = pagos;
+            int montoTotal = 0;
+            thisPago = pagos[0];
+
             int lastNroFactura = 0;
             textBoxNroFactura.Text = "0000001";
 
@@ -55,8 +58,14 @@ namespace Gimnasio
                 textBoxRUC.Background = Brushes.MistyRose;
             }
 
+            int tempMonto = 0;
+            Int32.TryParse(thisPago.Cuotas.monto, out tempMonto);
+            montoTotal += tempMonto;
+
+            labelMontoTotal.Content = "Monto Total: " + montoTotal.ToString("#,##0");
+
             // Hacemos un query a la base de datos para obtener todas las facturas.
-            string esql = "select value f from Facturas as f";
+            string esql = "SELECT value f FROM Facturas as f";
             var facturasVar = database1Entities.CreateQuery<Facturas>(esql);
 
             // Si existe al menos una factura.
