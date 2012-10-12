@@ -91,6 +91,9 @@
     <Compile Include="VentanaLogin.xaml.cs">
       <DependentUpon>VentanaLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VistaAdministrarAdmins.xaml.cs">
+      <DependentUpon>VistaAdministrarAdmins.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VistaConsultarPagos.xaml.cs">
       <DependentUpon>VistaConsultarPagos.xaml</DependentUpon>
     </Compile>
@@ -222,6 +225,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="VentanaLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VistaAdministrarAdmins.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

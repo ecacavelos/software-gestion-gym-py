@@ -34,6 +34,7 @@ namespace Gimnasio
         private Window winVistaFacturas = new Window();
         private Window winReportePagos = new Window();
         private Window winReporteIngresos = new Window();
+        private Window winAdministrarAdmins = new Window();
 
         private RawStuff.InputDevice id;
         private int NumberOfKeyboards;
@@ -281,6 +282,31 @@ namespace Gimnasio
                     Assembly assembly = type.Assembly;
                     this.winReporteIngresos = (Window)assembly.CreateInstance("Gimnasio.VistaReporteIngresos");
                     this.winReporteIngresos.Show();
+                }
+                else
+                {
+                    //System.Console.WriteLine("Se canceló el Login.");
+                }
+            }
+        }
+
+        private void menuItem_administrarAdmins(object sender, RoutedEventArgs e)
+        {
+            if (VistaAdministrarAdmins.IsOpen)
+            {
+                this.winAdministrarAdmins.Activate();
+                return;
+            }
+            else
+            {
+                VentanaLogin winLogin = new VentanaLogin();
+                Nullable<bool> result = winLogin.ShowDialog();
+                if (result == true)
+                {
+                    Type type = this.GetType();
+                    Assembly assembly = type.Assembly;
+                    this.winAdministrarAdmins = (Window)assembly.CreateInstance("Gimnasio.VistaAdministrarAdmins");
+                    this.winAdministrarAdmins.Show();
                 }
                 else
                 {

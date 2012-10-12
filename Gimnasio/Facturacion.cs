@@ -23,11 +23,11 @@ namespace Gimnasio
         /// Genera, valida y almacena las facturas.
         /// </summary>
         /// <param name="pago">El pago a facturar.</param>
-        public static void DatosFactura(Pagos pago)
+        public static void DatosFactura(Pagos[] pagos, clientes clienteFacturado)
         {
 
             Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
-            if (pago != null)   // Si se recibe un Pago válido.
+            if (pagos != null)   // Si se recibe un array de Pagos válido.
             {
                 Facturas current_factura = new Facturas();
                 if (current_factura.idFactura == 0)                                 // Si el ID no existe.
@@ -36,19 +36,18 @@ namespace Gimnasio
                     int timestamp = (int)time.TotalSeconds;
                     current_factura.idFactura = timestamp;                          // Nuevo ID = timestamp.
                 }
-                // Se cargan los datos correspondientes de la factura en el nuevo registro de la BD.
-                current_factura.fk_pago = pago.idPago;
-                current_factura.fk_cliente = pago.clientes.idCliente;
+                // Se cargan los datos correspondientes de la factura en el nuevo registro de la BD.                
+                current_factura.fk_cliente = pagos[0].clientes.idCliente;
 
                 // Se hace el query a la BD de facturas, para conocer si el pago ya fue facturado.
-                string esql = "select value f from Facturas as f where f.fk_pago = " + (current_factura.fk_pago);
-                var facturasVar = database1Entities.CreateQuery<Facturas>(esql);
+                //string esql = "SELECT value f FROM Facturas as f WHERE f.fk_pago = " + (current_factura.fk_pago);
+                //var facturasVar = database1Entities.CreateQuery<Facturas>(esql);
 
                 // Si no se encontró este pago entre los facturados.
                 /*if (facturasVar.ToList().Count == 0)
                 {*/
 
-                FacturaDialog dlg = new FacturaDialog(pago);
+                FacturaDialog dlg = new FacturaDialog(pagos);
                 Nullable<bool> result = dlg.ShowDialog();
 
                 if (result == true)
@@ -62,7 +61,7 @@ namespace Gimnasio
                 }
 
                 current_factura.Fecha_Emision = DateTime.Now;
-                current_factura.Nombre_Pagador = pago.clientes.nombre + " " + pago.clientes.apellido;
+                current_factura.Nombre_Pagador = pagos[0].clientes.nombre + " " + pagos[0].clientes.apellido;
                 current_factura.RUC_Pagador = dlg.ResponseText_RUC;
 
                 // Se determina el tipo de IVA y se acumula en el array correspondiente.
@@ -73,19 +72,22 @@ namespace Gimnasio
                 current_factura.IVA05_Total = 0;
                 current_factura.IVA10_Total = 0;
 
-                for (int i = 0; i < 1; i++)
+                System.Console.WriteLine();
+                System.Console.WriteLine(pagos.ToList().Count + " pagos en esta factura.");
+
+                for (int i = 0; i < pagos.ToList().Count; i++)
                 {
-                    int thisMonto = Convert.ToInt32(pago.Cuotas.monto);
+                    int thisMonto = Convert.ToInt32(pagos[0].Cuotas.monto);
                     //myMontosArray[0] = thisMonto;
-                    if (pago.Cuotas.tipoIVA == "10%")
+                    if (pagos[i].Cuotas.tipoIVA == "10%")
                     {
                         myIVAs10Array[i] = thisMonto;
                     }
-                    else if (pago.Cuotas.tipoIVA == "5%")
+                    else if (pagos[i].Cuotas.tipoIVA == "5%")
                     {
                         myIVAs05Array[i] = thisMonto;
                     }
-                    else if (pago.Cuotas.tipoIVA == "Exentas")
+                    else if (pagos[i].Cuotas.tipoIVA == "Exentas")
                     {
                         myIVAsExArray[i] = thisMonto;
                     }
@@ -103,17 +105,17 @@ namespace Gimnasio
                 current_factura.Liquidacion_IVA10 = current_factura.IVA10_Total / 11;
                 current_factura.Liquidacion_IVA_Total = current_factura.Liquidacion_IVA05 + current_factura.Liquidacion_IVA10;
 
-                current_factura.Concepto = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", pago.fecha) +
-                    " a " + String.Format("{0:dd/MM/yyyy}", pago.fecha_vencimiento);
+                current_factura.Concepto = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", pagos[0].fecha) +
+                    " a " + String.Format("{0:dd/MM/yyyy}", pagos[0].fecha_vencimiento);
 
-                // Se agrega la factura a la BD en la tabla "Facturas".
+                // Se agrega la factura a la BD en la tabla "Facturas".                
                 database1Entities.Facturas.AddObject(current_factura);
                 database1Entities.SaveChanges();
 
                 // Se actualiza el campo "ya_facturado" de la tabla Pagos
                 // para indicar que ese pago ya fue facturado.
                 database1Entities.ExecuteStoreCommand(
-                    "UPDATE Pagos SET ya_facturado = 1 WHERE (Pagos.idPago = {0})", current_factura.fk_pago);
+                    "UPDATE Pagos SET ya_facturado = 1 WHERE (Pagos.idPago = {0})", pagos[0].idPago);
                 database1Entities.SaveChanges();
 
                 // Se llama al módulo de Impresión.

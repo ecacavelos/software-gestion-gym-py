@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Gimnasio"
-        Title="Consulta de pagos de clientes" Height="380" Width="420" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" ResizeMode="NoResize" Icon="/Gimnasio;component/Images/iconoCuotas.png" Unloaded="Window_Unloaded">
+        Title="Consulta de Pagos de Clientes" Height="420" Width="420" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" ResizeMode="NoResize" Icon="/Gimnasio;component/Images/iconoCuotas.png" Unloaded="Window_Unloaded">
     <Window.Resources>
         <CollectionViewSource x:Key="pagosViewSource" d:DesignSource="{d:DesignInstance my:Pagos, CreateList=True}" />
         <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
@@ -12,15 +12,22 @@
             <RowDefinition Height="247*" />
             <RowDefinition Height="145*" />
         </Grid.RowDefinitions>
-        <Label Content="Nro. de Cedula :" Height="24" HorizontalAlignment="Center" Margin="87,67,215,0" Name="label1" VerticalAlignment="Top" />
-        <Label Content="Consulta de pagos" Height="46" HorizontalAlignment="Center" Margin="8,12,12,0" Name="label2" VerticalAlignment="Top" Width="323" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" />
-        <TextBox Height="24" HorizontalAlignment="Center" Margin="190,68,88,0" Name="textBoxNroCedula" VerticalAlignment="Top" Width="120" KeyDown="textBoxNroCedula_KeyDown" PreviewKeyDown="textBoxNroCedula_PreviewKeyDown" />
-        <Label Content="Nombre :" Height="24" HorizontalAlignment="Center" Margin="123,97,215,0" Name="label3" VerticalAlignment="Top" />
-        <Label Content="Apellido :" Height="24" HorizontalAlignment="Center" Margin="123,127,215,0" Name="label4" VerticalAlignment="Top" />
+        <Label Content="Nro. de Cedula: " Height="24" HorizontalAlignment="Center" Margin="84,68,214,0" Name="label1" VerticalAlignment="Top" Width="100" HorizontalContentAlignment="Right" />
+        <Label Content="Consulta de Pagos" HorizontalAlignment="Stretch" Margin="12,12,12,0" Name="label2" VerticalAlignment="Top" Width="374" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <TextBox Height="24" HorizontalAlignment="Center" Margin="190,70,88,0" Name="textBoxNroCedula" VerticalAlignment="Top" Width="120" KeyDown="textBoxNroCedula_KeyDown" PreviewKeyDown="textBoxNroCedula_PreviewKeyDown" />
+        <Label Content="Nombre: " Height="24" HorizontalAlignment="Center" Margin="84,100,214,0" Name="label3" VerticalAlignment="Top" Width="100" HorizontalContentAlignment="Right" />
+        <Label Content="Apellido: " Height="24" HorizontalAlignment="Center" Margin="84,130,214,0" Name="label4" VerticalAlignment="Top" Width="100" HorizontalContentAlignment="Right" />
         <TextBlock Height="24" HorizontalAlignment="Center" Margin="190,100,88,0" Name="textBoxNombre" Text="{Binding Path=nombre}" VerticalAlignment="Top" Width="120" Background="#12000000" />
         <TextBlock Height="24" HorizontalAlignment="Center" Margin="190,130,88,0" Name="textBoxApellido" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="120" Background="#12000000" />
-        <DataGrid AutoGenerateColumns="False" Height="150" HorizontalAlignment="Stretch" Margin="12,0,12,12" Name="dataGridPagos" VerticalAlignment="Bottom" UnloadingRow="unLoadingRow_Pagos" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" LoadingRow="dataGridPagos_LoadingRow" Grid.RowSpan="2" VerticalContentAlignment="Center" CanUserAddRows="False" CanUserDeleteRows="True">
+        <DataGrid AutoGenerateColumns="False" Height="160" HorizontalAlignment="Stretch" Margin="12,0,12,48" Name="dataGridPagos" VerticalAlignment="Bottom" UnloadingRow="unLoadingRow_Pagos" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" Grid.RowSpan="2" VerticalContentAlignment="Center" CanUserAddRows="False" CanUserDeleteRows="True" RowHeight="25">
             <DataGrid.Columns>
+                <DataGridTemplateColumn x:Name="checkColumn">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox Name="checkBoxAddToFactura" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="checkBoxAddToFactura_Checked" Unchecked="checkBoxAddToFactura_Unchecked"></CheckBox>
+                        </DataTemplate>                        
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn x:Name="fechaColumn" Binding="{Binding Path=fecha, StringFormat={}{0:dd/MM/yyyy}}" Header="Fecha" FontSize="15" MinWidth="100" />
                 <DataGridTextColumn Binding="{Binding Path=fecha_vencimiento, StringFormat={}{0:dd/MM/yyyy}}" Header="Fecha Vencimiento" FontSize="15" MinWidth="100" />
                 <DataGridTextColumn Binding="{Binding Path=Cuotas.monto}" Header="Monto" FontSize="15" MinWidth="50" />
@@ -34,5 +41,6 @@
             </DataGrid.Columns>
 
         </DataGrid>
+        <Button Name="buttonFacturasMultiples" Content="Facturar Pagos Seleccionados..." Grid.Row="1" Height="24" HorizontalAlignment="Right" Margin="0,0,12,12" VerticalAlignment="Bottom" Width="192" IsEnabled="False" Click="buttonFacturasMultiples_Click" />
     </Grid>
 </Window>

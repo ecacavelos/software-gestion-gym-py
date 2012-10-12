@@ -20,8 +20,6 @@ namespace Gimnasio
     /// </summary>
     public partial class VistaConsultarPagos : Window
     {
-
-        //public ResourceDictionary Resources { get; set; }
         Configuration c2;
 
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
@@ -31,6 +29,10 @@ namespace Gimnasio
         private System.Data.Objects.DataClasses.EntityCollection<Pagos> pagosCliente;
 
         DataGridRow[] PagosRow001 = new DataGridRow[99999];
+
+        System.Data.Objects.ObjectQuery<clientes> clientesVar;
+        private int modoMultiplesFacturas = 0;
+        private List<Pagos> arrayPagosSeleccionados = new List<Pagos>();
 
         public VistaConsultarPagos()
         {
@@ -72,8 +74,8 @@ namespace Gimnasio
             // se presiono ENTER
             if (e.Key.ToString() == "Return")
             {
-                string esql = "select value c from clientes as c where c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
-                var clientesVar = database1Entities.CreateQuery<clientes>(esql);
+                string esql = "SELECT value c FROM clientes as c WHERE c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
+                clientesVar = database1Entities.CreateQuery<clientes>(esql);
 
                 //Chequear si existe un cliente con ese nro. de Cedula. 
                 if (clientesVar.ToList().Count == 0)// NO HAY NADA. 
@@ -98,20 +100,20 @@ namespace Gimnasio
 
         }
 
+        // Lógica para manejar el borrado de Pagos.
         private void unLoadingRow_Pagos(object sender, DataGridRowEventArgs e)
         {
             System.Windows.Forms.DialogResult result;
-            string esql = "select value c from clientes as c where c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
+            string esql = "SELECT value c FROM clientes as c WHERE c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
             var clientesVar = database1Entities2.CreateQuery<clientes>(esql);
 
             if (this.pagosCliente.Count < clientesVar.ToArray()[0].Pagos.Count)
             {
-
                 result = System.Windows.Forms.MessageBox.Show("Desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNoCancel);
 
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
-                    // ver los controles necesarios. 
+                    // Ver los controles necesarios. 
                     database1Entities.SaveChanges();
                 }
                 else
@@ -119,7 +121,7 @@ namespace Gimnasio
                     if (result == System.Windows.Forms.DialogResult.No)
                     {   // No hacer nada y poner de vuelta los elementos.
                         database1Entities = new Gimnasio.Database1Entities();
-                        string esql2 = "select value c from clientes as c where c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
+                        string esql2 = "SELECT value c FROM clientes as c WHERE c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
                         var clientesVar2 = database1Entities.CreateQuery<clientes>(esql2);
                         this.pagosCliente = clientesVar2.ToArray()[0].Pagos;
                         this.dataGridPagos.ItemsSource = clientesVar2.ToArray()[0].Pagos;
@@ -128,22 +130,63 @@ namespace Gimnasio
             }
         }
 
+        #region "Funciones relativas a la Facturación de Pagos en esta Ventana"
         private void PrintFactura(object sender, RoutedEventArgs e)
         {
             Pagos pago = ((FrameworkElement)sender).DataContext as Pagos;
-            Facturacion.DatosFactura(pago);
+
+            Pagos[] pagosSeleccionados = new Pagos[1];
+            pagosSeleccionados[0] = pago;
+
+            Facturacion.DatosFactura(pagosSeleccionados, pago.clientes);
 
             // Se actualiza el Datagrid, para que se refleje que ya se facturó el pago.
             database1Entities = new Gimnasio.Database1Entities();
-            string esql3 = "select value c from clientes as c where c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
+            string esql3 = "SELECT value c FROM clientes as c WHERE c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
             var clientesVar3 = database1Entities.CreateQuery<clientes>(esql3);
             this.dataGridPagos.ItemsSource = clientesVar3.ToArray()[0].Pagos;
         }
 
-        private void dataGridPagos_LoadingRow(object sender, DataGridRowEventArgs e)
+        private void checkBoxAddToFactura_Checked(object sender, RoutedEventArgs e)
         {
+            Pagos pago = ((FrameworkElement)sender).DataContext as Pagos;
+            arrayPagosSeleccionados.Add(pago);
 
+            modoMultiplesFacturas++;
+            buttonColumn.Visibility = Visibility.Hidden;
+            buttonFacturasMultiples.IsEnabled = true;
         }
+
+        private void checkBoxAddToFactura_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Pagos pago = ((FrameworkElement)sender).DataContext as Pagos;
+
+            foreach (Pagos tempPago in arrayPagosSeleccionados)
+            {
+                if (tempPago.idPago == pago.idPago)
+                {
+                    arrayPagosSeleccionados.Remove(tempPago);
+                    return;
+                }
+            }
+
+            modoMultiplesFacturas--;
+            if (modoMultiplesFacturas < 1)
+            {
+                buttonColumn.Visibility = Visibility.Visible;
+                buttonFacturasMultiples.IsEnabled = false;
+            }
+        }
+
+        private void buttonFacturasMultiples_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Pagos tempPago in arrayPagosSeleccionados)
+            {
+                System.Console.WriteLine(tempPago.idPago);
+            }
+            arrayPagosSeleccionados.ToArray();
+        }
+        #endregion
 
         #region "Funciones relativas al Keypad USB"
         // Funciones para evitar que el keypad USB afecte los controles de esta ventana.
