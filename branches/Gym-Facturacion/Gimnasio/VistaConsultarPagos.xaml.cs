@@ -55,6 +55,7 @@ namespace Gimnasio
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             IsOpen = true;
+            buttonFacturasMultiples.IsEnabled = false;
             // Load data into Pagos. You can modify this code as needed.
             System.Windows.Data.CollectionViewSource pagosViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("pagosViewSource")));
             System.Data.Objects.ObjectQuery<Gimnasio.Pagos> pagosQuery = this.GetPagosQuery(database1Entities);
@@ -131,6 +132,7 @@ namespace Gimnasio
         }
 
         #region "Funciones relativas a la Facturación de Pagos en esta Ventana"
+
         private void PrintFactura(object sender, RoutedEventArgs e)
         {
             Pagos pago = ((FrameworkElement)sender).DataContext as Pagos;
@@ -154,11 +156,11 @@ namespace Gimnasio
 
             modoMultiplesFacturas++;
             buttonColumn.Visibility = Visibility.Hidden;
-            buttonFacturasMultiples.IsEnabled = true;
+            //buttonFacturasMultiples.IsEnabled = true;
         }
 
         private void checkBoxAddToFactura_Unchecked(object sender, RoutedEventArgs e)
-        {
+        {            
             Pagos pago = ((FrameworkElement)sender).DataContext as Pagos;
 
             foreach (Pagos tempPago in arrayPagosSeleccionados)
@@ -166,7 +168,7 @@ namespace Gimnasio
                 if (tempPago.idPago == pago.idPago)
                 {
                     arrayPagosSeleccionados.Remove(tempPago);
-                    return;
+                    break;
                 }
             }
 
@@ -174,7 +176,7 @@ namespace Gimnasio
             if (modoMultiplesFacturas < 1)
             {
                 buttonColumn.Visibility = Visibility.Visible;
-                buttonFacturasMultiples.IsEnabled = false;
+                //buttonFacturasMultiples.IsEnabled = false;
             }
         }
 
@@ -186,6 +188,7 @@ namespace Gimnasio
             }
             arrayPagosSeleccionados.ToArray();
         }
+
         #endregion
 
         #region "Funciones relativas al Keypad USB"
