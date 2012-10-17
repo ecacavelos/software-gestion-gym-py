@@ -6,8 +6,8 @@
         <CollectionViewSource x:Key="clientesViewSource" d:DesignSource="{d:DesignInstance my:clientes, CreateList=True}" />
     </Window.Resources>
     <Grid DataContext="{StaticResource clientesViewSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="clientesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" Margin="12,12,12,78" RowEditEnding="clientesDataGrid_RowEditEnding" UnloadingRow="clientesDataGrid_UnloadingRow" LoadingRow="clientesDataGrid_LoadingRow" PreviewKeyDown="clientesDataGrid_PreviewKeyDown" HorizontalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" VerticalGridLinesBrush="Gainsboro" CanUserSortColumns="False">
-            <DataGrid.Resources>
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="clientesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" Margin="12,12,12,78" RowEditEnding="clientesDataGrid_RowEditEnding" UnloadingRow="clientesDataGrid_UnloadingRow" LoadingRow="clientesDataGrid_LoadingRow" PreviewKeyDown="clientesDataGrid_PreviewKeyDown" HorizontalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" VerticalGridLinesBrush="Gainsboro" CanUserSortColumns="False" RowHeaderWidth="0" CanUserDeleteRows="False">
+            <DataGrid.Resources>                
                 <Style TargetType="{x:Type DataGridCell}" x:Key="MyCellStyle">
                     <Setter Property="Background" Value="SeaGreen"/>
                 </Style>

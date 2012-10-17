@@ -28,12 +28,14 @@ namespace Gimnasio
         System.Data.Objects.ObjectQuery<Gimnasio.clientes> clientesVar2;
         public static bool IsOpen { get; private set; }
 
-        int i = 0;
+        /*int i = 0;
+        DataTable main_tabla;
         DataGridRow[] myRow001 = new DataGridRow[99999];
-        Boolean[] RowFlag = new Boolean[99999];
+        Boolean[] RowFlag = new Boolean[99999];*/
 
         public VistaClientes()
         {
+            this.WindowState = WindowState.Maximized;
             InitializeComponent();
             this.c2 = Configuration.Deserialize("config.xml");
         }
@@ -59,8 +61,7 @@ namespace Gimnasio
             clientesViewSource.Source = clientesVar2;
 
             labelCantidadClientes.Content = String.Format("(Total: {0})", clientesVar2.ToList().Count.ToString());
-            database1Entities.SaveChanges();
-
+            //database1Entities.SaveChanges();                        
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -78,7 +79,15 @@ namespace Gimnasio
                 result = System.Windows.Forms.MessageBox.Show("Desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNoCancel);
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
-                    database1Entities.SaveChanges();
+                    try
+                    {
+                        database1Entities.SaveChanges();
+                    }
+                    catch (System.Data.UpdateException ex)
+                    {
+                        System.Console.WriteLine(ex.InnerException.GetType());
+                        System.Console.WriteLine(ex.InnerException.Message);
+                    }
                     //label1.Content = "Se guardaron los cambios.";                
                 }
                 else if (result == System.Windows.Forms.DialogResult.No)
@@ -145,7 +154,15 @@ namespace Gimnasio
             if (result == System.Windows.Forms.DialogResult.Yes)
             {
                 // Se guardan los cambios.
-                database1Entities.SaveChanges();
+                try
+                {
+                    database1Entities.SaveChanges();
+                }
+                catch (System.Data.UpdateException ex)
+                {
+                    System.Console.WriteLine(ex.InnerException.GetType());
+                    System.Console.WriteLine(ex.InnerException.Message);
+                }
                 label1.Content = "Se guardaron los cambios.";
                 button2.IsEnabled = false;
             }
@@ -171,144 +188,22 @@ namespace Gimnasio
         // La búsqueda se realiza a medida que se ingresa texto en el cuadro de texto.
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Si existe al menos un cliente.
-            if (clientesVar2.ToList().Count > 0)
-            {
-
-                int b;  // Índice Auxiliar.
-
-                // Si el cuadro de texto no está en blanco.
-                if (textBox1.Text != "")
-                {
-                    b = 0;
-                    // Convertimos la lista de registros de clientes a una DataTable.
-                    DataTable main_tabla = MyRecordListToDataTable(clientesVar2.ToList());
-                    foreach (DataRow row in main_tabla.Rows)
-                    {
-                        //Console.WriteLine("Row " + b.ToString() + " - Nombre: " + row[0].ToString());
-                        RowFlag[b] = false; // Antes de revisar si hay coincidencia se asume que no.
-                        foreach (DataColumn x in main_tabla.Columns)
-                        {
-                            // Si la columna contiene el valor de texto ingresado en el cuadro de búsqueda.
-                            if (row[x].ToString().ToLower().Contains(textBox1.Text.ToLower()))
-                            {
-                                // Se marca la columna como válida para mostrar y se ajusta su visibilidad.
-                                RowFlag[b] = true;
-                                myRow001[b].Visibility = Visibility.Visible;
-                            }
-                        }
-                        b++;
-                        // Se detiene la búsqueda cuando se llega a una fila nula.
-                        if (myRow001[b] == null)
-                        {
-                            break;
-                        }
-                    }
-                    /* Se hace una nueva iteración de las filas visibles para ocultar las que no contengan
-                     * coincidencias con la búsqueda actual. */
-                    b = 0;
-                    foreach (DataRow row in main_tabla.Rows)
-                    {
-                        if (!RowFlag[b])
-                        {
-                            // Se oculta la fila puesto que no está marcada como coincidencia.
-                            myRow001[b].Visibility = Visibility.Collapsed;
-                        }
-                        b++;
-                        // Se termina cuando se llega a una fila nula.
-                        if (myRow001[b] == null)
-                        {
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    /* Si el usuario deja el cuadro de texto en blanco, se itera a 
-                     * través de todas las filas y se las hace visibles. */
-                    for (b = 0; b < i; b++)
-                    {
-                        RowFlag[i] = true;
-                        if (myRow001[b] == null)
-                        {
-                            break;
-                        }
-                        myRow001[b].Visibility = Visibility.Visible;
-                    }
-                }
-            }
-
-        }
-
-        /* A medida que se cargan nuevas filas en el DataGrid, se obtienen los índices de las filas
-         * que son cargadas y se validan con la búsqueda actual.¨*/
-        private void clientesDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
-        {
-            i = clientesDataGrid.Items.Count;
-            myRow001[e.Row.GetIndex()] = e.Row;
-            validarRow(e.Row);
-        }
-
-
-        private void validarRow(DataGridRow e)
-        {
-            // Si el cuadro de búsqueda no está vacío.
+            string esql;
             if (textBox1.Text != "")
             {
-                // Mostrar la nueva fila si la búsqueda marcó que contiene una coincidencia.
-                if (RowFlag[e.GetIndex()] == true)
-                {
-                    e.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    e.Visibility = Visibility.Collapsed;
-                }
+                esql = String.Format("SELECT value c FROM clientes as c WHERE (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%' OR c.nro_cedula LIKE '%{0}%') ORDER BY c.apellido", textBox1.Text.ToLower());
             }
             else
             {
-                // No hace falta ocultar una nueva fila si no existe una búsqueda actual.
-                e.Visibility = Visibility.Visible;
+                esql = String.Format("SELECT value c FROM clientes as c ORDER BY c.apellido");
             }
+            clientesVar2 = database1Entities.CreateQuery<clientes>(esql);
+            clientesDataGrid.ItemsSource = clientesVar2;
         }
 
-        /// <summary>
-        /// Función que convierte una List a DataTable.
-        /// </summary>
-        /// <param name="list">La Lista a convertir.</param>
-        /// <returns>Retorna una DataTable.</returns>
-        public DataTable MyRecordListToDataTable(List<Gimnasio.clientes> list)
+        private void clientesDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            DataTable dt = new DataTable("TablaEjemplo");
 
-            //dt.Columns.Add("apellido", list[0].apellido.GetType());
-            dt.Columns.Add("apellido", "string".GetType());
-            dt.Columns.Add("nombre", "string".GetType());
-            dt.Columns.Add("nro_cedula", "string".GetType());
-            dt.Columns.Add("direccion", "string".GetType());
-            dt.Columns.Add("telefono", "string".GetType());
-            dt.Columns.Add("email", "string".GetType());
-            dt.Columns.Add("fecha_nacimiento", "string".GetType());
-            dt.Columns.Add("fecha_ingreso", "string".GetType());
-            dt.Columns.Add("altura", "string".GetType());
-            dt.Columns.Add("peso", "string".GetType());
-
-            foreach (Gimnasio.clientes item in list)
-            {
-                dt.Rows.Add(
-                    item.apellido,
-                    item.nombre,
-                    item.nro_cedula,
-                    item.direccion,
-                    item.telefono,
-                    item.email,
-                    item.fecha_nacimiento,
-                    item.fecha_ingreso,
-                    item.altura,
-                    item.peso);
-            }
-
-            return dt;
         }
 
         #endregion
@@ -390,7 +285,6 @@ namespace Gimnasio
             }
             // Se habilita el botón "Guardar Cambios".
             button2.IsEnabled = true;
-
         }
 
         #endregion
