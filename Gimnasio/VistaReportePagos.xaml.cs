@@ -282,16 +282,28 @@ namespace Gimnasio
 
             if (firstTime)
             {
-                string esql_clientes = "SELECT value c FROM clientes as c";
+                string esql_clientes = "SELECT value c FROM clientes as c WHERE (c.nro_cedula IS NOT null)";
                 var clientesVar = database1Entities.CreateQuery<clientes>(esql_clientes);
+
+                System.Console.WriteLine(clientesVar.ToList().Count.ToString() + " clientes.");
 
                 int i = 0;
                 arrayClientesID = new string[clientesVar.ToList().Count];
                 foreach (Gimnasio.clientes tempCliente in clientesVar.ToArray())
                 {
-                    arrayClientesID[i] = tempCliente.nombre + " " + tempCliente.apellido + " (" + tempCliente.idCliente + ")";
+                    if (tempCliente.nombre != null)
+                    {
+                        arrayClientesID[i] += tempCliente.nombre;
+                        if (tempCliente.apellido != null)
+                        {
+                            arrayClientesID[i] += " " + tempCliente.apellido;
+                        }
+                    }
+                    arrayClientesID[i] += " (" + tempCliente.idCliente + ")";
+                    //arrayClientesID[i] = tempCliente.nombre + " " + tempCliente.apellido + " (" + tempCliente.idCliente + ")";
                     autoCompleteTextBoxNombre.AddItem(new WPFAutoCompleteTextbox.AutoCompleteEntry(tempCliente.nombre + " " + tempCliente.apellido, tempCliente.nombre, tempCliente.apellido));
                     i++;
+
                 }
             }
 

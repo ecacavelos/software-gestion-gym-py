@@ -123,6 +123,87 @@ namespace Gimnasio
         }
 
         #region "Funciones relativas al Keypad USB"
+
+        private void textBoxUsuarioActual_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.Key.ToString() == "Return" && textBoxUsuarioActual.Text.Length > 0)
+                {
+                    textBoxNuevoUsuario.Focus();
+                }
+            }
+        }
+
+        private void textBoxNuevoUsuario_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.Key.ToString() == "Return" && textBoxNuevoUsuario.Text.Length > 0)
+                {
+                    passwordBoxContraseñaActual.Focus();
+                }
+            }
+        }
+
+        private void passwordBoxContraseñaActual_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.Key.ToString() == "Return" && passwordBoxContraseñaActual.Password.Length > 0)
+                {
+                    passwordBoxNuevaContraseña.Focus();
+                }
+            }
+        }
+
+        private void passwordBoxNuevaContraseña_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.Key.ToString() == "Return" && passwordBoxNuevaContraseña.Password.Length > 0)
+                {
+                    passwordBoxNuevaContraseñaRepetir.Focus();
+                }
+            }
+        }
+
+        private void passwordBoxNuevaContraseñaRepetir_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.Key.ToString() == "Return")
+                {
+                    buttonCambiar_Click(null, null);
+                }
+            }
+        }
+
         #endregion
 
     }

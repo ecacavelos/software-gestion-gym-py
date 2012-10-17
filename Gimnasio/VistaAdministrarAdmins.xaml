@@ -7,11 +7,11 @@
         <Label Content="Contraseña Actual: " HorizontalAlignment="Left" Margin="12,80,0,0" Name="labelContraseñaActual" VerticalAlignment="Top" Width="178" HorizontalContentAlignment="Right" />
         <Label Content="Nueva Contraseña: " HorizontalAlignment="Left" Margin="12,112,0,0" Name="labelNuevaContraseña" VerticalAlignment="Top" Width="178" HorizontalContentAlignment="Right" />
         <Label Content="Nueva Contraseña (Repetir): " HorizontalAlignment="Left" Margin="12,144,0,0" Name="labelNuevaContraseñaRepetir" VerticalAlignment="Top" Width="178" HorizontalContentAlignment="Right" />
-        <TextBox HorizontalAlignment="Right" Margin="0,14,12,0" Name="textBoxUsuarioActual" VerticalAlignment="Top" Width="150" Height="22" />
-        <TextBox Height="22" HorizontalAlignment="Right" Margin="0,43,12,0" Name="textBoxNuevoUsuario" VerticalAlignment="Top" Width="150" />
-        <PasswordBox HorizontalAlignment="Right" Margin="0,82,12,0" Name="passwordBoxContraseñaActual" VerticalAlignment="Top" Width="150" Height="22" />
-        <PasswordBox Height="22" HorizontalAlignment="Right" Margin="0,116,12,0" Name="passwordBoxNuevaContraseña" VerticalAlignment="Top" Width="150" />
-        <PasswordBox Height="22" HorizontalAlignment="Right" Margin="0,148,12,0" Name="passwordBoxNuevaContraseñaRepetir" VerticalAlignment="Top" Width="150" />
+        <TextBox HorizontalAlignment="Right" Margin="0,14,12,0" Name="textBoxUsuarioActual" VerticalAlignment="Top" Width="150" Height="22" PreviewKeyDown="textBoxUsuarioActual_PreviewKeyDown" />
+        <TextBox Height="22" HorizontalAlignment="Right" Margin="0,43,12,0" Name="textBoxNuevoUsuario" VerticalAlignment="Top" Width="150" PreviewKeyDown="textBoxNuevoUsuario_PreviewKeyDown" />
+        <PasswordBox HorizontalAlignment="Right" Margin="0,82,12,0" Name="passwordBoxContraseñaActual" VerticalAlignment="Top" Width="150" Height="22" PreviewKeyDown="passwordBoxContraseñaActual_PreviewKeyDown" />
+        <PasswordBox Height="22" HorizontalAlignment="Right" Margin="0,116,12,0" Name="passwordBoxNuevaContraseña" VerticalAlignment="Top" Width="150" PreviewKeyDown="passwordBoxNuevaContraseña_PreviewKeyDown" />
+        <PasswordBox Height="22" HorizontalAlignment="Right" Margin="0,148,12,0" Name="passwordBoxNuevaContraseñaRepetir" VerticalAlignment="Top" Width="150" PreviewKeyDown="passwordBoxNuevaContraseñaRepetir_PreviewKeyDown" />
         <Button Content="Cambiar" Height="23" HorizontalAlignment="Right" Margin="0,0,101,12" Name="buttonCambiar" VerticalAlignment="Bottom" Width="75" Click="buttonCambiar_Click" />
         <Button Content="Cancelar" Height="23" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonCancel" VerticalAlignment="Bottom" Width="75" Click="buttonCancel_Click" />
         <Label Content="Nuevo Usuario: " HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="12,39,0,0" Name="labelNuevoUsuario" VerticalAlignment="Top" Width="178" />        

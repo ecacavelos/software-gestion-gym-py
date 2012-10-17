@@ -28,6 +28,7 @@ namespace Gimnasio
         private Window winVistaConfiguracion = new Window();
         private Window winVistaTiposCuotas = new Window();
         private Window winClientes = new Window();
+        private Window winIngresarPago = new Window();
         private Window winConsultarPagos = new Window();
         private Window winIngresoManual = new Window();
         private Window winVistaControlIngreso = new Window();
@@ -83,12 +84,12 @@ namespace Gimnasio
 
         private void abrirVentana_Clientes(object sender, RoutedEventArgs e)
         {
-            if (VistaClientes.IsOpen) // Se controla que una instancia de esta ventana no este abierta.
+            if (VistaClientes.IsOpen)   // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winClientes.Activate(); // Si esta abierta entonces activar, mandar al frente.
+                this.winClientes.Activate();    // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            else // No está abierta. Abrir una instancia de la ventana.
             {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
@@ -99,23 +100,28 @@ namespace Gimnasio
 
         private void abrirVentana_IngresarPago(object sender, RoutedEventArgs e)
         {
-            // Create an instance of the window named by the current button.
-            Type type = this.GetType();
-            Assembly assembly = type.Assembly;
-            Window win = (Window)assembly.CreateInstance("Gimnasio.VistaIngresoDeCuota");
-
-            //win.Owner = this;
-            win.Show();
+            if (VistaIngresoDeCuota.IsOpen)     // Se controla que una instancia de esta ventana no esté abierta.
+            {
+                this.winIngresarPago.Activate();    // Si está abierta entonces activar y mandar al frente.
+                return;
+            }
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winIngresarPago = (Window)assembly.CreateInstance("Gimnasio.VistaIngresoDeCuota");
+                this.winIngresarPago.Show();
+            }
         }
 
         private void abrirVentana_ControlIngreso(object sender, RoutedEventArgs e)
         {
-            if (VistaControlIngreso.IsOpen) // Se controla que una instancia de esta ventana no este abierta.
+            if (VistaControlIngreso.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winVistaControlIngreso.Activate(); // Si esta abierta entonces activar, mandar al frente.
+                this.winVistaControlIngreso.Activate(); // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            else // No está abierta. Abrir una instancia de la ventana.
             {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
@@ -126,12 +132,12 @@ namespace Gimnasio
 
         private void abrirVentana_IngresoManual(object sender, RoutedEventArgs e)
         {
-            if (VistaIngresoManual.IsOpen) // Se controla que una instancia de esta ventana no este abierta.
+            if (VistaIngresoManual.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winIngresoManual.Activate(); // Si esta abierta entonces activar, mandar al frente.
+                this.winIngresoManual.Activate(); // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            else // No está abierta. Abrir una instancia de la ventana.
             {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
@@ -146,13 +152,14 @@ namespace Gimnasio
 
         private void menuItem_Configuracion(object sender, RoutedEventArgs e)
         {
-            if (VistaConfiguracion.IsOpen) // Se controla que una instancia de esta ventana no este abierta.
+            if (VistaConfiguracion.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winVistaConfiguracion.Activate(); // Si esta abierta entonces activar, mandar al frente.
+                this.winVistaConfiguracion.Activate(); // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            else // No está abierta. Abrir una instancia de la ventana.
             {
+                // Si el archivo de configuración es inválido, es borrado para generar uno nuevo.
                 if (xmlinvalido == true)
                 {
                     System.IO.File.Delete("config.xml");
@@ -167,12 +174,12 @@ namespace Gimnasio
 
         private void menuItem_CuotasEditar(object sender, RoutedEventArgs e)
         {
-            if (VistaTiposCuotas.IsOpen)
+            if (VistaTiposCuotas.IsOpen)    // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winVistaTiposCuotas.Activate();
+                this.winVistaTiposCuotas.Activate();    // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else
+            else // No está abierta. Abrir una instancia de la ventana.
             {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
@@ -183,17 +190,17 @@ namespace Gimnasio
 
         private void menuItem_Salir(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown(); //CERRAR LA APLICACION ENTERA.
+            Application.Current.Shutdown(); // Cerrar la Aplicación Entera.
         }
 
         private void menuItem_VerClientes(object sender, RoutedEventArgs e)
         {
-            if (VistaClientes.IsOpen) // Se controla que una instancia de esta ventana no este abierta.
+            if (VistaClientes.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winClientes.Activate(); // Si esta abierta entonces activar, mandar al frente.
+                this.winClientes.Activate(); // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            else // No está abierta. Abrir una instancia de la ventana.
             {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
@@ -204,13 +211,13 @@ namespace Gimnasio
 
         private void menuItem_ConsultarPagos(object sender, RoutedEventArgs e)
         {
-            if (VistaConsultarPagos.IsOpen)
+            if (VistaConsultarPagos.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winConsultarPagos.Activate();
+                this.winConsultarPagos.Activate();  // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else
-            {                
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
                 this.winConsultarPagos = (Window)assembly.CreateInstance("Gimnasio.VistaConsultarPagos");
@@ -220,12 +227,12 @@ namespace Gimnasio
 
         private void menuItem_FacturasVer(object sender, RoutedEventArgs e)
         {
-            if (VistaFacturas.IsOpen)
+            if (VistaFacturas.IsOpen)   // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winVistaFacturas.Activate();
+                this.winVistaFacturas.Activate();   // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else
+            else // No está abierta. Abrir una instancia de la ventana.
             {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
@@ -242,15 +249,17 @@ namespace Gimnasio
 
         private void menuItem_ReportePagos(object sender, RoutedEventArgs e)
         {
-            if (VistaReportePagos.IsOpen)
+            if (VistaReportePagos.IsOpen)   // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winReportePagos.Activate();
+                this.winReportePagos.Activate();    // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else
+            else // No está abierta. Abrir una instancia de la ventana.
             {
+                // Se llama a la ventana para hacer login y comprobar que el usuario es admin.
                 VentanaLogin winLogin = new VentanaLogin();
                 Nullable<bool> result = winLogin.ShowDialog();
+                // Si el login es exitoso.
                 if (result == true)
                 {
                     Type type = this.GetType();
@@ -267,15 +276,17 @@ namespace Gimnasio
 
         private void menuItem_ReporteIngresos(object sender, RoutedEventArgs e)
         {
-            if (VistaReporteIngresos.IsOpen)
+            if (VistaReporteIngresos.IsOpen)    // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winReporteIngresos.Activate();
+                this.winReporteIngresos.Activate(); // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else
+            else // No está abierta. Abrir una instancia de la ventana.
             {
+                // Se llama a la ventana para hacer login y comprobar que el usuario es admin.
                 VentanaLogin winLogin = new VentanaLogin();
                 Nullable<bool> result = winLogin.ShowDialog();
+                // Si el login es exitoso.
                 if (result == true)
                 {
                     Type type = this.GetType();
@@ -292,15 +303,17 @@ namespace Gimnasio
 
         private void menuItem_administrarAdmins(object sender, RoutedEventArgs e)
         {
-            if (VistaAdministrarAdmins.IsOpen)
+            if (VistaAdministrarAdmins.IsOpen)  // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winAdministrarAdmins.Activate();
+                this.winAdministrarAdmins.Activate();   // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else
+            else // No está abierta. Abrir una instancia de la ventana.
             {
+                // Se llama a la ventana para hacer login y comprobar que el usuario es admin.
                 VentanaLogin winLogin = new VentanaLogin();
                 Nullable<bool> result = winLogin.ShowDialog();
+                // Si el login es exitoso.
                 if (result == true)
                 {
                     Type type = this.GetType();

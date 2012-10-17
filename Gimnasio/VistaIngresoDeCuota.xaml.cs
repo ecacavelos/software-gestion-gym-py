@@ -22,7 +22,9 @@ namespace Gimnasio
         Configuration c2;
 
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
-        string esqlCuotas = "select value c from cuotas as c";
+        public static bool IsOpen { get; private set; }
+
+        string esqlCuotas = "SELECT value c FROM cuotas as c";
         int diasAHabilitar;
         DateTime fechaPago, /*fechaTemporal,*/ fechaUltimoVencimiento;
         int /*nroCedula,*/ idCliente, cuotaId;
@@ -59,11 +61,17 @@ namespace Gimnasio
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            IsOpen = true;
             // cargar en el combobox los parametros de cuotas posibles, trayendo de la tabla Cuotas. 
             var cuotas = database1Entities.CreateQuery<Cuotas>(esqlCuotas);
             comboBoxTiposCuotas.ItemsSource = cuotas;
             comboBoxTiposCuotas.DisplayMemberPath = "diasHabilitados";
 
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            IsOpen = false;
         }
 
         private void botonAplicarPago(object sender, RoutedEventArgs e)
@@ -94,8 +102,8 @@ namespace Gimnasio
                     else
                     { // esta todo seteado, aplicar el pago 
                         /* Calcular 30/7/1 dias para establecer la fecha de vencimiento en al tabla Pagos. 
-                        *Por ejemplo: Dia actual  14/10/2012 y se paga por 30 dias, entonces el 13/11/2011 sera la fecha de vencimiento
-                       */
+                         * Por ejemplo: Dia actual  14/10/2012 y se paga por 30 dias, entonces el 13/11/2011 sera la fecha de vencimiento
+                         */
                         if (this.fechaUltimoVencimiento < this.fechaPago)
                         {
                             TimeSpan time = (DateTime.UtcNow - new DateTime(1970, 1, 1));
@@ -118,19 +126,16 @@ namespace Gimnasio
                             database1Entities.AddToPagos(pagoAAgregar);
                             if (database1Entities.SaveChanges() == 0)
                             {
-
                                 MessageBox.Show("Hubo un problema de base de datos, por favor consule con los responsables de la aplicacion");
-
                             }
                             else
                             {
-                                MessageBoxResult result;
-                                //MessageBox.Show("El pago se aplico correctamente");
+                                /*MessageBoxResult result;                                
                                 result = MessageBox.Show("Desea imprimir una factura para este pago?", "Pago de Cuota", MessageBoxButton.YesNo);
                                 if (result == MessageBoxResult.Yes)
                                 {
                                     //Facturacion.DatosFactura(pagoAAgregar);
-                                }
+                                }*/
                                 MessageBox.Show("El pago se aplicó correctamente.");
                                 this.Close();
                             }
@@ -187,13 +192,14 @@ namespace Gimnasio
             // se presiono ENTER
             if (e.Key.ToString() == "Return")
             {
-                string esql = "select value c from clientes as c where c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
+                string esql = "SELECT value c FROM clientes as c WHERE c.nro_cedula = '" + this.textBoxNroCedula.Text + "\'";
                 var clientesVar = database1Entities.CreateQuery<clientes>(esql);
                 ClienteSeleccionado.DataContext = clientesVar; // Establecer el data context para los elementos del cliente. OJO: Esto creo que no sirve.
 
-                if (clientesVar.ToList().Count == 1) // Esta es la unica condicion correcta, que se seleccione un cliente.  
+                if (clientesVar.ToList().Count == 1) // Esta es la unica condicion correcta, que se seleccione un cliente.
                 {
                     this.idCliente = clientesVar.ToArray()[0].idCliente;
+                    button1.IsEnabled = true;
 
                     if (clientesVar.ToArray()[0].Pagos.ToList().Count >= 1)// Existe al menos un pago
                     {
@@ -202,7 +208,7 @@ namespace Gimnasio
                         Array.Sort(arrayListPagos);
                         this.fechaUltimoVencimiento = arrayListPagos[0].fecha_vencimiento.Value;
                         this.textBlockFechaVto.Text = arrayListPagos[0].fecha_vencimiento.Value.ToShortDateString(); // Traer el ultimo pago.*/
-                        string fechaVencimientoQuery = "select value p from Pagos as p where p.fk_cliente=" + this.idCliente + " order by p.fecha_vencimiento desc limit 1";
+                        string fechaVencimientoQuery = "SELECT value p FROM Pagos as p WHERE p.fk_cliente=" + this.idCliente + " ORDER by p.fecha_vencimiento desc limit 1";
                         var fechaUltimoVencimientoResult = database1Entities.CreateQuery<Pagos>(fechaVencimientoQuery);
                         this.fechaUltimoVencimiento = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value;
                         this.textBlockFechaVto.Text = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value.ToString("dd/MM/yyyy");

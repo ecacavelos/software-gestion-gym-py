@@ -25,7 +25,7 @@ namespace Gimnasio
 
         public static bool IsOpen { get; private set; }
 
-        bool anularClicked;
+        //bool anularClicked;
 
         public VistaFacturas()
         {
@@ -48,7 +48,7 @@ namespace Gimnasio
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             IsOpen = true;
-            anularClicked = false;
+            //anularClicked = false;
 
             // Load data into Facturas. You can modify this code as needed.
             System.Windows.Data.CollectionViewSource facturasViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("facturasViewSource")));
@@ -171,7 +171,7 @@ namespace Gimnasio
 
         private void anularCheckBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            anularClicked = true;
+            //anularClicked = true;
         }
         #endregion
 

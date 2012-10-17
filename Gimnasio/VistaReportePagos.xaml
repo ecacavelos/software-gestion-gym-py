@@ -35,7 +35,7 @@
                 <Label Content="---" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,56,8,0" Name="labelMontoTotal" VerticalAlignment="Top" Width="130" FontSize="18" FontWeight="Bold" />
                 <CheckBox HorizontalAlignment="Left" Margin="12,81,0,0" Name="checkBoxNombre" VerticalAlignment="Top" Checked="checkBoxNombre_Checked" Unchecked="checkBoxNombre_Unchecked" />
                 <Label Content="Nombre: " HorizontalAlignment="Left" Margin="31,74,0,0" Name="labelNombre" VerticalAlignment="Top" Width="94" Height="28" HorizontalContentAlignment="Right" />
-                <my1:AutoCompleteTextBox HorizontalAlignment="Left" Margin="131,76,0,0" x:Name="autoCompleteTextBoxNombre" VerticalAlignment="Top" Width="115" Height="23" DelayTime="250" IsEnabled="False" />
+                <my1:AutoCompleteTextBox HorizontalAlignment="Left" Margin="131,76,0,0" x:Name="autoCompleteTextBoxNombre" VerticalAlignment="Top" Width="115" Height="23" DelayTime="250" IsEnabled="False" Threshold="2" />
             </Grid>
         </GroupBox>
     </Grid>
