@@ -65,10 +65,10 @@ namespace WPFAutoCompleteTextbox
         public string Text
         {
             get { return textBox.Text; }
-            set 
+            set
             {
                 insertText = true;
-                textBox.Text = value; 
+                textBox.Text = value;
             }
         }
 
@@ -140,7 +140,7 @@ namespace WPFAutoCompleteTextbox
         {
             // text was not typed, do nothing and consume the flag
             if (insertText == true) insertText = false;
-            
+
             // if the delay time is set, delay handling of text changed
             else
             {
@@ -169,6 +169,53 @@ namespace WPFAutoCompleteTextbox
         {
             get { return controls.Count; }
         }
+        #endregion
+
+        #region "David Methods"
+
+        public void FocusTextBox()
+        {
+            this.textBox.Focus();
+            this.textBox.SelectAll();
+        }
+
+        public bool SuggestionListActive()
+        {
+            return comboBox.IsDropDownOpen;
+        }
+
+        public void ChangeComboBoxIndexUp()
+        {
+            if (comboBox.SelectedIndex == -1)
+            {
+                comboBox.Items.MoveCurrentToLast();
+            }
+            if (comboBox.SelectedIndex == 0)
+            {
+                comboBox.Items.MoveCurrentToLast();
+            }
+            else
+            {
+                comboBox.Items.MoveCurrentToPrevious();
+            }
+        }
+
+        public void ChangeComboBoxIndexDown()
+        {
+            if (comboBox.SelectedIndex == -1)
+            {
+                comboBox.Items.MoveCurrentToFirst();
+            }
+            if (comboBox.SelectedIndex == comboBox.Items.Count - 1)
+            {
+                comboBox.Items.MoveCurrentToFirst();
+            }
+            else
+            {
+                comboBox.Items.MoveCurrentToNext();
+            }
+        }
+
         #endregion
     }
 }
