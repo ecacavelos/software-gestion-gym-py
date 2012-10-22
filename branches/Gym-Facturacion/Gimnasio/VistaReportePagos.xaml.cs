@@ -195,14 +195,29 @@ namespace Gimnasio
                     }
                 }
 
+                esql += " WHERE ";
+
                 if (totalHits > 1)
                 {
-                    labelSatusBar.Content = "Existe más de un cliente con ese nombre.";
-                    return;
+                    if (nombreBuscado.Contains(" "))
+                    {
+                        string temp_nombre = nombreBuscado.Substring(0, nombreBuscado.IndexOf(" ")).Trim().ToLower();
+                        string temp_apellido = nombreBuscado.Substring(nombreBuscado.LastIndexOf(" "), nombreBuscado.Length - nombreBuscado.LastIndexOf(" ")).Trim().ToLower();
+                        System.Console.WriteLine(temp_nombre + " - " + temp_apellido);
+                        esql += String.Format("(p.clientes.nombre LIKE '%{0}%' AND p.clientes.apellido LIKE '%{1}%')", temp_nombre, temp_apellido);
+                    }
+                    else
+                    {
+                        esql += String.Format("(p.clientes.nombre LIKE '%{0}%' OR p.clientes.apellido LIKE '%{0}%')", nombreBuscado.ToLower());
+                    }
+                    /*labelSatusBar.Content = "Existe más de un cliente con ese nombre.";
+                    return;*/
+                }
+                else if (totalHits == 1)
+                {
+                    esql += String.Format("(p.clientes.idCliente = {0})", foundID);
                 }
 
-                esql += " WHERE ";
-                esql += String.Format("(p.clientes.idCliente = {0})", foundID);
             }
 
             if (datePickerDesde.IsEnabled == true)
@@ -286,7 +301,7 @@ namespace Gimnasio
                 string esql_clientes = "SELECT value c FROM clientes as c WHERE (c.nro_cedula IS NOT null)";
                 var clientesVar = database1Entities.CreateQuery<clientes>(esql_clientes);
 
-                System.Console.WriteLine(clientesVar.ToList().Count.ToString() + " clientes.");
+                //System.Console.WriteLine(clientesVar.ToList().Count.ToString() + " clientes.");
 
                 int i = 0;
                 arrayClientesID = new string[clientesVar.ToList().Count];
