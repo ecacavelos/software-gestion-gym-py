@@ -7,7 +7,7 @@
     </Window.Resources>
     <Grid DataContext="{StaticResource clientesViewSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="clientesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" Margin="12,12,12,78" RowEditEnding="clientesDataGrid_RowEditEnding" UnloadingRow="clientesDataGrid_UnloadingRow" LoadingRow="clientesDataGrid_LoadingRow" PreviewKeyDown="clientesDataGrid_PreviewKeyDown" HorizontalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" VerticalGridLinesBrush="Gainsboro" CanUserSortColumns="False" RowHeaderWidth="0" CanUserDeleteRows="False">
-            <DataGrid.Resources>                
+            <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}" x:Key="MyCellStyle">
                     <Setter Property="Background" Value="SeaGreen"/>
                 </Style>
@@ -24,7 +24,7 @@
                 <DataGridTextColumn x:Name="nombreColumn" Binding="{Binding Path=nombre}" Header="Nombre" />
                 <DataGridTextColumn x:Name="nro_cedulaColumn" Binding="{Binding Path=nro_cedula}" Header="Nro. de cedula" />
                 <DataGridTextColumn x:Name="rucColumn" Binding="{Binding Path=RUC}" Header="RUC" />
-                <DataGridTextColumn x:Name="direccionColumn" Binding="{Binding Path=direccion}" Header="Dirección"  />
+                <DataGridTextColumn x:Name="direccionColumn" Binding="{Binding Path=direccion}" Header="Dirección" MaxWidth="350" />
                 <DataGridTextColumn x:Name="telefonoColumn" Binding="{Binding Path=telefono}" Header="Teléfono"  />
                 <DataGridTextColumn x:Name="emailColumn" Binding="{Binding Path=email}" Header="email" />
                 <DataGridTemplateColumn x:Name="fecha_nacimientoColumn" Header="Fecha de nacimiento" >
@@ -57,7 +57,7 @@
         <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="button1" VerticalAlignment="Bottom" Width="100" Click="btnCancelarVistaClientes" PreviewKeyDown="button1_PreviewKeyDown" />
         <Label Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="label1" VerticalAlignment="Bottom" Width="442" Content="Vista de Clientes." />
         <Label Content="Buscar: " Height="28" HorizontalAlignment="Left" Margin="12,0,0,44" Name="label2" VerticalAlignment="Bottom" />
-        <TextBox Height="24" HorizontalAlignment="Stretch" Margin="68,0,12,44" Name="textBox1" VerticalAlignment="Bottom" TextChanged="textBox1_TextChanged" PreviewKeyDown="textBox1_PreviewKeyDown" />
+        <TextBox Height="24" HorizontalAlignment="Stretch" Margin="68,0,12,44" Name="textBoxBuscar" VerticalAlignment="Bottom" TextChanged="textBoxBuscar_TextChanged" PreviewKeyDown="textBoxBuscar_PreviewKeyDown" />
         <Label Content="(0 Clientes)" Height="26" HorizontalAlignment="Right" Margin="0,0,224,12" Name="labelCantidadClientes" VerticalAlignment="Bottom" Width="96" />
     </Grid>
 </Window>

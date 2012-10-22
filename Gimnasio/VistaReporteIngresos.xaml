@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Gimnasio"
-        Title="Reporte de Ingresos" Height="480" Width="640" Loaded="Window_Loaded" Unloaded="Window_Unloaded" MinWidth="640" MinHeight="480" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" xmlns:my1="clr-namespace:WPFAutoCompleteTextbox" Icon="/Gimnasio;component/Images/iconoControAcceso.png">
+        Title="Reporte de Ingresos" Height="480" Width="660" Loaded="Window_Loaded" Unloaded="Window_Unloaded" MinWidth="660" MinHeight="480" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" xmlns:my1="clr-namespace:WPFAutoCompleteTextbox" Icon="/Gimnasio;component/Images/iconoControAcceso.png">
     <Window.Resources>
         <CollectionViewSource x:Key="ingresosViewSource" d:DesignSource="{d:DesignInstance my:Ingresos, CreateList=True}" />
         <local:BooleantoStringConverter x:Key="BooleantoStringConverter" />
@@ -12,6 +12,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nombreCliente" Binding="{Binding Path=clientes.nombre}" Header="Nombre del Cliente" MinWidth="120" />
                 <DataGridTextColumn x:Name="apellidoCliente" Binding="{Binding Path=clientes.apellido}" Header="Apellido" MinWidth="120" />
+                <DataGridTextColumn x:Name="cedulaCliente" Binding="{Binding Path=clientes.nro_cedula}" Header="CI" />
                 <DataGridTextColumn x:Name="fechaCliente" Binding="{Binding Path=fecha}" Header="Fecha del Ingreso" />
                 <!--<DataGridTextColumn x:Name="exitoso" Binding="{Binding Path=exitoso, Converter={StaticResource BooleantoStringConverter}}" Header="Ingreso Exitoso" />-->
                 <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
@@ -40,25 +41,25 @@
         <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" Click="buttonSalir_Click" />
         <GroupBox Header="Datos de Reporte" Height="207" HorizontalAlignment="Stretch" Margin="12,0,12,43" Name="groupBox1" VerticalAlignment="Bottom">
             <Grid>
-                <Label Content="Total de Ingresos: " FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,13,124,0" Name="labelCantidadIngresosTotalTitle" VerticalAlignment="Top" />
+                <Label Content="Total de Ingresos: " FontSize="17" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,14,124,0" Name="labelCantidadIngresosTotalTitle" VerticalAlignment="Top" Height="34" />
                 <CheckBox Checked="checkBoxDesde_Checked" HorizontalAlignment="Left" Margin="12,13,0,0" Name="checkBoxDesde" Unchecked="checkBoxDesde_Unchecked" VerticalAlignment="Top" />
                 <Label Content="Desde Fecha: " Height="28" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="31,6,0,0" Name="labelFechaDesde" VerticalAlignment="Top" Width="94" />
                 <Label Content="---" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,14,8,0" Name="labelCantidadIngresosTotal" VerticalAlignment="Top" Width="110" />
-                <DatePicker Height="28" HorizontalAlignment="Left" IsEnabled="False" Margin="131,6,0,0" Name="datePickerDesde" SelectedDateChanged="datePickerDesde_SelectedDateChanged" VerticalAlignment="Top" VerticalContentAlignment="Stretch" Width="115" />
+                <DatePicker Height="28" HorizontalAlignment="Left" IsEnabled="False" Margin="131,6,0,0" Name="datePickerDesde" SelectedDateChanged="datePickerDesde_SelectedDateChanged" VerticalAlignment="Top" VerticalContentAlignment="Stretch" Width="150" />
                 <CheckBox Checked="checkBoxHasta_Checked" HorizontalAlignment="Left" Margin="12,47,0,0" Name="checkBoxHasta" Unchecked="checkBoxHasta_Unchecked" VerticalAlignment="Top" />
                 <Label Content="Hasta Fecha: " Height="28" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="31,40,0,0" Name="labelFechaHasta" VerticalAlignment="Top" Width="94" />
-                <DatePicker Height="28" HorizontalAlignment="Left" IsEnabled="False" Margin="131,40,0,0" Name="datePickerHasta" SelectedDateChanged="datePickerHasta_SelectedDateChanged" VerticalAlignment="Top" VerticalContentAlignment="Stretch" Width="115" />
-                <Button Content="Buscar Ingresos en Rango" Height="28" HorizontalAlignment="Left" IsEnabled="False" Margin="12,0,0,12" Name="buttonBuscarIngresos" VerticalAlignment="Bottom" Width="234" Click="buttonBuscarIngresos_Click" />
-                <Label Content="Ingresos Exitosos: " FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,56,124,0" Name="labelIngresosExitososTitle" VerticalAlignment="Top" />
+                <DatePicker Height="28" HorizontalAlignment="Left" IsEnabled="False" Margin="131,40,0,0" Name="datePickerHasta" SelectedDateChanged="datePickerHasta_SelectedDateChanged" VerticalAlignment="Top" VerticalContentAlignment="Stretch" Width="150" />
+                <Button Content="Buscar Ingresos en Rango" Height="28" HorizontalAlignment="Left" IsEnabled="False" Margin="12,0,0,12" Name="buttonBuscarIngresos" VerticalAlignment="Bottom" Width="269" Click="buttonBuscarIngresos_Click" />
+                <Label Content="Ingresos Exitosos: " FontSize="17" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,56,124,0" Name="labelIngresosExitososTitle" VerticalAlignment="Top" Height="34" />
                 <Label Content="---" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,56,8,0" Name="labelIngresosExitosos" VerticalAlignment="Top" Width="110" />
                 <CheckBox Checked="checkBoxNombre_Checked" HorizontalAlignment="Left" Margin="12,81,0,0" Name="checkBoxNombre" Unchecked="checkBoxNombre_Unchecked" VerticalAlignment="Top" />
                 <Label Content="Nombre: " Height="28" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="31,74,0,0" Name="labelNombre" VerticalAlignment="Top" Width="94" />
-                <my1:AutoCompleteTextBox DelayTime="250" Height="23" HorizontalAlignment="Left" IsEnabled="False" Margin="131,76,0,0" x:Name="autoCompleteTextBoxNombre" VerticalAlignment="Top" Width="115" />
-                <Label Content="Ingresos No Exitosos: " FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,96,123,0" Name="labelIngresosNoExitososTitle" VerticalAlignment="Top" />
+                <my1:AutoCompleteTextBox DelayTime="250" Height="23" HorizontalAlignment="Left" IsEnabled="False" Margin="131,76,0,0" x:Name="autoCompleteTextBoxNombre" VerticalAlignment="Top" Width="150" PreviewKeyDown="autoCompleteTextBoxNombre_PreviewKeyDown" />
+                <Label Content="Ingresos No Exitosos: " FontSize="17" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,96,124,0" Name="labelIngresosNoExitososTitle" VerticalAlignment="Top" Height="34" />
                 <Label Content="---" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,96,8,0" Name="labelIngresosNoExitosos" VerticalAlignment="Top" Width="110" />
                 <CheckBox HorizontalAlignment="Left" Margin="12,115,0,0" Name="checkBoxExitoso" VerticalAlignment="Top" Checked="checkBoxExitoso_Checked" Unchecked="checkBoxExitoso_Unchecked" />
                 <Label Content="Mostrar sólo: " Height="28" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="31,108,0,0" Name="labelExitoso" VerticalAlignment="Top" Width="94" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="131,110,0,0" Name="comboBoxExitoso" VerticalAlignment="Top" Width="115" IsEnabled="False" IsEditable="False" IsReadOnly="True" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="131,110,0,0" Name="comboBoxExitoso" VerticalAlignment="Top" Width="150" IsEnabled="False" IsEditable="False" IsReadOnly="True" />
             </Grid>
         </GroupBox>
     </Grid>

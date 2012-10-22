@@ -20,6 +20,7 @@ namespace Gimnasio
     /// </summary>
     public partial class VistaReportePagos : Window
     {
+        Configuration c2;
 
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
         public static bool IsOpen { get; private set; }
@@ -60,9 +61,9 @@ namespace Gimnasio
             return pagosQuery;
         }
 
-        private void dataGrid1_CurrentCellChanged(object sender, EventArgs e)
+        private void dataGridPagos_CurrentCellChanged(object sender, EventArgs e)
         {
-            DataGrid temp = (DataGrid)sender;
+            /*DataGrid temp = (DataGrid)sender;
             try
             {
                 Gimnasio.Pagos selectedPago = (Gimnasio.Pagos)temp.CurrentCell.Item;
@@ -72,7 +73,7 @@ namespace Gimnasio
             }
             catch
             {
-            }
+            }*/
         }
 
         private void buttonSalir_Click(object sender, RoutedEventArgs e)
@@ -128,11 +129,13 @@ namespace Gimnasio
         {
             autoCompleteTextBoxNombre.IsEnabled = true;
             buttonBuscarPagos.IsEnabled = true;
+            autoCompleteTextBoxNombre.FocusTextBox();
         }
 
         private void checkBoxNombre_Unchecked(object sender, RoutedEventArgs e)
         {
             autoCompleteTextBoxNombre.IsEnabled = false;
+            autoCompleteTextBoxNombre.Text = "";
             if (checkBoxDesde.IsChecked == false && checkBoxHasta.IsChecked == false)
             {
                 buttonBuscarPagos.IsEnabled = false;
@@ -189,8 +192,6 @@ namespace Gimnasio
                         int lengthID = endID - startID;
                         Int32.TryParse(cacheClientes.Substring(startID, lengthID), out foundID);
                         totalHits++;
-                        //System.Console.WriteLine(cacheClientes);
-                        //System.Console.WriteLine(foundID);
                     }
                 }
 
@@ -317,6 +318,49 @@ namespace Gimnasio
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return epoch.AddSeconds(unixTime);
         }
+
+        #region "Funciones relativas al Keypad USB"
+
+        private void autoCompleteTextBoxNombre_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.Key.ToString() == "Up")
+                {
+                    if (autoCompleteTextBoxNombre.SuggestionListActive())
+                    {
+                        autoCompleteTextBoxNombre.ChangeComboBoxIndexUp();
+                    }
+                    e.Handled = true;
+                }
+                if (e.Key.ToString() == "Down")
+                {
+                    if (autoCompleteTextBoxNombre.SuggestionListActive())
+                    {
+                        autoCompleteTextBoxNombre.ChangeComboBoxIndexDown();
+                    }
+                    e.Handled = true;
+                }
+                if (e.Key.ToString() == "Return")
+                {
+                    if (autoCompleteTextBoxNombre.SuggestionListActive())
+                    {
+                        autoCompleteTextBoxNombre.FocusTextBox();
+                    }
+                    else
+                    {
+                        buttonBuscarPagos_Click(buttonBuscarPagos, null);
+                    }
+                }
+            }
+        }
+
+        #endregion
 
     }
 

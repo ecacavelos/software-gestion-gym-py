@@ -62,6 +62,8 @@ namespace Gimnasio
 
             labelCantidadClientes.Content = String.Format("(Total: {0})", clientesVar2.ToList().Count.ToString());
             //database1Entities.SaveChanges();                        
+
+            textBoxBuscar.Focus();
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -186,12 +188,12 @@ namespace Gimnasio
         #region "Funciones relativas a la busqueda dinámica"
 
         // La búsqueda se realiza a medida que se ingresa texto en el cuadro de texto.
-        private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
+        private void textBoxBuscar_TextChanged(object sender, TextChangedEventArgs e)
         {
             string esql;
-            if (textBox1.Text != "")
+            if (textBoxBuscar.Text != "")
             {
-                esql = String.Format("SELECT value c FROM clientes as c WHERE (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%' OR c.nro_cedula LIKE '%{0}%') ORDER BY c.apellido", textBox1.Text.ToLower());
+                esql = String.Format("SELECT value c FROM clientes as c WHERE (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%' OR c.nro_cedula LIKE '%{0}%') ORDER BY c.apellido", textBoxBuscar.Text.ToLower());
             }
             else
             {
@@ -301,10 +303,9 @@ namespace Gimnasio
             }
         }
 
-        private void textBox1_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void textBoxBuscar_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             this.c2 = Configuration.Deserialize("config.xml");
-            //Console.WriteLine("C2: " + this.c2.Keypad_usb.ToString());
             if (this.c2.Keypad_usb == true)
             {
                 e.Handled = true;
