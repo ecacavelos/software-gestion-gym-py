@@ -135,6 +135,22 @@ namespace Gimnasio
             {
                 if (e.Key.ToString() == "Return" && textBoxUsuarioActual.Text.Length > 0)
                 {
+                    passwordBoxContraseñaActual.Focus();
+                }
+            }
+        }        
+
+        private void passwordBoxContraseñaActual_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            this.c2 = Configuration.Deserialize("config.xml");
+            if (this.c2.Keypad_usb == true)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.Key.ToString() == "Return" && passwordBoxContraseñaActual.Password.Length > 0)
+                {
                     textBoxNuevoUsuario.Focus();
                 }
             }
@@ -150,22 +166,6 @@ namespace Gimnasio
             else
             {
                 if (e.Key.ToString() == "Return" && textBoxNuevoUsuario.Text.Length > 0)
-                {
-                    passwordBoxContraseñaActual.Focus();
-                }
-            }
-        }
-
-        private void passwordBoxContraseñaActual_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            this.c2 = Configuration.Deserialize("config.xml");
-            if (this.c2.Keypad_usb == true)
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                if (e.Key.ToString() == "Return" && passwordBoxContraseñaActual.Password.Length > 0)
                 {
                     passwordBoxNuevaContraseña.Focus();
                 }

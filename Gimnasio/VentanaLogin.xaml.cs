@@ -28,6 +28,16 @@ namespace Gimnasio
             InitializeComponent();
         }
 
+        public VentanaLogin(bool cambiarAdmin)
+        {
+            if (cambiarAdmin == true)
+            {
+                InitializeComponent();
+                this.Height = 200;
+                this.textBlock1.Visibility = Visibility.Visible;
+            }
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             IsOpen = true;
