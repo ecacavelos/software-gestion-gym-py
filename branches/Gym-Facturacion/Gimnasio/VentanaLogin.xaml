@@ -9,5 +9,6 @@
         <Label Content="Contraseña: " HorizontalAlignment="Left" Margin="12,36,0,0" Name="label2" VerticalAlignment="Top" Width="80" />
         <TextBox HorizontalAlignment="Right" Margin="0,14,12,0" Name="textBoxUsuario" VerticalAlignment="Top" Width="156" PreviewKeyDown="textBoxUsuario_PreviewKeyDown" />
         <PasswordBox HorizontalAlignment="Right" Margin="0,36,12,0" Name="passwordBoxContraseña" VerticalAlignment="Top" Width="156" PreviewKeyDown="passwordBoxContraseña_PreviewKeyDown" Height="22" />
+        <TextBlock Height="52" HorizontalAlignment="Stretch" Margin="12,68,12,0" Name="textBlock1" Text="Para cambiar la contraseña debe ingresar sus credenciales" VerticalAlignment="Top" TextWrapping="Wrap" Visibility="Collapsed" />
     </Grid>
 </Window>

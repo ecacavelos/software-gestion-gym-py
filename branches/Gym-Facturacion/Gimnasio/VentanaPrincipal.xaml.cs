@@ -311,7 +311,7 @@ namespace Gimnasio
             else // No está abierta. Abrir una instancia de la ventana.
             {
                 // Se llama a la ventana para hacer login y comprobar que el usuario es admin.
-                VentanaLogin winLogin = new VentanaLogin();
+                VentanaLogin winLogin = new VentanaLogin(true);
                 Nullable<bool> result = winLogin.ShowDialog();
                 // Si el login es exitoso.
                 if (result == true)
