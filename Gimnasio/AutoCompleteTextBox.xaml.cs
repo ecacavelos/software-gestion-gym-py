@@ -175,6 +175,7 @@ namespace WPFAutoCompleteTextbox
 
         public void FocusTextBox()
         {
+            this.comboBox.IsDropDownOpen = false;
             this.textBox.Focus();
             this.textBox.SelectAll();
         }
