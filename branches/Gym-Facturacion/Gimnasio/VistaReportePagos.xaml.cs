@@ -9,9 +9,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
+
+using ExportToExcelTools;
 
 namespace Gimnasio
 {
@@ -61,19 +62,13 @@ namespace Gimnasio
             return pagosQuery;
         }
 
-        private void dataGridPagos_CurrentCellChanged(object sender, EventArgs e)
+        #region "Funciones relativas a los Botones Externos"
+
+        private void buttonExportar_Click(object sender, RoutedEventArgs e)
         {
-            /*DataGrid temp = (DataGrid)sender;
-            try
-            {
-                Gimnasio.Pagos selectedPago = (Gimnasio.Pagos)temp.CurrentCell.Item;
-                DateTime fechaIngresoPago = FromUnixTime((long)selectedPago.idPago);
-                fechaIngresoPago = fechaIngresoPago.AddHours(-4);
-                System.Console.WriteLine(fechaIngresoPago + " (" + selectedPago.idPago + ")");
-            }
-            catch
-            {
-            }*/
+            ExportToExcelTools.DataGridExcelTools.SetFormatForExport(dataGridPagos.Columns[4], "dd.MM.yyyy");
+            ExportToExcelTools.DataGridExcelTools.SetFormatForExport(dataGridPagos.Columns[5], "dd.MM.yyyy");
+            dataGridPagos.ExportToExcel();
         }
 
         private void buttonSalir_Click(object sender, RoutedEventArgs e)
@@ -81,9 +76,11 @@ namespace Gimnasio
             this.Close();
         }
 
+        #endregion
+
         #region "Funciones relativas a los CheckBox"
         /* Con los CheckBox se elige el criterio de filtrado, con los DatePicker se seleccionan los rangos.
-         * En caso de destachar ambos CheckBox, se vuelven a mostrar todos los pagos. */
+         * En caso de destachar todos los CheckBox, se vuelven a mostrar todos los pagos. */
 
         private void checkBoxDesde_Checked(object sender, RoutedEventArgs e)
         {
@@ -390,7 +387,7 @@ namespace Gimnasio
             //if (targetType != typeof(bool))
             //throw new InvalidOperationException("The target must be a boolean");           
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc) - new TimeSpan(4, 0, 0);
-            return epoch.AddSeconds((long)value).ToString("dd/MM/yyyy");
+            return epoch.AddSeconds((long)value).ToString("dd.MM.yyyy");
         }
         public object ConvertBack(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture)

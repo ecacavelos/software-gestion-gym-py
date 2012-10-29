@@ -8,19 +8,18 @@
         <local:KeytoDateStringConverter x:Key="KeytoDateStringConverter" />
     </Window.Resources>
     <Grid Background="#FFBECBEB" DataContext="{StaticResource pagosViewSource}">
-        <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="12,12,12,220" Name="dataGridPagos" VerticalAlignment="Stretch" ItemsSource="{Binding}" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" IsReadOnly="True" CurrentCellChanged="dataGridPagos_CurrentCellChanged">
+        <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="12,12,12,220" Name="dataGridPagos" VerticalAlignment="Stretch" ItemsSource="{Binding}" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="fechaIngresoPago" Binding="{Binding Path=idPago, StringFormat=\{0:dd/MM/yyyy\}, Converter={StaticResource KeytoDateStringConverter}}" Header="Fecha del Pago" MinWidth="90" />
                 <DataGridTextColumn x:Name="nombreCliente" Binding="{Binding Path=clientes.nombre}" Header="Nombre del Cliente" />
                 <DataGridTextColumn x:Name="apellidoCliente" Binding="{Binding Path=clientes.apellido}" Header="Apellido" />
                 <DataGridTextColumn x:Name="cedulaCliente" Binding="{Binding Path=clientes.nro_cedula}" Header="CI" />
-                <DataGridTextColumn x:Name="fechaDesde" Binding="{Binding Path=fecha, StringFormat=\{0:dd/MM/yyyy\}}" Header="Cuota - Desde" />
-                <DataGridTextColumn x:Name="fechaHasta" Binding="{Binding Path=fecha_vencimiento, StringFormat=\{0:dd/MM/yyyy\}}" Header="Cuota - Hasta" />
+                <DataGridTextColumn x:Name="fechaDesde" Binding="{Binding Path=fecha, StringFormat=\{0:dd.MM.yyyy\}}" Header="Cuota - Desde" />
+                <DataGridTextColumn x:Name="fechaHasta" Binding="{Binding Path=fecha_vencimiento, StringFormat=\{0:dd.MM.yyyy\}}" Header="Cuota - Hasta" />
                 <DataGridTextColumn x:Name="montoCuota" Binding="{Binding Path=Cuotas.monto}" Header="Monto" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" Click="buttonSalir_Click" />
-        <Label Content="Reporte de Pagos." Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="labelSatusBar" VerticalAlignment="Bottom" Width="488" />
+        <Label Content="Reporte de Pagos." Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="labelSatusBar" VerticalAlignment="Bottom" Width="402" />
         <GroupBox Header="Datos de Reporte" Height="171" HorizontalAlignment="Stretch" Margin="12,0,12,44" Name="groupBox1" VerticalAlignment="Bottom">
             <Grid>
                 <Label Content="Cantidad de Pagos: " HorizontalAlignment="Right" Margin="0,14,144,0" Name="labelCantidadPagosTitle" VerticalAlignment="Top" FontSize="17" FontWeight="Bold" Height="34" />
@@ -39,5 +38,7 @@
                 <my1:AutoCompleteTextBox HorizontalAlignment="Left" Margin="131,76,0,0" x:Name="autoCompleteTextBoxNombre" VerticalAlignment="Top" Width="150" Height="23" DelayTime="250" IsEnabled="False" Threshold="2" Focusable="True" PreviewKeyDown="autoCompleteTextBoxNombre_PreviewKeyDown" />
             </Grid>
         </GroupBox>
+        <Button Content="Exportar..." Height="26" HorizontalAlignment="Right" Margin="0,0,118,12" Name="buttonExportar" VerticalAlignment="Bottom" Width="100" ToolTip="Exporta los resultados actuales a un archivo." Click="buttonExportar_Click" />
+        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" Click="buttonSalir_Click" />
     </Grid>
 </Window>

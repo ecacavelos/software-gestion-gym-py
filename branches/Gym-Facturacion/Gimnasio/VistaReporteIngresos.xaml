@@ -13,8 +13,8 @@
                 <DataGridTextColumn x:Name="nombreCliente" Binding="{Binding Path=clientes.nombre}" Header="Nombre del Cliente" MinWidth="120" />
                 <DataGridTextColumn x:Name="apellidoCliente" Binding="{Binding Path=clientes.apellido}" Header="Apellido" MinWidth="120" />
                 <DataGridTextColumn x:Name="cedulaCliente" Binding="{Binding Path=clientes.nro_cedula}" Header="CI" />
-                <DataGridTextColumn x:Name="fechaCliente" Binding="{Binding Path=fecha}" Header="Fecha del Ingreso" />
-                <!--<DataGridTextColumn x:Name="exitoso" Binding="{Binding Path=exitoso, Converter={StaticResource BooleantoStringConverter}}" Header="Ingreso Exitoso" />-->
+                <DataGridTextColumn x:Name="fechaCliente" Binding="{Binding Path=fecha, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Header="Fecha del Ingreso" />
+                <DataGridTextColumn x:Name="exitoso" Binding="{Binding Path=exitoso, Converter={StaticResource BooleantoStringConverter}}" Header="Ingreso Exitoso" Visibility="Collapsed" />
                 <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -37,8 +37,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="Reporte de Ingresos." Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="labelSatusBar" VerticalAlignment="Bottom" Width="488" />
-        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" Click="buttonSalir_Click" />
+        <Label Content="Reporte de Ingresos." Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="labelSatusBar" VerticalAlignment="Bottom" Width="318" />        
         <GroupBox Header="Datos de Reporte" Height="207" HorizontalAlignment="Stretch" Margin="12,0,12,43" Name="groupBox1" VerticalAlignment="Bottom">
             <Grid>
                 <Label Content="Total de Ingresos: " FontSize="17" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,14,124,0" Name="labelCantidadIngresosTotalTitle" VerticalAlignment="Top" Height="34" />
@@ -62,5 +61,7 @@
                 <ComboBox Height="23" HorizontalAlignment="Left" Margin="131,110,0,0" Name="comboBoxExitoso" VerticalAlignment="Top" Width="150" IsEnabled="False" IsEditable="False" IsReadOnly="True" />
             </Grid>
         </GroupBox>
+        <Button Content="Exportar..." Height="26" HorizontalAlignment="Right" Margin="0,0,118,12" Name="buttonExportar" ToolTip="Exporta los resultados actuales a un archivo." VerticalAlignment="Bottom" Width="100" Click="buttonExportar_Click" />
+        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" Click="buttonSalir_Click" />
     </Grid>
 </Window>

@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Globalization;
 
+using ExportToExcelTools;
+
 namespace Gimnasio
 {
     /// <summary>
@@ -64,10 +66,20 @@ namespace Gimnasio
             return ingresosQuery;
         }
 
+        #region "Funciones relativas a los Botones Externos"
+
+        private void buttonExportar_Click(object sender, RoutedEventArgs e)
+        {
+            ExportToExcelTools.DataGridExcelTools.SetFormatForExport(dataGridIngresos.Columns[3], "dd.MM.yyyy HH:mm");
+            dataGridIngresos.ExportToExcel();
+        }
+
         private void buttonSalir_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+        #endregion
 
         #region "Funciones relativas a los CheckBox"
         /* Con los CheckBox se elige el criterio de filtrado, con los DatePicker se seleccionan los rangos.
