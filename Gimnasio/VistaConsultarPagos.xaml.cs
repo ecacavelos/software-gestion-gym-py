@@ -156,11 +156,11 @@ namespace Gimnasio
 
             modoMultiplesFacturas++;
             buttonColumn.Visibility = Visibility.Hidden;
-            //buttonFacturasMultiples.IsEnabled = true;
+            buttonFacturasMultiples.IsEnabled = true;
         }
 
         private void checkBoxAddToFactura_Unchecked(object sender, RoutedEventArgs e)
-        {            
+        {
             Pagos pago = ((FrameworkElement)sender).DataContext as Pagos;
 
             foreach (Pagos tempPago in arrayPagosSeleccionados)
@@ -176,17 +176,28 @@ namespace Gimnasio
             if (modoMultiplesFacturas < 1)
             {
                 buttonColumn.Visibility = Visibility.Visible;
-                //buttonFacturasMultiples.IsEnabled = false;
+                buttonFacturasMultiples.IsEnabled = false;
             }
         }
 
         private void buttonFacturasMultiples_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Pagos tempPago in arrayPagosSeleccionados)
+            /*foreach (Pagos tempPago in arrayPagosSeleccionados)
             {
                 System.Console.WriteLine(tempPago.idPago);
-            }
-            arrayPagosSeleccionados.ToArray();
+            }*/
+            Pagos[] pagosSeleccionados = arrayPagosSeleccionados.ToArray();
+            Facturacion.DatosFactura(pagosSeleccionados, pagosSeleccionados[0].clientes);
+
+            // Se actualiza el Datagrid, para que se refleje que ya se facturó el pago.
+            database1Entities = new Gimnasio.Database1Entities();
+            string esql3 = "SELECT value c FROM clientes as c WHERE c.nro_cedula= '" + this.textBoxNroCedula.Text + "\'";
+            var clientesVar3 = database1Entities.CreateQuery<clientes>(esql3);
+            this.dataGridPagos.ItemsSource = clientesVar3.ToArray()[0].Pagos;
+
+            modoMultiplesFacturas = 0;
+            buttonColumn.Visibility = Visibility.Visible;
+            buttonFacturasMultiples.IsEnabled = false;
         }
 
         #endregion

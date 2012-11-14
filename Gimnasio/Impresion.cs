@@ -17,7 +17,7 @@ namespace Gimnasio
     public static class Impresion
     {
 
-        public static void ImprimirFactura(Facturas factura, int[] ArrayEx, int[] Array05, int[] Array10)
+        public static void ImprimirFactura(Facturas factura, string[] ArrayConceptos, int[] ArrayEx, int[] Array05, int[] Array10)
         {
 
             DateTime fecha = (DateTime)factura.Fecha_Emision;
@@ -74,37 +74,41 @@ namespace Gimnasio
             FixedPage.SetLeft(factRUC, 200);
             FixedPage.SetTop(factRUC, 40);
 
-            TextBlock factCant = new TextBlock();
-            factCant.Text = "1";
-            page1.Children.Add(factCant);
-            FixedPage.SetLeft(factCant, 10);
-            FixedPage.SetTop(factCant, 80);
+            // Esta sección de impresión es variable y dependiente de la cantidad de "ítems" a ser facturados.
 
-            TextBlock factConcepto = new TextBlock();
-            factConcepto.Text = factura.Concepto;
-            page1.Children.Add(factConcepto);
-            FixedPage.SetLeft(factConcepto, 200);
-            FixedPage.SetTop(factConcepto, 80);
+            for (int i = 0; i < ArrayEx.ToList().Count; i++)
+            {
+                TextBlock factCant = new TextBlock();
+                factCant.Text = "1";
+                page1.Children.Add(factCant);
+                FixedPage.SetLeft(factCant, 10);
+                FixedPage.SetTop(factCant, 80 + 30 * i);
 
-            //
+                TextBlock factConcepto = new TextBlock();
+                /*factConcepto.Text = factura.Concepto;*/
+                factConcepto.Text = ArrayConceptos[i];
+                page1.Children.Add(factConcepto);
+                FixedPage.SetLeft(factConcepto, 200);
+                FixedPage.SetTop(factConcepto, 80 + 30 * i);
 
-            TextBlock factMontoIVAEx = new TextBlock();
-            factMontoIVAEx.Text = ArrayEx[0].ToString();
-            page1.Children.Add(factMontoIVAEx);
-            FixedPage.SetLeft(factMontoIVAEx, 440);
-            FixedPage.SetTop(factMontoIVAEx, 80);
+                TextBlock factMontoIVAEx = new TextBlock();
+                factMontoIVAEx.Text = ArrayEx[i].ToString();
+                page1.Children.Add(factMontoIVAEx);
+                FixedPage.SetLeft(factMontoIVAEx, 440);
+                FixedPage.SetTop(factMontoIVAEx, 80 + 30 * i);
 
-            TextBlock factMontoIVA05 = new TextBlock();
-            factMontoIVA05.Text = Array05[0].ToString();
-            page1.Children.Add(factMontoIVA05);
-            FixedPage.SetLeft(factMontoIVA05, 460);
-            FixedPage.SetTop(factMontoIVA05, 80);
+                TextBlock factMontoIVA05 = new TextBlock();
+                factMontoIVA05.Text = Array05[i].ToString();
+                page1.Children.Add(factMontoIVA05);
+                FixedPage.SetLeft(factMontoIVA05, 460);
+                FixedPage.SetTop(factMontoIVA05, 80 + 30 * i);
 
-            TextBlock factMontoIVA10 = new TextBlock();
-            factMontoIVA10.Text = Array10[0].ToString();
-            page1.Children.Add(factMontoIVA10);
-            FixedPage.SetLeft(factMontoIVA10, 480);
-            FixedPage.SetTop(factMontoIVA10, 80);
+                TextBlock factMontoIVA10 = new TextBlock();
+                factMontoIVA10.Text = Array10[i].ToString();
+                page1.Children.Add(factMontoIVA10);
+                FixedPage.SetLeft(factMontoIVA10, 480);
+                FixedPage.SetTop(factMontoIVA10, 80 + 30 * i);
+            }
 
             //
 

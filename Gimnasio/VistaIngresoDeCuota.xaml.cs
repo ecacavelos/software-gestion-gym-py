@@ -15,7 +15,7 @@ using System.Data.EntityClient;
 namespace Gimnasio
 {
     /// <summary>
-    /// Interaction logic for Window4.xaml
+    /// Interaction logic for VistaIngresoDeCuota.xaml
     /// </summary>
     public partial class VistaIngresoDeCuota : Window
     {
@@ -58,15 +58,16 @@ namespace Gimnasio
             return cuotasQuery;
         }
 
+        #region "Funciones Manejadoras de Carga y Descarga de la Ventana"
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             IsOpen = true;
-            // cargar en el combobox los parametros de cuotas posibles, trayendo de la tabla Cuotas. 
+            textBoxNroCedula.Focus();
+            // Cargar en el comboBox los parámetros de cuotas posibles, trayendo de la tabla Cuotas.
             var cuotas = database1Entities.CreateQuery<Cuotas>(esqlCuotas);
             comboBoxTiposCuotas.ItemsSource = cuotas;
             comboBoxTiposCuotas.DisplayMemberPath = "diasHabilitados";
-
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -74,36 +75,39 @@ namespace Gimnasio
             IsOpen = false;
         }
 
+        #endregion
+
         private void botonAplicarPago(object sender, RoutedEventArgs e)
         {
-            //Cantidad de dias a habilitar, si esta en 0 entonces aun no se seteo
+            // Cantidad de dias a habilitar, si está en 0 entonces aún no se seteó.
             if (diasAHabilitar == 0)
             {
-                //abrir una ventanita con el aviso de seteo de los dias que se quiere habilitar
+                // Abrir una ventanita con el aviso de seteo de los dias que se quiere habilitar.
                 MessageBox.Show("Debe seleccionar la cantidad de dias a habilitar");
-
             }
             else
-            { // esta correctamente seteada la cantidad de dias, comprobar si la fecha esta seleccionada
+            {
+                // Si está correctamente seteada la cantidad de dias, comprobar si la fecha está seleccionada.
                 if ((fechaPago.Year == 1) && (fechaPago.Day == 1) && (fechaPago.Month == 1))
                 {
-                    //abrir una ventanita con el aviso de seteo de los dias que se quiere habilitar
+                    // Abrir una ventanita con el aviso de seteo de los dias que se quiere habilitar.
                     MessageBox.Show("Debe seleccionar la fecha");
-
                 }
                 else
                 {
-                    if (textBoxNombre.Text == "")// aun no se selecciono ningun cliente
-                    {//todavia no esta seteado ningun nombre.
-                        //abrir una ventanita con el aviso de seteo de los dias que se quiere habilitar
+                    // Si aún no se selecciono ningún cliente.
+                    if (textBoxNombre.Text == "")
+                    {
+                        // Todavia no está seteado ningun nombre.
+                        // Abrir una ventanita con el aviso de seteo de los dias que se quiere habilitar.
                         MessageBox.Show("Debe seleccionar un cliente");
-
                     }
                     else
-                    { // esta todo seteado, aplicar el pago 
+                    {
+                        // Está todo seteado, aplicar el pago.
                         /* Calcular 30/7/1 dias para establecer la fecha de vencimiento en al tabla Pagos. 
-                         * Por ejemplo: Dia actual  14/10/2012 y se paga por 30 dias, entonces el 13/11/2011 sera la fecha de vencimiento
-                         */
+                         * Por ejemplo: Dia actual  14/10/2012 y se paga por 30 dias (un mes), 
+                         * entonces el 14/11/2011 sera la fecha de vencimiento */
                         if (this.fechaUltimoVencimiento < this.fechaPago)
                         {
                             TimeSpan time = (DateTime.UtcNow - new DateTime(1970, 1, 1));
@@ -142,24 +146,17 @@ namespace Gimnasio
                         }
                         else
                         {
-
                             MessageBox.Show("Debe seleccionar una fecha posterior a la fecha del vencimiento de la cuota anterior");
                         }
-
                     }
                 }
-
             }
-
-
-
         }
 
-        // la seleccion de la fecha fue realizada
+        // La selección de la fecha fue realizada.
         private void datePickerFechaInicialPago_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            // se obtiene la fecha elegida y se setea el campo correspondiente
+            // Se obtiene la fecha elegida y se setea el campo correspondiente.
             if (this.fechaUltimoVencimiento < (System.DateTime)datePickerFechaInicialPago.SelectedDate)
             {
                 this.fechaPago = (System.DateTime)datePickerFechaInicialPago.SelectedDate;
@@ -168,17 +165,14 @@ namespace Gimnasio
             {
                 MessageBox.Show("Debe seleccionar una fecha posterior a la fecha del vencimiento de la ultima cuota");
             }
-
         }
 
         private void comboBoxTiposCuotas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //comboBoxTiposCuotas.
             Cuotas cuotaSeleccionada = (Cuotas)comboBoxTiposCuotas.SelectedItem;
-            diasAHabilitar = (int)cuotaSeleccionada.diasHabilitados; // aca se setean los dias a habilitar para el cliente
+            diasAHabilitar = (int)cuotaSeleccionada.diasHabilitados; // Acá se setean los dias a habilitar para el cliente.
             this.cuotaId = (int)cuotaSeleccionada.idCuota;
             Console.WriteLine("Dias a habilitar = " + diasAHabilitar.ToString());
-
         }
 
         /*
@@ -189,7 +183,7 @@ namespace Gimnasio
          */
         private void textBoxNroCedula_KeyDown(object sender, KeyEventArgs e)
         {
-            // se presiono ENTER
+            // Se presionó ENTER.
             if (e.Key.ToString() == "Return")
             {
                 string esql = "SELECT value c FROM clientes as c WHERE c.nro_cedula = '" + this.textBoxNroCedula.Text + "\'";
@@ -219,23 +213,23 @@ namespace Gimnasio
                         this.textBlockFechaVto.Text = "Sin pagos de cuotas";
                     }
                 }
-                else if (clientesVar.ToList().Count > 1)// Existe una inconsistencia en la base de datos. 
+                else if (clientesVar.ToList().Count > 1) // Existe una inconsistencia en la base de datos. 
                 {
                     MessageBox.Show("Existe mas de un usuario con este numero de cedula, por favor identifique el cliente y corriga el error.");
                 }
-                else if (clientesVar.ToList().Count == 0)// No se selecciono ningun cliente.
+                else if (clientesVar.ToList().Count == 0) // No se seleccionó ningun cliente.
                 {
                     MessageBox.Show("No existe cliente con ese numero de cedula, por favor inserte o modifique el cliente con el numero de cedula.");
                 }
             }
             else
             {
-                //System.Console.WriteLine("se presiono cualquier otra tecla que no es Return");
-
+                //System.Console.WriteLine("Se presiono cualquier otra tecla que no es Return.");
             }
         }
 
         #region "Funciones relativas al Keypad USB"
+
         // Funciones para evitar que el keypad USB afecte los controles de esta ventana.
 
         private void textBoxNroCedula_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -282,6 +276,7 @@ namespace Gimnasio
                 e.Handled = true;
             }
         }
+
         #endregion
 
     }
