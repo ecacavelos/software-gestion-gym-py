@@ -29,6 +29,12 @@ namespace Gimnasio
             set { textBoxNroFactura.Text = value; }
         }
 
+        public string ResponseText_NombreApellido
+        {
+            get { return textBoxNombre.Text; }
+            set { textBoxNombre.Text = value; }
+        }
+
         public string ResponseText_RUC
         {
             get { return textBoxRUC.Text; }
@@ -58,9 +64,12 @@ namespace Gimnasio
                 textBoxRUC.Background = Brushes.MistyRose;
             }
 
-            int tempMonto = 0;
-            Int32.TryParse(thisPago.Cuotas.monto, out tempMonto);
-            montoTotal += tempMonto;
+            for (int i = 0; i < pagos.ToList().Count; i++)
+            {
+                int tempMonto = 0;
+                Int32.TryParse(pagos[i].Cuotas.monto, out tempMonto);
+                montoTotal += tempMonto;
+            }
 
             labelMontoTotal.Content = "Monto Total: " + montoTotal.ToString("#,##0");
 
@@ -128,6 +137,7 @@ namespace Gimnasio
         }
 
         #region "Funciones de validación para el RUC"
+
         private void textBoxRUC_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Verificamos que haya al menos 2 caracteres en el cuadro de RUC.
@@ -183,6 +193,7 @@ namespace Gimnasio
                 e.Handled = true;
             }
         }
+
         #endregion
 
     }
