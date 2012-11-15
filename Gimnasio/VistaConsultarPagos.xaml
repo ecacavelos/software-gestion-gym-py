@@ -2,20 +2,20 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Gimnasio"
-        Title="Consulta de Pagos de Clientes" Height="420" Width="480" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" ResizeMode="NoResize" Icon="/Gimnasio;component/Images/iconoCuotas.png" Unloaded="Window_Unloaded">
+        Title="Consulta de Pagos de Clientes" Height="400" Width="460" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" ResizeMode="NoResize" Icon="/Gimnasio;component/Images/iconoCuotas.png" Unloaded="Window_Unloaded">
     <Window.Resources>
         <CollectionViewSource x:Key="pagosViewSource" d:DesignSource="{d:DesignInstance my:Pagos, CreateList=True}" />
         <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </Window.Resources>
     <Grid Name="ClienteSeleccionado" Background="#FFBECBEB">
-        <Label Content="Nro. de Cedula: " Height="24" HorizontalAlignment="Center" Margin="84,68,214,0" Name="label1" VerticalAlignment="Top" Width="100" HorizontalContentAlignment="Right" />
+        <Label Content="Nro. de Cedula: " Height="24" HorizontalAlignment="Center" Margin="104,55,234,0" Name="label1" VerticalAlignment="Top" Width="100" HorizontalContentAlignment="Right" />
         <Label Content="Consulta de Pagos" HorizontalAlignment="Stretch" Margin="12,12,12,0" Name="label2" VerticalAlignment="Top" Width="374" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-        <TextBox Height="24" HorizontalAlignment="Center" Margin="190,70,88,0" Name="textBoxNroCedula" VerticalAlignment="Top" Width="120" KeyDown="textBoxNroCedula_KeyDown" PreviewKeyDown="textBoxNroCedula_PreviewKeyDown" />
-        <Label Content="Nombre: " Height="24" HorizontalAlignment="Center" Margin="84,100,214,0" Name="label3" VerticalAlignment="Top" Width="100" HorizontalContentAlignment="Right" />
-        <Label Content="Apellido: " Height="24" HorizontalAlignment="Center" Margin="84,130,214,0" Name="label4" VerticalAlignment="Top" Width="100" HorizontalContentAlignment="Right" />
-        <TextBlock Height="24" HorizontalAlignment="Center" Margin="190,100,88,0" Name="textBoxNombre" Text="{Binding Path=nombre}" VerticalAlignment="Top" Width="120" Background="#12000000" />
-        <TextBlock Height="24" HorizontalAlignment="Center" Margin="190,130,88,0" Name="textBoxApellido" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="120" Background="#12000000" />
-        <DataGrid AutoGenerateColumns="False" Height="160" HorizontalAlignment="Stretch" Margin="12,0,12,48" Name="dataGridPagos" VerticalAlignment="Bottom" UnloadingRow="unLoadingRow_Pagos" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" Grid.RowSpan="2" VerticalContentAlignment="Center" CanUserAddRows="False" CanUserDeleteRows="True" RowHeight="25">
+        <TextBox Height="24" HorizontalAlignment="Center" Margin="210,55,108,0" Name="textBoxNroCedula" VerticalAlignment="Top" Width="120" KeyDown="textBoxNroCedula_KeyDown" PreviewKeyDown="textBoxNroCedula_PreviewKeyDown" />
+        <Label Content="Nombre: " Height="24" HorizontalAlignment="Center" Margin="104,87,234,0" Name="label3" VerticalAlignment="Top" Width="100" HorizontalContentAlignment="Right" />
+        <Label Content="Apellido: " Height="24" HorizontalAlignment="Center" Margin="104,117,234,0" Name="label4" VerticalAlignment="Top" Width="100" HorizontalContentAlignment="Right" />
+        <TextBlock Height="24" HorizontalAlignment="Center" Margin="210,87,108,0" Name="textBoxNombre" Text="{Binding Path=nombre}" VerticalAlignment="Top" Width="120" Background="#12000000" />
+        <TextBlock Height="24" HorizontalAlignment="Center" Margin="210,117,108,0" Name="textBoxApellido" Text="{Binding Path=apellido}" VerticalAlignment="Top" Width="120" Background="#12000000" />
+        <DataGrid AutoGenerateColumns="False" Height="150" HorizontalAlignment="Stretch" Margin="12,0,12,48" Name="dataGridPagos" VerticalAlignment="Bottom" UnloadingRow="unLoadingRow_Pagos" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" Grid.RowSpan="2" VerticalContentAlignment="Center" CanUserAddRows="False" CanUserDeleteRows="True" RowHeight="25" AlternatingRowBackground="Beige">
             <DataGrid.Columns>
                 <DataGridTemplateColumn x:Name="checkColumn">
                     <DataGridTemplateColumn.CellTemplate>
@@ -26,7 +26,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn x:Name="fechaColumn" Binding="{Binding Path=fecha, StringFormat={}{0:dd/MM/yyyy}}" Header="Fecha" FontSize="15" MinWidth="100" />
                 <DataGridTextColumn Binding="{Binding Path=fecha_vencimiento, StringFormat={}{0:dd/MM/yyyy}}" Header="Fecha Vencimiento" FontSize="15" MinWidth="100" />
-                <DataGridTextColumn Binding="{Binding Path=Cuotas.monto}" Header="Monto" FontSize="15" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=Cuotas.monto}" Header="Monto" FontSize="15" MinWidth="64" Width="64" />
                 <DataGridTemplateColumn x:Name="buttonColumn" Width="Auto" Header="">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

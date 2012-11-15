@@ -350,10 +350,12 @@ namespace Gimnasio
         /// Create a new clientes object.
         /// </summary>
         /// <param name="idCliente">Initial value of the idCliente property.</param>
-        public static clientes Createclientes(global::System.Int32 idCliente)
+        /// <param name="hasFoto">Initial value of the hasFoto property.</param>
+        public static clientes Createclientes(global::System.Int32 idCliente, global::System.Boolean hasFoto)
         {
             clientes clientes = new clientes();
             clientes.idCliente = idCliente;
+            clientes.hasFoto = hasFoto;
             return clientes;
         }
 
@@ -632,30 +634,6 @@ namespace Gimnasio
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> hasfoto
-        {
-            get
-            {
-                return _hasfoto;
-            }
-            set
-            {
-                OnhasfotoChanging(value);
-                ReportPropertyChanging("hasfoto");
-                _hasfoto = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("hasfoto");
-                OnhasfotoChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _hasfoto;
-        partial void OnhasfotoChanging(Nullable<global::System.Boolean> value);
-        partial void OnhasfotoChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String RUC
         {
             get
@@ -674,6 +652,30 @@ namespace Gimnasio
         private global::System.String _RUC;
         partial void OnRUCChanging(global::System.String value);
         partial void OnRUCChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean hasFoto
+        {
+            get
+            {
+                return _hasFoto;
+            }
+            set
+            {
+                OnhasFotoChanging(value);
+                ReportPropertyChanging("hasFoto");
+                _hasFoto = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("hasFoto");
+                OnhasFotoChanged();
+            }
+        }
+        private global::System.Boolean _hasFoto;
+        partial void OnhasFotoChanging(global::System.Boolean value);
+        partial void OnhasFotoChanged();
 
         #endregion
     
@@ -1725,6 +1727,54 @@ namespace Gimnasio
         private Nullable<global::System.Int32> _fk_factura;
         partial void Onfk_facturaChanging(Nullable<global::System.Int32> value);
         partial void Onfk_facturaChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String tipoPago
+        {
+            get
+            {
+                return _tipoPago;
+            }
+            set
+            {
+                OntipoPagoChanging(value);
+                ReportPropertyChanging("tipoPago");
+                _tipoPago = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("tipoPago");
+                OntipoPagoChanged();
+            }
+        }
+        private global::System.String _tipoPago;
+        partial void OntipoPagoChanging(global::System.String value);
+        partial void OntipoPagoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String descripcionPago
+        {
+            get
+            {
+                return _descripcionPago;
+            }
+            set
+            {
+                OndescripcionPagoChanging(value);
+                ReportPropertyChanging("descripcionPago");
+                _descripcionPago = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("descripcionPago");
+                OndescripcionPagoChanged();
+            }
+        }
+        private global::System.String _descripcionPago;
+        partial void OndescripcionPagoChanging(global::System.String value);
+        partial void OndescripcionPagoChanged();
 
         #endregion
     

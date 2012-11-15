@@ -127,6 +127,10 @@ namespace Gimnasio
                                 pagoAAgregar.fecha_vencimiento = this.fechaPago.AddMonths(1);
                             }
 
+                            // Agregamos el tipo de Pago (Cuota, Producto, Servicio, etc.) y la Descripcion.
+                            pagoAAgregar.tipoPago = "Cuota";
+                            pagoAAgregar.descripcionPago = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", pagoAAgregar.fecha) + " a " + String.Format("{0:dd/MM/yyyy}", pagoAAgregar.fecha_vencimiento);
+
                             database1Entities.AddToPagos(pagoAAgregar);
                             if (database1Entities.SaveChanges() == 0)
                             {
