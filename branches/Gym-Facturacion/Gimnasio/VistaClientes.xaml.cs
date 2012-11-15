@@ -135,10 +135,10 @@ namespace Gimnasio
 
                 obj.idCliente = timestamp;
 
-                if (obj.hasfoto == null)
+                /*if (obj.hasFoto == null)
                 {
-                    ((clientes)e.Row.Item).hasfoto = false;
-                }
+                    ((clientes)e.Row.Item).hasFoto = false;
+                }*/
             }
             // Se habilita el botón "Guardar Cambios", puesto que se acaba de ingresar un nuevo registro.
             button2.IsEnabled = true;

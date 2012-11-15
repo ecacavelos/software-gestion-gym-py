@@ -24,7 +24,7 @@
                 <DataGridTextColumn x:Name="nombreColumn" Binding="{Binding Path=nombre}" Header="Nombre" />
                 <DataGridTextColumn x:Name="nro_cedulaColumn" Binding="{Binding Path=nro_cedula}" Header="Nro. de cedula" />
                 <DataGridTextColumn x:Name="rucColumn" Binding="{Binding Path=RUC}" Header="RUC" />
-                <DataGridTextColumn x:Name="direccionColumn" Binding="{Binding Path=direccion}" Header="Dirección" MaxWidth="350" />
+                <DataGridTextColumn x:Name="direccionColumn" Binding="{Binding Path=direccion}" Header="Dirección" MaxWidth="340" />
                 <DataGridTextColumn x:Name="telefonoColumn" Binding="{Binding Path=telefono}" Header="Teléfono"  />
                 <DataGridTextColumn x:Name="emailColumn" Binding="{Binding Path=email}" Header="email" />
                 <DataGridTemplateColumn x:Name="fecha_nacimientoColumn" Header="Fecha de nacimiento" >
@@ -43,10 +43,10 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn x:Name="alturaColumn" Binding="{Binding Path=altura}" Header="Altura" Width="SizeToHeader" />
                 <DataGridTextColumn x:Name="pesoColumn" Binding="{Binding Path=peso}" Header="Peso" Width="SizeToHeader" />
-                <DataGridTemplateColumn x:Name="fotoColumn" Width="Auto" Header="Foto" SortMemberPath="hasfoto">
+                <DataGridTemplateColumn x:Name="fotoColumn" Width="Auto" Header="Foto" SortMemberPath="hasFoto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox Style="{StaticResource DataGridCheckBoxStyle}" IsChecked="{Binding Path=hasfoto, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" TargetUpdated="OnFotoToggleTargetUpdated" Click="FotoToggled"/>
+                            <CheckBox Style="{StaticResource DataGridCheckBoxStyle}" IsChecked="{Binding Path=hasFoto, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" TargetUpdated="OnFotoToggleTargetUpdated" Click="FotoToggled"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

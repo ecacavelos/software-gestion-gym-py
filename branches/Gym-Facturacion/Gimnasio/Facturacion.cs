@@ -19,7 +19,7 @@ namespace Gimnasio
         /// Genera, valida y almacena las facturas.
         /// </summary>
         /// <param name="pago">El pago a facturar.</param>
-        public static void DatosFactura(Pagos[] pagos, clientes clienteFacturado)
+        public static bool DatosFactura(Pagos[] pagos, clientes clienteFacturado)
         {
 
             int[] myIVAsExArray = new int[pagos.ToList().Count];
@@ -58,7 +58,7 @@ namespace Gimnasio
                 }
                 else
                 {
-                    return;
+                    return false;
                 }
 
                 current_factura.Fecha_Emision = DateTime.Now;
@@ -99,9 +99,10 @@ namespace Gimnasio
                     current_factura.IVA10_Total += myIVAs10Array[i];
 
                     conceptosArray[i] = "";
+                    conceptosArray[i] = pagos[i].descripcionPago;
 
-                    conceptosArray[i] = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", pagos[i].fecha) +
-                    " a " + String.Format("{0:dd/MM/yyyy}", pagos[i].fecha_vencimiento);
+                    /*conceptosArray[i] = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", pagos[i].fecha) +
+                    " a " + String.Format("{0:dd/MM/yyyy}", pagos[i].fecha_vencimiento);*/
 
                 }
 
@@ -133,6 +134,7 @@ namespace Gimnasio
                 Impresion.ImprimirFactura(current_factura, conceptosArray, myIVAsExArray, myIVAs05Array, myIVAs10Array);
 
                 MessageBox.Show("Se ingresó la factura al sistema.", "Nueva Factura");
+                return true;
 
                 //}
 
@@ -140,6 +142,7 @@ namespace Gimnasio
             else
             {
                 System.Console.WriteLine("No se recibió un pago válido como parámetro.");
+                return false;
             }
         }
     }

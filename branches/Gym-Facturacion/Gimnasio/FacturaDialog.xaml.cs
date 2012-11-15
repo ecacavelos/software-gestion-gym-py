@@ -45,6 +45,19 @@ namespace Gimnasio
         {
             InitializeComponent();
 
+            foreach (Pagos tempPago in pagos)
+            {
+                // Ejecutar el siguiente Query en la BD para actualizar las descripciones de los Pagos:
+                // UPDATE Pagos SET descripcionPago = 'Pago Cuota ' + CONVERT(nvarchar(100), fecha, 103) + 
+                //    ' a ' + CONVERT(nvarchar(100), fecha_vencimiento, 103)                
+                if (tempPago.descripcionPago == null)
+                {
+                    System.Console.WriteLine("Generando nueva descripción del Pago.");
+                    tempPago.descripcionPago = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", tempPago.fecha) +
+                        " a " + String.Format("{0:dd/MM/yyyy}", tempPago.fecha_vencimiento);
+                }
+            }
+
             dataGridFacturaPreview.ItemsSource = pagos;
             int montoTotal = 0;
             thisPago = pagos[0];

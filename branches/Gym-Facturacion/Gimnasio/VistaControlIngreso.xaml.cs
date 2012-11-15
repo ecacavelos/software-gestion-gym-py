@@ -321,7 +321,7 @@ namespace Gimnasio
                             TimeSpan cantDias = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value - System.DateTime.Today;
                             this.label2_ResultadoIngreso.Content = "Ingreso Exitoso --> " + "Su cuota vence en: " + cantDias.Days + " días.";
 
-                            if (clientesVar.ToArray()[0].hasfoto == true)
+                            if (clientesVar.ToArray()[0].hasFoto == true)
                             {
                                 // Recuperamos la foto del cliente para mostrar
                                 string pathfoto = String.Empty;
