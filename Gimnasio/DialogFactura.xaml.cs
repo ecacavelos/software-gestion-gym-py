@@ -14,9 +14,9 @@ using System.Windows.Shapes;
 namespace Gimnasio
 {
     /// <summary>
-    /// Interaction logic for FacturaDialog.xaml
+    /// Interaction logic for DialogFactura.xaml
     /// </summary>
-    public partial class FacturaDialog : Window
+    public partial class DialogFactura : Window
     {
 
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
@@ -41,7 +41,7 @@ namespace Gimnasio
             set { textBoxRUC.Text = value; }
         }
 
-        public FacturaDialog(Pagos[] pagos)
+        public DialogFactura(Pagos[] pagos)
         {
             InitializeComponent();
 

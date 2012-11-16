@@ -101,8 +101,8 @@
       <DependentUpon>VistaConsultarPagos.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataGridHelper.cs" />
-    <Compile Include="FacturaDialog.xaml.cs">
-      <DependentUpon>FacturaDialog.xaml</DependentUpon>
+    <Compile Include="DialogFactura.xaml.cs">
+      <DependentUpon>DialogFactura.xaml</DependentUpon>
     </Compile>
     <Compile Include="InputDevice.cs" />
     <Compile Include="Numalet.cs" />
@@ -239,7 +239,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FacturaDialog.xaml">
+    <Page Include="DialogFactura.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

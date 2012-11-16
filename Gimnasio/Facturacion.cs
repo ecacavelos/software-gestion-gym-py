@@ -48,7 +48,7 @@ namespace Gimnasio
                 /*if (facturasVar.ToList().Count == 0)
                 {*/
 
-                FacturaDialog dlg = new FacturaDialog(pagos);
+                DialogFactura dlg = new DialogFactura(pagos);
                 Nullable<bool> result = dlg.ShowDialog();
 
                 if (result == true)
@@ -114,8 +114,9 @@ namespace Gimnasio
                 current_factura.Liquidacion_IVA10 = current_factura.IVA10_Total / 11;
                 current_factura.Liquidacion_IVA_Total = current_factura.Liquidacion_IVA05 + current_factura.Liquidacion_IVA10;
 
-                current_factura.Concepto = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", pagos[0].fecha) +
-                    " a " + String.Format("{0:dd/MM/yyyy}", pagos[pagos.ToList().Count - 1].fecha_vencimiento);
+                /*current_factura.Concepto = "Pago cuota " + String.Format("{0:dd/MM/yyyy}", pagos[0].fecha) +
+                    " a " + String.Format("{0:dd/MM/yyyy}", pagos[pagos.ToList().Count - 1].fecha_vencimiento);*/
+                current_factura.Concepto = "Pago de Cuotas...";
 
                 // Se agrega la factura a la BD en la tabla "Facturas".                
                 database1Entities.Facturas.AddObject(current_factura);
