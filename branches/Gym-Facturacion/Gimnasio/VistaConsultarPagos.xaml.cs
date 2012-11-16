@@ -152,7 +152,7 @@ namespace Gimnasio
         private void checkBoxAddToFactura_Checked(object sender, RoutedEventArgs e)
         {
             cantidadPagosSeleccionados++;
-            if (cantidadPagosSeleccionados <= 3)
+            if (cantidadPagosSeleccionados <= 7)
             {
                 Pagos pago = ((FrameworkElement)sender).DataContext as Pagos;
                 arrayPagosSeleccionados.Add(pago);
