@@ -88,6 +88,9 @@
     </Compile>
     <Compile Include="DataGridExcelTools.cs" />
     <Compile Include="DataGridExportManager.cs" />
+    <Compile Include="DialogDetalleFactura.xaml.cs">
+      <DependentUpon>DialogDetalleFactura.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Impresion.cs" />
     <Compile Include="Facturacion.cs" />
     <Compile Include="Configuration.cs" />
@@ -230,6 +233,10 @@
     <Page Include="AutoCompleteTextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DialogDetalleFactura.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VentanaLogin.xaml">
       <SubType>Designer</SubType>
