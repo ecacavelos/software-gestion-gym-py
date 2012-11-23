@@ -118,26 +118,33 @@ namespace Gimnasio
                     " a " + String.Format("{0:dd/MM/yyyy}", pagos[pagos.ToList().Count - 1].fecha_vencimiento);*/
                 current_factura.Concepto = "Pago de Cuotas...";
 
-                // Se agrega la factura a la BD en la tabla "Facturas".                
-                database1Entities.Facturas.AddObject(current_factura);
-                database1Entities.SaveChanges();
-
-                for (int i = 0; i < pagos.ToList().Count; i++)
-                {
-                    // Se actualiza el campo "ya_facturado" de la tabla Pagos
-                    // para indicar que ese pago ya fue facturado.
-                    database1Entities.ExecuteStoreCommand(
-                        "UPDATE Pagos SET ya_facturado = 1 WHERE (Pagos.idPago = {0})", pagos[i].idPago);
-                    database1Entities.SaveChanges();
-                }
-
                 // Se llama al módulo de Impresión.
-                Impresion.ImprimirFactura(current_factura, conceptosArray, myIVAsExArray, myIVAs05Array, myIVAs10Array);
+                //Impresion.ImprimirFactura(current_factura, conceptosArray, myIVAsExArray, myIVAs05Array, myIVAs10Array);
 
-                MessageBox.Show("Se ingresó la factura al sistema.", "Nueva Factura");
-                return true;
+                if (Impresion.ImprimirFactura(current_factura, conceptosArray, myIVAsExArray, myIVAs05Array, myIVAs10Array) == true)
+                {
+                    // Se agrega la factura a la BD en la tabla "Facturas".                
+                    database1Entities.Facturas.AddObject(current_factura);
+                    database1Entities.SaveChanges();
 
-                //}
+                    for (int i = 0; i < pagos.ToList().Count; i++)
+                    {
+                        // Se actualiza el campo "ya_facturado" de la tabla Pagos
+                        // para indicar que ese pago ya fue facturado.
+                        database1Entities.ExecuteStoreCommand(
+                            "UPDATE Pagos SET ya_facturado = 1 WHERE (Pagos.idPago = {0})", pagos[i].idPago);
+                        database1Entities.ExecuteStoreCommand(
+                            "UPDATE Pagos SET fk_factura = {0} WHERE (Pagos.idPago = {1})", current_factura.idFactura, pagos[i].idPago);
+                        database1Entities.SaveChanges();
+                    }
+
+                    MessageBox.Show("Se ingresó la factura al sistema.", "Nueva Factura");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
             }
             else

@@ -70,15 +70,15 @@ namespace Gimnasio
                 result = System.Windows.Forms.MessageBox.Show("Desea guardar los cambios efectuados?", "Confirmar modificaciones", System.Windows.Forms.MessageBoxButtons.YesNoCancel);
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
-                    database1Entities.SaveChanges();
+                    database1Entities.SaveChanges();    // Se graban los cambios antes de cerrar la ventana.
                 }
                 else if (result == System.Windows.Forms.DialogResult.No)
                 {
-
+                    // No se hace nada antes de cerrar la ventana.
                 }
                 else
                 {
-                    e.Cancel = true;
+                    e.Cancel = true;    // Cancelamos el cierre de la ventana.
                 }
             }
         }
@@ -173,6 +173,26 @@ namespace Gimnasio
         {
             //anularClicked = true;
         }
+
+        #endregion
+
+        #region "Funciones relativas al Detalle de las Facturas"
+
+        private void DetalleFactura(object sender, RoutedEventArgs e)
+        {
+            Facturas thisFactura = ((FrameworkElement)sender).DataContext as Facturas;
+
+            // Recuperamos de la Base de Datos todos los Pagos asociados a esta Factura.
+            database1Entities = new Gimnasio.Database1Entities();
+            string esql = String.Format("SELECT value p FROM Pagos as p WHERE p.fk_factura = {0}", thisFactura.idFactura);
+            var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
+
+            System.Console.WriteLine(pagosVar.ToList().Count.ToString());
+
+            DialogDetalleFactura winDetalle = new DialogDetalleFactura(thisFactura, pagosVar.ToArray());
+            Nullable<bool> result = winDetalle.ShowDialog();
+        }
+
         #endregion
 
         #region "Funciones relativas al Keypad USB"

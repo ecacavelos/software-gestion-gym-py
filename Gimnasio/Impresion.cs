@@ -17,7 +17,7 @@ namespace Gimnasio
     public static class Impresion
     {
 
-        public static void ImprimirFactura(Facturas factura, string[] ArrayConceptos, int[] ArrayEx, int[] Array05, int[] Array10)
+        public static bool ImprimirFactura(Facturas factura, string[] ArrayConceptos, int[] ArrayEx, int[] Array05, int[] Array10)
         {
             Configuration c2 = Configuration.Deserialize("config.xml");
 
@@ -190,7 +190,19 @@ namespace Gimnasio
             if (print == true)
             {
                 fixedDoc.DocumentPaginator.PageSize = new Size(pDialog.PrintableAreaWidth, pDialog.PrintableAreaHeight);
-                pDialog.PrintDocument(aDocPage, "Table Printing Test");
+                try
+                {
+                    pDialog.PrintDocument(aDocPage, "Table Printing Test");
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
 
         }

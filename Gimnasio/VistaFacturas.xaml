@@ -18,7 +18,14 @@
                 <DataGridTextColumn x:Name="fechaEmisionColumn" Binding="{Binding Path=Fecha_Emision, StringFormat=\{0:dd/MM/yyyy\}}" Header="Fecha de Emisión" />
                 <DataGridTextColumn x:Name="nombreColumn" Binding="{Binding Path=Nombre_Pagador}" Header="Nombre" />
                 <DataGridTextColumn x:Name="rucColumn" Binding="{Binding Path=RUC_Pagador}" Header="RUC" Width="100" />
-                <DataGridTextColumn x:Name="conceptoColumn" Binding="{Binding Path=Concepto}" Header="Concepto" />
+                <!--<DataGridTextColumn x:Name="conceptoColumn" Binding="{Binding Path=Concepto}" Header="Concepto" />-->
+                <DataGridTemplateColumn x:Name="buttonColumn" Width="Auto" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="detalleButton" Content="Detalle de Factura..." Click="DetalleFactura" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn x:Name="montoTotalColumn" Binding="{Binding Path=Monto_Total}" Header="Monto Total" Width="100" />
                 <DataGridTemplateColumn x:Name="anuladaColumn" Header="Anulada" Width="60">
                     <DataGridTemplateColumn.CellTemplate>
