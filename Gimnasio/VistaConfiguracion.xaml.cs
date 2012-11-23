@@ -49,9 +49,6 @@ namespace Gimnasio
             this.label_SegundosApertura.Content = c2.TiempoApertura.ToString();
         }
 
-
-
-
         private void slider_TiempoAperturaPorton_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (this.IsInitialized == true)
@@ -67,15 +64,13 @@ namespace Gimnasio
             }
         }
 
-
-        //cerrar la ventana. 
+        // Cerrar la ventana. 
         private void button_CancelarConfiguracion_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-
-        //escribir en el archivo de configuracion.
+        // Escribir en el archivo de configuracion.
         private void button_AceptarConfiguracion_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.DialogResult result;
