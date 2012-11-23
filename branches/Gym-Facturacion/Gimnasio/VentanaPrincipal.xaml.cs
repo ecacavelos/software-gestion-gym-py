@@ -33,6 +33,7 @@ namespace Gimnasio
         private Window winIngresoManual = new Window();
         private Window winVistaControlIngreso = new Window();
         private Window winVistaFacturas = new Window();
+        private Window winVistaConfiguracionFacturas = new Window();
         private Window winReportePagos = new Window();
         private Window winReporteIngresos = new Window();
         private Window winAdministrarAdmins = new Window();
@@ -238,6 +239,22 @@ namespace Gimnasio
                 Assembly assembly = type.Assembly;
                 this.winVistaFacturas = (Window)assembly.CreateInstance("Gimnasio.VistaFacturas");
                 this.winVistaFacturas.Show();
+            }
+        }
+
+        private void menuItem_FacturasConfiguracion(object sender, RoutedEventArgs e)
+        {
+            if (VistaConfiguracionFacturas.IsOpen)  // Si que una instancia de esta ventana está abierta.
+            {
+                this.winVistaConfiguracionFacturas.Activate();  // Si está abierta activar y mandar al frente.
+                return;
+            }
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winVistaConfiguracionFacturas = (Window)assembly.CreateInstance("Gimnasio.VistaConfiguracionFacturas");
+                this.winVistaConfiguracionFacturas.Show();
             }
         }
 

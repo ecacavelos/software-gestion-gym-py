@@ -97,6 +97,9 @@
     <Compile Include="VistaAdministrarAdmins.xaml.cs">
       <DependentUpon>VistaAdministrarAdmins.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VistaConfiguracionFacturas.xaml.cs">
+      <DependentUpon>VistaConfiguracionFacturas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VistaConsultarPagos.xaml.cs">
       <DependentUpon>VistaConsultarPagos.xaml</DependentUpon>
     </Compile>
@@ -168,6 +171,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -232,6 +236,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VistaAdministrarAdmins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VistaConfiguracionFacturas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

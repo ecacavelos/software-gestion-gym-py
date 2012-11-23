@@ -38,6 +38,8 @@
                         <Image Source="/Gimnasio;component/Images/iconoFacturas.png" Width="16" Height="16" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <Separator />
+                <MenuItem Header="Configuración de Facturas..." Click="menuItem_FacturasConfiguracion"></MenuItem>
             </MenuItem>
             <MenuItem Header="Administración">
                 <MenuItem Header="Reporte de Pagos..." Click="menuItem_ReportePagos">
