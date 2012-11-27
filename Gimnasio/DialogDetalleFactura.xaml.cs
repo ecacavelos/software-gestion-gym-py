@@ -31,6 +31,11 @@ namespace Gimnasio
             labelNroFactura.Content = factura.Nro_Factura.ToString();
             labelFechaEmision.Content = factura.Fecha_Emision.ToString();
             labelMontoTotal.Content = "Monto Total: " + ((int)(factura.Monto_Total)).ToString("#,##0");
+
+            // Indicamos si la Factura está anulada.
+            if(factura.Anulada){
+                labelAnulada.Visibility = Visibility.Visible;
+            }
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
