@@ -169,6 +169,22 @@ namespace Gimnasio
             }
         }
         private ObjectSet<Ingresos> _Ingresos;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FacturasAnuladas> FacturasAnuladas
+        {
+            get
+            {
+                if ((_FacturasAnuladas == null))
+                {
+                    _FacturasAnuladas = base.CreateObjectSet<FacturasAnuladas>("FacturasAnuladas");
+                }
+                return _FacturasAnuladas;
+            }
+        }
+        private ObjectSet<FacturasAnuladas> _FacturasAnuladas;
 
         #endregion
         #region AddTo Methods
@@ -219,6 +235,14 @@ namespace Gimnasio
         public void AddToIngresos(Ingresos ingresos)
         {
             base.AddObject("Ingresos", ingresos);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FacturasAnuladas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFacturasAnuladas(FacturasAnuladas facturasAnuladas)
+        {
+            base.AddObject("FacturasAnuladas", facturasAnuladas);
         }
 
         #endregion
@@ -1359,6 +1383,109 @@ namespace Gimnasio
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Database1Model", Name="FacturasAnuladas")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class FacturasAnuladas : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FacturasAnuladas object.
+        /// </summary>
+        /// <param name="idFacturaAnulada">Initial value of the idFacturaAnulada property.</param>
+        public static FacturasAnuladas CreateFacturasAnuladas(global::System.Int32 idFacturaAnulada)
+        {
+            FacturasAnuladas facturasAnuladas = new FacturasAnuladas();
+            facturasAnuladas.idFacturaAnulada = idFacturaAnulada;
+            return facturasAnuladas;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> idFactura
+        {
+            get
+            {
+                return _idFactura;
+            }
+            set
+            {
+                OnidFacturaChanging(value);
+                ReportPropertyChanging("idFactura");
+                _idFactura = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("idFactura");
+                OnidFacturaChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _idFactura;
+        partial void OnidFacturaChanging(Nullable<global::System.Int32> value);
+        partial void OnidFacturaChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> idPago
+        {
+            get
+            {
+                return _idPago;
+            }
+            set
+            {
+                OnidPagoChanging(value);
+                ReportPropertyChanging("idPago");
+                _idPago = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("idPago");
+                OnidPagoChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _idPago;
+        partial void OnidPagoChanging(Nullable<global::System.Int64> value);
+        partial void OnidPagoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 idFacturaAnulada
+        {
+            get
+            {
+                return _idFacturaAnulada;
+            }
+            set
+            {
+                if (_idFacturaAnulada != value)
+                {
+                    OnidFacturaAnuladaChanging(value);
+                    ReportPropertyChanging("idFacturaAnulada");
+                    _idFacturaAnulada = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("idFacturaAnulada");
+                    OnidFacturaAnuladaChanged();
+                }
+            }
+        }
+        private global::System.Int32 _idFacturaAnulada;
+        partial void OnidFacturaAnuladaChanging(global::System.Int32 value);
+        partial void OnidFacturaAnuladaChanged();
+
+        #endregion
+    
     }
     
     /// <summary>

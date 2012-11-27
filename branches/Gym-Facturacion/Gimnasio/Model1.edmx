@@ -10,6 +10,7 @@
           <EntitySet Name="clientes" EntityType="Database1Model.Store.clientes" store:Type="Tables" />
           <EntitySet Name="Cuotas" EntityType="Database1Model.Store.Cuotas" store:Type="Tables" />
           <EntitySet Name="Facturas" EntityType="Database1Model.Store.Facturas" store:Type="Tables" />
+          <EntitySet Name="FacturasAnuladas" EntityType="Database1Model.Store.FacturasAnuladas" store:Type="Tables" />
           <EntitySet Name="Ingresos" EntityType="Database1Model.Store.Ingresos" store:Type="Tables" />
           <EntitySet Name="Pagos" EntityType="Database1Model.Store.Pagos" store:Type="Tables" />
           <AssociationSet Name="fk_cliente_factura" Association="Database1Model.Store.fk_cliente_factura">
@@ -88,6 +89,14 @@
           <Property Name="Liquidacion_IVA10" Type="int" />
           <Property Name="Liquidacion_IVA_Total" Type="int" />
           <Property Name="Anulada" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FacturasAnuladas">
+          <Key>
+            <PropertyRef Name="idFacturaAnulada" />
+          </Key>
+          <Property Name="idFactura" Type="int" />
+          <Property Name="idPago" Type="bigint" />
+          <Property Name="idFacturaAnulada" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Ingresos">
           <Key>
@@ -203,6 +212,7 @@
             <End Role="Facturas" EntitySet="Facturas" />
             <End Role="Pagos" EntitySet="Pagos" />
           </AssociationSet>
+          <EntitySet Name="FacturasAnuladas" EntityType="Database1Model.FacturasAnuladas" />
           </EntityContainer>
         <EntityType Name="clientes">
           <Key>
@@ -352,6 +362,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FacturasAnuladas">
+          <Key>
+            <PropertyRef Name="idFacturaAnulada" />
+          </Key>
+          <Property Type="Int32" Name="idFactura" />
+          <Property Type="Int64" Name="idPago" />
+          <Property Type="Int32" Name="idFacturaAnulada" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -443,6 +461,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="FacturasAnuladas">
+            <EntityTypeMapping TypeName="Database1Model.FacturasAnuladas">
+              <MappingFragment StoreEntitySet="FacturasAnuladas">
+                <ScalarProperty Name="idFacturaAnulada" ColumnName="idFacturaAnulada" />
+                <ScalarProperty Name="idPago" ColumnName="idPago" />
+                <ScalarProperty Name="idFactura" ColumnName="idFactura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -464,34 +491,37 @@
     <Diagrams>
       <Diagram Name="Model1" ZoomLevel="100" >
         <EntityTypeShape EntityType="Database1Model.clientes" Width="1.5" PointX="0.5" PointY="0.5" Height="4.0956022135416656" />
-        <EntityTypeShape EntityType="Database1Model.Cuotas" Width="1.5" PointX="2.75" PointY="3.875" Height="1.9802864583333326" />
-        <EntityTypeShape EntityType="Database1Model.Pagos" Width="1.5" PointX="2.75" PointY="0.5" Height="2.5571907552083326" />
+        <EntityTypeShape EntityType="Database1Model.Cuotas" Width="1.625" PointX="2.75" PointY="5.375" Height="1.9802864583333326" />
+        <EntityTypeShape EntityType="Database1Model.Pagos" Width="1.625" PointX="2.75" PointY="0.5" Height="3.326396484375" />
         <AssociationConnector Association="Database1Model.FK_cliente_pago" >
-          <ConnectorPoint PointX="2" PointY="2.0166984049479164" />
-          <ConnectorPoint PointX="2.75" PointY="2.0166984049479164" />
+          <ConnectorPoint PointX="2" PointY="2.1631982421875" />
+          <ConnectorPoint PointX="2.75" PointY="2.1631982421875" />
         </AssociationConnector>
         <AssociationConnector Association="Database1Model.fk_tipoCuota_pago" >
-          <ConnectorPoint PointX="3.5" PointY="3.875" />
-          <ConnectorPoint PointX="3.5" PointY="3.4417936197916665" />
+          <ConnectorPoint PointX="3.5625" PointY="5.375" />
+          <ConnectorPoint PointX="3.5625" PointY="3.826396484375" />
         </AssociationConnector>
         <EntityTypeShape EntityType="Database1Model.Facturas" Width="1.625" PointX="5" PointY="0.5" Height="4.2879036458333335" />
         <AssociationConnector Association="Database1Model.fk_cliente_factura" ManuallyRouted="false" >
-          <ConnectorPoint PointX="2" PointY="0.5" />
-          <ConnectorPoint PointX="2.375" PointY="0.125" />
-          <ConnectorPoint PointX="4.625" PointY="0.125" />
-          <ConnectorPoint PointX="5" PointY="0.5" />
+          <ConnectorPoint PointX="2" PointY="4.2422493489583326" />
+          <ConnectorPoint PointX="3.4791666666666665" PointY="4.2422493489583317" />
+          <ConnectorPoint PointX="3.6458333333333335" PointY="4.2422493489583326" />
+          <ConnectorPoint PointX="5" PointY="4.2422493489583326" />
         </AssociationConnector>
         <EntityTypeShape EntityType="Database1Model.Admins" Width="1.5" PointX="7.875" PointY="0.625" Height="1.59568359375" />
         <EntityTypeShape EntityType="Database1Model.Ingresos" Width="1.5" PointX="7.875" PointY="4" Height="1.9802864583333335" />
         <AssociationConnector Association="Database1Model.fk_cliente_ingreso" >
           <ConnectorPoint PointX="1.25" PointY="4.5956022135416656" />
-          <ConnectorPoint PointX="1.25" PointY="5.9490364583333326" />
-          <ConnectorPoint PointX="7.875" PointY="5.9490364583333326" />
+          <ConnectorPoint PointX="1.25" PointY="5.0814518229166667" />
+          <ConnectorPoint PointX="3.4791666666666665" PointY="5.0814518229166659" />
+          <ConnectorPoint PointX="3.6458333333333335" PointY="5.0814518229166667" />
+          <ConnectorPoint PointX="7.875" PointY="5.0814518229166667" />
         </AssociationConnector>
         <AssociationConnector Association="Database1Model.FK_factura_pago" >
-          <ConnectorPoint PointX="5" PointY="1.9708968098958333" />
-          <ConnectorPoint PointX="4.25" PointY="1.9708968098958333" />
+          <ConnectorPoint PointX="5" PointY="2.1631982421875" />
+          <ConnectorPoint PointX="4.375" PointY="2.1631982421875" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="Database1Model.FacturasAnuladas" Width="1.625" PointX="5" PointY="5.375" Height="1.5956835937499996" />
         </Diagram>
     </Diagrams>
   </Designer>
