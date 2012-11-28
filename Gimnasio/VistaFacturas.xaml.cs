@@ -136,6 +136,8 @@ namespace Gimnasio
         {
             if (anularClicked.ToString() == "True")
             {
+                anularClicked = false;
+
                 DataGrid myDataGrid = facturasDataGrid;
                 Gimnasio.Facturas currentcell = (Gimnasio.Facturas)myDataGrid.SelectedItem;
 
@@ -151,8 +153,6 @@ namespace Gimnasio
                 // verificar y prevenir posibles conflictos de facturación.
                 for (int i = 0; i < pagosFacturaActual.ToList().Count; i++)
                 {
-                    //System.Console.WriteLine("FOR " + pagosFacturaActual.ToArray<Pagos>()[i].idPago.ToString());
-
                     // Se crea una nueva entrada en la tabla FacturasAnuladas.
                     // Esta entrada tiene la relacion entre el pago y en cual factura estaba contenido.
                     FacturasAnuladas nuevaFacturaAnular = new FacturasAnuladas();
@@ -166,8 +166,6 @@ namespace Gimnasio
                     nuevaFacturaAnular.idPago = pagosFacturaActual.ToArray<Pagos>()[i].idPago;
                     database1Entities.FacturasAnuladas.AddObject(nuevaFacturaAnular);
                 }
-
-                anularClicked = false;
             }
         }
 
@@ -175,7 +173,7 @@ namespace Gimnasio
         {
             if (anularClicked.ToString() == "True")
             {
-                //System.Console.WriteLine("Unchecked.");
+                anularClicked = false;
 
                 bool permitirDesanular = true;
                 DataGrid myDataGrid = facturasDataGrid;
@@ -184,21 +182,20 @@ namespace Gimnasio
                 // Al des-anular una factura, verificamos que no hayan ya otras facturas sin anular correspondientes al mismo pago.
                 string esql0 = String.Format("SELECT value f FROM FacturasAnuladas as f WHERE f.idFactura = {0}", currentcell.idFactura);
                 var facturasAnuladasVar = database1Entities.CreateQuery<FacturasAnuladas>(esql0);
-                //System.Console.WriteLine(facturasAnuladasVar.ToArray().Length);
 
                 for (int i = 0; i < facturasAnuladasVar.ToArray().Length; i++)
                 {
                     string esql1 = String.Format("SELECT value p FROM Pagos as p WHERE (p.idPago = {0} AND p.ya_facturado = True)", facturasAnuladasVar.ToArray()[i].idPago);
-                    //System.Console.WriteLine(esql1);
                     var pagosVar = database1Entities.CreateQuery<Pagos>(esql1);
                     if (pagosVar.ToList().Count > 0)
                     {
+                        // Indicamos cual Factura no anulada está en conflicto con algun ítem de la 
+                        // Factura que se pretende desanular, y no se hace nada.
                         string esql2 = String.Format("SELECT value f FROM Facturas as f WHERE f.idFactura = {0}", pagosVar.ToArray<Pagos>()[0].fk_factura);
                         var facturasConflictoVar = database1Entities.CreateQuery<Facturas>(esql2);
-                        System.Console.WriteLine("Advertencia: Ya existen facturas no anuladas para este pago. Verificar factura " + facturasConflictoVar.Single<Facturas>().Nro_Factura + ".");
-                        anularClicked = false;
                         ((CheckBox)(sender)).IsChecked = true;
                         permitirDesanular = false;
+                        MessageBox.Show("Ya existen facturas no anuladas para este pago. Verificar factura " + facturasConflictoVar.Single<Facturas>().Nro_Factura + ".", "No se puede cancelar la anulación de la Factura.");
                     }
                 }
 
@@ -207,9 +204,7 @@ namespace Gimnasio
                 {
                     for (int i = 0; i < facturasAnuladasVar.ToArray().Length; i++)
                     {
-                        //System.Console.WriteLine(facturasAnuladasVar.ToArray()[i].idPago);
                         string esql = String.Format("SELECT value p FROM Pagos as p WHERE p.idPago = {0}", facturasAnuladasVar.ToArray()[i].idPago);
-                        //System.Console.WriteLine(esql);
                         var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
                         // Ponemos el pago correspondiente como facturado.
                         foreach (Pagos pago in pagosVar)
@@ -218,20 +213,20 @@ namespace Gimnasio
                             pago.ya_facturado = true;
                         }
                     }
-                    // Eliminamos las entradas correspondientes a la Factura en la tabla FacturasAnuladas                        
+                    // Eliminamos las entradas correspondientes a la Factura en la tabla 'FacturasAnuladas'.                        
                     foreach (FacturasAnuladas factura in facturasAnuladasVar)
                     {
                         factura.idFactura = 0;
                         factura.idPago = 0;
                     }
                 }
-
-                anularClicked = false;
             }
         }
 
         private void anularCheckBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            // Se usa el bool 'anularClicked' para indicar que fue efectivamente el usuario el
+            // que marcó o desmarcó algun CheckBox para anular o desanular Facturas.
             anularClicked = true;
         }
 
@@ -243,12 +238,12 @@ namespace Gimnasio
         {
             Facturas thisFactura = ((FrameworkElement)sender).DataContext as Facturas;
 
-            // Recuperamos de la Base de Datos todos los Pagos asociados a esta Factura.
-            //System.Console.WriteLine(thisFactura.Anulada.ToString());
+            // Recuperamos de la Base de Datos todos los Pagos asociados a esta Factura.            
             string esql;
             Pagos[] arrayPagos;
             if (thisFactura.Anulada)
             {
+                // Si la Factura está anulada, los Pagos se recuperan de la tabla 'FacturasAnuladas'.
                 string esql0 = String.Format("SELECT value f FROM FacturasAnuladas as f WHERE f.idFactura = {0}", thisFactura.idFactura);
                 var facturasAnuladasVar = database1Entities.CreateQuery<FacturasAnuladas>(esql0);
 
@@ -256,7 +251,6 @@ namespace Gimnasio
 
                 for (int i = 0; i < facturasAnuladasVar.ToArray().Length; i++)
                 {
-                    //System.Console.WriteLine(facturasAnuladasVar.ToArray()[i].idPago);
                     esql = String.Format("SELECT value p FROM Pagos as p WHERE p.idPago = {0}", facturasAnuladasVar.ToArray()[i].idPago);
                     var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
                     pagosAfectados[i] = pagosVar.ToArray()[0];
@@ -265,6 +259,7 @@ namespace Gimnasio
             }
             else
             {
+                // Si la Factura está activa, los Pagos se recuperan directamente de la tabla 'Pagos'.
                 esql = String.Format("SELECT value p FROM Pagos as p WHERE p.fk_factura = {0}", thisFactura.idFactura);
                 var pagosVar = database1Entities.CreateQuery<Pagos>(esql);
                 arrayPagos = pagosVar.ToArray();
