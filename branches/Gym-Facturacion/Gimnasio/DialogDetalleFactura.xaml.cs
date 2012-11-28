@@ -30,10 +30,12 @@ namespace Gimnasio
             labelRUC.Content = factura.RUC_Pagador.ToString();
             labelNroFactura.Content = factura.Nro_Factura.ToString();
             labelFechaEmision.Content = factura.Fecha_Emision.ToString();
-            labelMontoTotal.Content = "Monto Total: " + ((int)(factura.Monto_Total)).ToString("#,##0");
+            labelMontoTotal.Content = "Monto Total: " + ((int)factura.Monto_Total).ToString("#,##0");
+            labelTotalIVA.Content = ((int)factura.Liquidacion_IVA_Total).ToString("#,##0");
 
             // Indicamos si la Factura está anulada.
-            if(factura.Anulada){
+            if (factura.Anulada)
+            {
                 labelAnulada.Visibility = Visibility.Visible;
             }
         }

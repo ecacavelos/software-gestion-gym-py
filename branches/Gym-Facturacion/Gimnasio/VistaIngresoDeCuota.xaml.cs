@@ -29,6 +29,8 @@ namespace Gimnasio
         DateTime fechaPago, /*fechaTemporal,*/ fechaUltimoVencimiento;
         int /*nroCedula,*/ idCliente, cuotaId;
 
+        Gimnasio.clientes clienteActual;
+
         public VistaIngresoDeCuota()
         {
             this.diasAHabilitar = new int();
@@ -138,12 +140,15 @@ namespace Gimnasio
                             }
                             else
                             {
-                                /*MessageBoxResult result;                                
+                                Pagos[] arrayPagosAgregados = new Pagos[1];
+                                arrayPagosAgregados[0] = pagoAAgregar;
+                                // Preguntamos si se quiere facturar el Pago siendo ingresado.
+                                MessageBoxResult result;
                                 result = MessageBox.Show("Desea imprimir una factura para este pago?", "Pago de Cuota", MessageBoxButton.YesNo);
                                 if (result == MessageBoxResult.Yes)
                                 {
-                                    //Facturacion.DatosFactura(pagoAAgregar);
-                                }*/
+                                    Facturacion.DatosFactura(arrayPagosAgregados, clienteActual);
+                                }
                                 MessageBox.Show("El pago se aplicó correctamente.");
                                 this.Close();
                             }
@@ -196,10 +201,12 @@ namespace Gimnasio
 
                 if (clientesVar.ToList().Count == 1) // Esta es la unica condicion correcta, que se seleccione un cliente.
                 {
+                    clienteActual = clientesVar.ToArray()[0];
+
                     this.idCliente = clientesVar.ToArray()[0].idCliente;
                     button1.IsEnabled = true;
 
-                    if (clientesVar.ToArray()[0].Pagos.ToList().Count >= 1)// Existe al menos un pago
+                    if (clientesVar.ToArray()[0].Pagos.ToList().Count >= 1) // Existe al menos un pago
                     {
                         /*Pagos[] arrayListPagos; 
                         arrayListPagos = clientesVar.ToArray()[0].Pagos.ToArray();

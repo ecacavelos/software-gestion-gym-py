@@ -19,7 +19,8 @@
         </DataGrid>
         <Label Content="Fecha de Emisión:" HorizontalAlignment="Left" Margin="12,84,0,0" Name="labelTitleFechaEmision" VerticalAlignment="Top" Width="108" />
         <Label Content="---" HorizontalAlignment="Stretch" Margin="126,84,12,0" Name="labelFechaEmision" VerticalAlignment="Top" />
-        <Label HorizontalAlignment="Stretch" Margin="12,256,12,0" Name="label1" VerticalAlignment="Top" Content="---" />
+        <Label HorizontalAlignment="Stretch" Margin="12,256,218,0" Name="labelTitleTotalIVA" VerticalAlignment="Top" Content="Total IVA:" />
         <Label Content="Esta Factura está Anulada." HorizontalAlignment="Stretch" Margin="12,108,12,0" Name="labelAnulada" VerticalAlignment="Top" Foreground="Red" Visibility="Collapsed" />
+        <Label Content="---" HorizontalAlignment="Stretch" Margin="126,256,12,0" Name="labelTotalIVA" VerticalAlignment="Top" />
     </Grid>
 </Window>

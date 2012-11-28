@@ -143,6 +143,7 @@ namespace Gimnasio
                 }
                 else
                 {
+                    MessageBox.Show("NO se ingresó la factura al sistema.", "Advertencia");
                     return false;
                 }
 
