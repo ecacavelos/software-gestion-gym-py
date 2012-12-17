@@ -68,8 +68,14 @@ namespace Gimnasio
             textBoxNroCedula.Focus();
             // Cargar en el comboBox los parámetros de cuotas posibles, trayendo de la tabla Cuotas.
             var cuotas = database1Entities.CreateQuery<Cuotas>(esqlCuotas);
-            comboBoxTiposCuotas.ItemsSource = cuotas;
-            comboBoxTiposCuotas.DisplayMemberPath = "diasHabilitados";
+            foreach (Gimnasio.Cuotas tempCuota in cuotas)
+            {
+                ComboBoxItem elementoCombo = new ComboBoxItem();
+                elementoCombo.Content = tempCuota.diasHabilitados + " - " + tempCuota.concepto;
+                comboBoxTiposCuotas.Items.Add(elementoCombo);
+            }
+            //comboBoxTiposCuotas.ItemsSource = cuotas;
+            //comboBoxTiposCuotas.DisplayMemberPath = "diasHabilitados";            
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -178,10 +184,18 @@ namespace Gimnasio
 
         private void comboBoxTiposCuotas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Cuotas cuotaSeleccionada = (Cuotas)comboBoxTiposCuotas.SelectedItem;
+            string currentComboBoxContent = comboBoxTiposCuotas.SelectedValue.ToString().Remove(0, 38);
+            string currentConcepto = (currentComboBoxContent.Substring(4, currentComboBoxContent.Length - 4).Trim());
+
+            string esql = String.Format("SELECT value c FROM Cuotas as c WHERE c.concepto = '{0}'", currentConcepto);
+            var tiposCuotaVar = database1Entities.CreateQuery<Cuotas>(esql);
+
+            Cuotas cuotaSeleccionada = tiposCuotaVar.ToArray()[0];
             diasAHabilitar = (int)cuotaSeleccionada.diasHabilitados; // Acá se setean los dias a habilitar para el cliente.
             this.cuotaId = (int)cuotaSeleccionada.idCuota;
-            Console.WriteLine("Dias a habilitar = " + diasAHabilitar.ToString());
+            //Console.WriteLine("Dias a habilitar = " + diasAHabilitar.ToString());
+
+            textBoxMonto.Text = cuotaSeleccionada.monto;
         }
 
         /*

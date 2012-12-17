@@ -387,7 +387,8 @@ namespace Gimnasio
             //if (targetType != typeof(bool))
             //throw new InvalidOperationException("The target must be a boolean");           
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc) - new TimeSpan(4, 0, 0);
-            return epoch.AddSeconds((long)value).ToString("dd.MM.yyyy");
+            return epoch.AddSeconds((long)value).ToString("dd.MM.yyyy - HH:mm");
+            //return epoch.AddSeconds((long)value);
         }
         public object ConvertBack(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture)
