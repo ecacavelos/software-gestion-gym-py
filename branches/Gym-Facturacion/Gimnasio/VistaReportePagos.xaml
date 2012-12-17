@@ -10,7 +10,7 @@
     <Grid Background="#FFBECBEB" DataContext="{StaticResource pagosViewSource}">
         <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="12,12,12,220" Name="dataGridPagos" VerticalAlignment="Stretch" ItemsSource="{Binding}" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" AlternatingRowBackground="Beige" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="fechaIngresoPago" Binding="{Binding Path=idPago, StringFormat=\{0:dd/MM/yyyy\}, Converter={StaticResource KeytoDateStringConverter}}" Header="Fecha del Pago" MinWidth="90" />
+                <DataGridTextColumn x:Name="fechaIngresoPago" Binding="{Binding Path=idPago, Converter={StaticResource KeytoDateStringConverter}}" Header="Fecha del Pago" MinWidth="90" />
                 <DataGridTextColumn x:Name="nombreCliente" Binding="{Binding Path=clientes.nombre}" Header="Nombre del Cliente" />
                 <DataGridTextColumn x:Name="apellidoCliente" Binding="{Binding Path=clientes.apellido}" Header="Apellido" />
                 <DataGridTextColumn x:Name="cedulaCliente" Binding="{Binding Path=clientes.nro_cedula}" Header="CI" />
