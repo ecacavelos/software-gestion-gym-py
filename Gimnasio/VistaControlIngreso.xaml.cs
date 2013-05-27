@@ -323,19 +323,26 @@ namespace Gimnasio
 
                             if (clientesVar.ToArray()[0].hasFoto == true)
                             {
-                                // Recuperamos la foto del cliente para mostrar
-                                string pathfoto = String.Empty;
-                                pathfoto = System.Windows.Forms.Application.ExecutablePath;
-                                pathfoto = System.IO.Path.GetDirectoryName(pathfoto);
+                                try
+                                {
+                                    // Recuperamos la foto del cliente para mostrar
+                                    string pathfoto = String.Empty;
+                                    pathfoto = System.Windows.Forms.Application.ExecutablePath;
+                                    pathfoto = System.IO.Path.GetDirectoryName(pathfoto);
 
-                                // Create source (BitmapImage.UriSource must be in a BeginInit/EndInit block)
-                                BitmapImage myBitmapImage = new BitmapImage();
-                                myBitmapImage.BeginInit();
-                                myBitmapImage.UriSource = new Uri(pathfoto + @"\FotosClientes\" + clientesVar.ToArray()[0].idCliente.ToString() + ".jpg");
-                                myBitmapImage.EndInit();
+                                    // Create source (BitmapImage.UriSource must be in a BeginInit/EndInit block)
+                                    BitmapImage myBitmapImage = new BitmapImage();
+                                    myBitmapImage.BeginInit();
+                                    myBitmapImage.UriSource = new Uri(pathfoto + @"\FotosClientes\" + clientesVar.ToArray()[0].idCliente.ToString() + ".jpg");
+                                    myBitmapImage.EndInit();
 
-                                image1.Source = myBitmapImage;
-                                myBitmapImage.UriSource = null;
+                                    image1.Source = myBitmapImage;
+                                    myBitmapImage.UriSource = null;
+                                }
+                                catch
+                                {
+                                    System.Console.WriteLine("No se encuentra el archivo de imagen para " + clientesVar.ToArray()[0].nombre + " " + clientesVar.ToArray()[0].apellido);
+                                }
                             }
 
                             //  DispatcherTimer setup

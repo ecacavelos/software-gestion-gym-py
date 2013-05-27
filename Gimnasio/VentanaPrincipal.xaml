@@ -70,5 +70,6 @@
             <Button Margin="3" Click="abrirVentana_IngresoManual" Width="130">Habilitar manualmente</Button>
         </ToolBar>
         <StackPanel Grid.Row="4" HorizontalAlignment="Left" Margin="12,6,0,0" Name="stackPanel1" VerticalAlignment="Top"  DataContext="{StaticResource clientesViewSource}"></StackPanel>
+        <Label Content="v27052013 Full" Grid.Row="4" Height="28" HorizontalAlignment="Right" Margin="0,0,12,12" Name="label1" VerticalAlignment="Bottom" />
     </Grid>
 </Window>
