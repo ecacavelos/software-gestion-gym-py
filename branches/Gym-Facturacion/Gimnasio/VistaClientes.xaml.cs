@@ -131,7 +131,7 @@ namespace Gimnasio
                 int c = clientesDataGrid.Items.Count;
                 List<clientes> clientesList = database1Entities.clientes.ToList();
 
-                int maxVal = clientesList.Max(t => t.idCliente) + 1;
+                // int maxVal = clientesList.Max(t => t.idCliente) + 1;
 
                 obj.idCliente = timestamp;
 
