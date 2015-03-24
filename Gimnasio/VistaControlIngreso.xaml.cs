@@ -55,6 +55,9 @@ namespace Gimnasio
         private static int test = 0;
         public static bool IsOpen { get; private set; }
 
+        //Create Standalone SDK class dynamicly.
+        public zkemkeeper.CZKEM axCZKEM1 = Marcador.axCZKEM1;
+
         public VistaControlIngreso()
         {
             ParallelPort();
@@ -62,8 +65,32 @@ namespace Gimnasio
             this.c2 = Configuration.Deserialize("config.xml");
             _TiempoApertura = this.c2.TiempoApertura;
             IsOpen = true;
+            //RelojMarcador();
         }
-
+        /*public void RelojMarcador()
+        {
+            //the serial number of the device.After connecting the device ,this value will be changed.
+            int iMachineNumber = 1;
+            iMachineNumber = 1;//In fact,when you are using the tcp/ip communication,this parameter will be ignored,that is any integer will all right.Here we use 1.
+            int all = 65535;
+            if (Marcador.conected)
+            {
+                if (Marcador.regEvent(iMachineNumber, all))
+                {
+                    axCZKEM1.OnFinger += new zkemkeeper._IZKEMEvents_OnFingerEventHandler(axCZKEM1_OnFinger);
+                    axCZKEM1.OnVerify += new zkemkeeper._IZKEMEvents_OnVerifyEventHandler(axCZKEM1_OnVerify);
+                    axCZKEM1.OnAttTransactionEx += new zkemkeeper._IZKEMEvents_OnAttTransactionExEventHandler(axCZKEM1_OnAttTransactionEx);
+                }
+                else
+                {
+                    MessageBox.Show("No se detectó el reloj biométrico.\nVerifique la configuración.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se detectó el reloj biométrico.\nVerifique la configuración.");
+            }
+        }*/
         public void ParallelPort()
         {
             InitializeComponent();
@@ -398,6 +425,57 @@ namespace Gimnasio
             }
             this.textBox_Cedula.Text = "";
         }
+
+        /*String msg = "";
+        //When you place your finger on sensor of the device,this event will be triggered
+        public void axCZKEM1_OnFinger()
+        {
+            this.centerlabel.Content = "";
+            msg = "OnFinger";
+        }
+
+        //After you have placed your finger on the sensor(or swipe your card to the device),this event will be triggered.
+        //If you passes the verification,the returned value userid will be the user enrollnumber,or else the value will be -1;
+        public void axCZKEM1_OnVerify(int iUserID)
+        {
+            msg = "Verificando huella...";
+            //label8.Content += " \n " + msg;
+            if (iUserID != -1)
+            {
+                msg = "Verificado, el UserID es " + iUserID.ToString();
+                //label8.Content += " \n " + msg;
+            }
+            else
+            {
+                msg = "Verified Failed... ";
+                //Si entra aca es por que no leyo bien la huella o la persona no esta registrada en el marcador.
+                this.centerlabel.Content = "Por favor intente de nuevo. \nSi el problema persiste, consulte en recepción.";
+                //label8.Content += " \n " + msg;
+            }
+        }
+
+        //If your fingerprint(or your card) passes the verification,this event will be triggered
+        public void axCZKEM1_OnAttTransactionEx(string sEnrollNumber, int iIsInValid, int iAttState, int iVerifyMethod, int iYear, int iMonth, int iDay, int iHour, int iMinute, int iSecond, int iWorkCode)
+        {
+            textBox_Cedula.Text = sEnrollNumber;
+            ComprobarCedula();
+            msg = ("RTEvent OnAttTrasactionEx Has been Triggered,Verified OK");
+            //label8.Content += " \n " + msg;
+            msg = ("-UserID:" + sEnrollNumber);
+            //label8.Content += " \n " + msg;
+            msg = ("-Invalido:" + iIsInValid.ToString());
+            //label8.Content += " \n " + msg;
+            msg = ("-Estado:" + iAttState.ToString());
+            //label8.Content += " \n " + msg;
+            msg = ("-VerifyMethod:" + iVerifyMethod.ToString());
+            //label8.Content += " \n " + msg;
+            msg = ("-Workcode:" + iWorkCode.ToString());//the difference between the event OnAttTransaction and OnAttTransactionEx
+            //label8.Content += " \n " + msg;
+            msg = ("-Time:" + iYear.ToString() + "-" + iMonth.ToString() + "-" + iDay.ToString() + " " + iHour.ToString() + ":" + iMinute.ToString() + ":" + iSecond.ToString());
+            //label8.Content += " \n " + msg;
+
+            //MessageBox.Show("Mensaje =" + msg, "Msj");
+        }*/
 
     }
 }
