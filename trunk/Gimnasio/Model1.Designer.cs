@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -118,8 +119,25 @@ namespace Gimnasio
             }
         }
         private ObjectSet<Pagos> _Pagos;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<usuario> usuarios
+        {
+            get
+            {
+                if ((_usuarios == null))
+                {
+                    _usuarios = base.CreateObjectSet<usuario>("usuarios");
+                }
+                return _usuarios;
+            }
+        }
+        private ObjectSet<usuario> _usuarios;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -145,13 +163,21 @@ namespace Gimnasio
         {
             base.AddObject("Pagos", pagos);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the usuarios EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTousuarios(usuario usuario)
+        {
+            base.AddObject("usuarios", usuario);
+        }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -176,6 +202,7 @@ namespace Gimnasio
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -470,6 +497,7 @@ namespace Gimnasio
         partial void OnhasfotoChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -496,6 +524,7 @@ namespace Gimnasio
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -520,6 +549,7 @@ namespace Gimnasio
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -598,6 +628,7 @@ namespace Gimnasio
         partial void OndiasHabilitadosChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -624,6 +655,7 @@ namespace Gimnasio
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -648,6 +680,7 @@ namespace Gimnasio
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -774,6 +807,7 @@ namespace Gimnasio
         partial void Onfecha_vencimientoChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -854,8 +888,145 @@ namespace Gimnasio
         }
 
         #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Database1Model", Name="usuario")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class usuario : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new usuario object.
+        /// </summary>
+        /// <param name="id">Initial value of the id property.</param>
+        /// <param name="user">Initial value of the user property.</param>
+        /// <param name="password">Initial value of the password property.</param>
+        /// <param name="root">Initial value of the root property.</param>
+        public static usuario Createusuario(global::System.Int32 id, global::System.String user, global::System.String password, global::System.Int32 root)
+        {
+            usuario usuario = new usuario();
+            usuario.id = id;
+            usuario.user = user;
+            usuario.password = password;
+            usuario.root = root;
+            return usuario;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    OnidChanging(value);
+                    ReportPropertyChanging("id");
+                    _id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("id");
+                    OnidChanged();
+                }
+            }
+        }
+        private global::System.Int32 _id;
+        partial void OnidChanging(global::System.Int32 value);
+        partial void OnidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String user
+        {
+            get
+            {
+                return _user;
+            }
+            set
+            {
+                OnuserChanging(value);
+                ReportPropertyChanging("user");
+                _user = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("user");
+                OnuserChanged();
+            }
+        }
+        private global::System.String _user;
+        partial void OnuserChanging(global::System.String value);
+        partial void OnuserChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String password
+        {
+            get
+            {
+                return _password;
+            }
+            set
+            {
+                OnpasswordChanging(value);
+                ReportPropertyChanging("password");
+                _password = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("password");
+                OnpasswordChanged();
+            }
+        }
+        private global::System.String _password;
+        partial void OnpasswordChanging(global::System.String value);
+        partial void OnpasswordChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 root
+        {
+            get
+            {
+                return _root;
+            }
+            set
+            {
+                OnrootChanging(value);
+                ReportPropertyChanging("root");
+                _root = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("root");
+                OnrootChanged();
+            }
+        }
+        private global::System.Int32 _root;
+        partial void OnrootChanging(global::System.Int32 value);
+        partial void OnrootChanged();
+
+        #endregion
+
+    
     }
 
     #endregion
+
     
 }

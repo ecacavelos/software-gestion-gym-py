@@ -4,5 +4,10 @@
   <General>My Config</General>
   <TiempoApertura>5</TiempoApertura>
   <Keypad_usb>false</Keypad_usb>
-  <MainDeviceID>720959</MainDeviceID>
+  <MainDeviceID>720963</MainDeviceID>
+  <ip1>192</ip1>
+  <ip2>168</ip2>
+  <ip3>50</ip3>
+  <ip4>201</ip4>
+  <puerto>4370</puerto>
 </Configuration>

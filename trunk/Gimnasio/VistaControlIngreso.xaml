@@ -3,15 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Control de Ingreso" Height="600" Width="800"  Icon="/Gimnasio;component/iconoControAcceso.png" Unloaded="Window_Unloaded" Name="window_ControlIngreso" Loaded="window_ControlIngreso_Loaded">
     <Grid>
-        <Label Content="INGRESE SU NUMERO DE CEDULA" HorizontalAlignment="Center" Margin="12,29,18,0" Name="label1" VerticalAlignment="Top" DataContext="{Binding}" FontWeight="Bold" FontSize="32" FontStyle="Normal" FontStretch="Normal" FontFamily="Segoe UI" Width="748" HorizontalContentAlignment="Center" />
-        <TextBox Height="82" HorizontalAlignment="Center" Margin="12,107,0,0" Name="textBox_Cedula" VerticalAlignment="Top" FontSize="48" FontStyle="Italic" AcceptsReturn="False" Text="" MaxLines="1" IsUndoEnabled="False" IsTabStop="False" MaxWidth="373" Cursor="Arrow" VerticalScrollBarVisibility="Hidden" KeyDown="textBoxNumeroCedula_KeyDown" BorderBrush="Black" BorderThickness="1" Width="400" VerticalContentAlignment="Center"></TextBox>
-        <Label Height="40" HorizontalAlignment="Stretch" Margin="12,0,12,58" Name="label2_ResultadoIngreso" VerticalAlignment="Bottom" Foreground="#FF004B00" HorizontalContentAlignment="Center" FontSize="24" />
-        <Label Height="50" HorizontalAlignment="Center" Margin="208,50,480,0" Name="labelNombre" VerticalAlignment="Top" Width="90" FontWeight="Normal" FontStyle="Italic" HorizontalContentAlignment="Left" BorderBrush="Black" BorderThickness="0" FontSize="22" VerticalContentAlignment="Center" />
-        <Label Height="50" Margin="304,50,196,0" Name="labelNombreCliente" VerticalAlignment="Top" Width="278" FontStyle="Normal" HorizontalContentAlignment="Left" FontWeight="Bold" BorderBrush="Black" BorderThickness="0" FontSize="24" HorizontalAlignment="Center" VerticalContentAlignment="Center" />
-        <Label Height="40" HorizontalAlignment="Stretch" Margin="12,0,12,12" Name="labelMensajeCuotaVencida" VerticalAlignment="Bottom" Foreground="Red" FontSize="24" HorizontalContentAlignment="Center" />
-        <Label BorderBrush="Black" BorderThickness="0" FontSize="22" FontStyle="Italic" FontWeight="Normal" Height="50" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="208,106,480,0" Name="labelApellido" Width="90" VerticalAlignment="Top" VerticalContentAlignment="Center" />
-        <Label BorderBrush="Black" BorderThickness="0" FontSize="24" FontStyle="Normal" FontWeight="Bold" Height="50" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="304,106,196,0" Name="labelApellidoCliente" VerticalAlignment="Top" Width="278" VerticalContentAlignment="Center" />
-        <Image HorizontalAlignment="Center" Margin="208,176,196,117" Name="image1" Stretch="Fill" VerticalAlignment="Stretch" Width="374" />
-        <Label FontSize="26" Foreground="#FF004B00" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="12,252,12,269" Name="centerlabel" VerticalAlignment="Center" FontFamily="Segoe UI" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="49*" />
+            <ColumnDefinition Width="729*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="114*" />
+            <RowDefinition Height="16*" />
+            <RowDefinition Height="431*" />
+        </Grid.RowDefinitions>
+        <Label Content="INGRESE SU NUMERO DE CEDULA" HorizontalAlignment="Center" Margin="12,29,18,0" Name="label1" VerticalAlignment="Top" DataContext="{Binding}" FontWeight="Bold" FontSize="32" FontStyle="Normal" FontStretch="Normal" FontFamily="Segoe UI" Width="748" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" />
+        <TextBox Height="82" HorizontalAlignment="Center" Margin="160,107,196,0" Name="textBox_Cedula" VerticalAlignment="Top" FontSize="48" FontStyle="Italic" AcceptsReturn="False" Text="" MaxLines="1" IsUndoEnabled="False" IsTabStop="False" MaxWidth="373" Cursor="Arrow" VerticalScrollBarVisibility="Hidden" KeyDown="textBoxNumeroCedula_KeyDown" BorderBrush="Black" BorderThickness="1" Width="400" VerticalContentAlignment="Center" Grid.RowSpan="3" Grid.Column="1"></TextBox>
+        <Label Height="40" HorizontalAlignment="Stretch" Margin="12,0,12,58" Name="label2_ResultadoIngreso" VerticalAlignment="Bottom" Foreground="#FF004B00" HorizontalContentAlignment="Center" FontSize="24" Grid.Row="2" Grid.ColumnSpan="2" />
+        <Label Height="50" HorizontalAlignment="Center" Margin="159,50,480,0" Name="labelNombre" VerticalAlignment="Top" Width="90" FontWeight="Normal" FontStyle="Italic" HorizontalContentAlignment="Left" BorderBrush="Black" BorderThickness="0" FontSize="22" VerticalContentAlignment="Center" Grid.Column="1" />
+        <Label Height="50" Margin="255,50,196,0" Name="labelNombreCliente" VerticalAlignment="Top" Width="278" FontStyle="Normal" HorizontalContentAlignment="Left" FontWeight="Bold" BorderBrush="Black" BorderThickness="0" FontSize="24" HorizontalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" />
+        <Label Height="40" HorizontalAlignment="Stretch" Margin="12,0,12,12" Name="labelMensajeCuotaVencida" VerticalAlignment="Bottom" Foreground="Red" FontSize="24" HorizontalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" />
+        <Label BorderBrush="Black" BorderThickness="0" FontSize="22" FontStyle="Italic" FontWeight="Normal" Height="50" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="159,106,480,0" Name="labelApellido" Width="90" VerticalAlignment="Top" VerticalContentAlignment="Center" Grid.RowSpan="3" Grid.Column="1" />
+        <Label BorderBrush="Black" BorderThickness="0" FontSize="24" FontStyle="Normal" FontWeight="Bold" Height="50" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="255,106,196,0" Name="labelApellidoCliente" VerticalAlignment="Top" Width="278" VerticalContentAlignment="Center" Grid.RowSpan="3" Grid.Column="1" />
+        <Image HorizontalAlignment="Center" Margin="159,46,196,117" Name="image1" Stretch="Fill" VerticalAlignment="Stretch" Width="374" Grid.Row="2" Grid.Column="1" DataContext="{Binding}" />
+        <Label FontSize="26" Foreground="#FF004B00" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="12,137,12,284" Name="centerlabel" VerticalAlignment="Center" FontFamily="Segoe UI" Grid.Row="2" Grid.ColumnSpan="2" />
     </Grid>
 </Window>
