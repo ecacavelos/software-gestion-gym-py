@@ -1,0 +1,1 @@
+Este proyecto tiene como objetivo desarrollar un software de gestiong de gimnasios, utilizando la API para el desarrollo de aplicaciones de escritorio de netbeans
