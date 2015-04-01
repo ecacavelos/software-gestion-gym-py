@@ -22,7 +22,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
 
-
 namespace Gimnasio
 {
     /// <summary>
@@ -46,17 +45,14 @@ namespace Gimnasio
 
         #endregion
 
-        bool _Activado = false;
+        //bool _Activado = false;
         private int _PortAddress = 0;
         string ExceptionOccured;
 
         Configuration c2;
         private int _TiempoApertura = 0;
-        private static int test = 0;
+        //private static int test = 0;
         public static bool IsOpen { get; private set; }
-
-        //Create Standalone SDK class dynamicly.
-        public zkemkeeper.CZKEM axCZKEM1 = Marcador.axCZKEM1;
 
         public VistaControlIngreso()
         {
@@ -65,32 +61,13 @@ namespace Gimnasio
             this.c2 = Configuration.Deserialize("config.xml");
             _TiempoApertura = this.c2.TiempoApertura;
             IsOpen = true;
-            //RelojMarcador();
         }
-        /*public void RelojMarcador()
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
-            //the serial number of the device.After connecting the device ,this value will be changed.
-            int iMachineNumber = 1;
-            iMachineNumber = 1;//In fact,when you are using the tcp/ip communication,this parameter will be ignored,that is any integer will all right.Here we use 1.
-            int all = 65535;
-            if (Marcador.conected)
-            {
-                if (Marcador.regEvent(iMachineNumber, all))
-                {
-                    axCZKEM1.OnFinger += new zkemkeeper._IZKEMEvents_OnFingerEventHandler(axCZKEM1_OnFinger);
-                    axCZKEM1.OnVerify += new zkemkeeper._IZKEMEvents_OnVerifyEventHandler(axCZKEM1_OnVerify);
-                    axCZKEM1.OnAttTransactionEx += new zkemkeeper._IZKEMEvents_OnAttTransactionExEventHandler(axCZKEM1_OnAttTransactionEx);
-                }
-                else
-                {
-                    MessageBox.Show("No se detectó el reloj biométrico.\nVerifique la configuración.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("No se detectó el reloj biométrico.\nVerifique la configuración.");
-            }
-        }*/
+            IsOpen = false;
+        }
+
         public void ParallelPort()
         {
             InitializeComponent();
@@ -130,7 +107,6 @@ namespace Gimnasio
             }
             return PortAddresses;
         }
-
 
         #region "Data Bus"
 
@@ -220,13 +196,13 @@ namespace Gimnasio
                     if (value)
                     {
                         Out32(DataBusAddress, Convert.ToInt16(Inp32(DataBusAddress) | 1));
-                        _Activado = true;
+                        //_Activado = true;
                         //label1.Content = "D0 ON";
                     }
                     else
                     {
                         Out32(DataBusAddress, Convert.ToInt16(Inp32(DataBusAddress) & (~1)));
-                        _Activado = false;
+                        //_Activado = false;
                         //label1.Content = "D0 OFF";
                     }
                 }
@@ -238,12 +214,6 @@ namespace Gimnasio
         }
 
         #endregion
-
-        private void Window_Unloaded(object sender, RoutedEventArgs e)
-        {
-            IsOpen = false;
-        }
-
 
         public void dispatcherTimer_Tick(object sender, EventArgs e)//TIMER PARA EL INGRESO DEL USUARIO
         {
@@ -351,21 +321,28 @@ namespace Gimnasio
                             TimeSpan cantDias = fechaUltimoVencimientoResult.ToArray()[0].fecha_vencimiento.Value - System.DateTime.Today;
                             this.label2_ResultadoIngreso.Content = "Ingreso Exitoso --> " + "Su cuota vence en: " + cantDias.Days + " días.";
 
-                            if (clientesVar.ToArray()[0].hasfoto == true)
+                            if (clientesVar.ToArray()[0].hasFoto == true)
                             {
-                                // Recuperamos la foto del cliente para mostrar
-                                string pathfoto = String.Empty;
-                                pathfoto = System.Windows.Forms.Application.ExecutablePath;
-                                pathfoto = System.IO.Path.GetDirectoryName(pathfoto);
+                                try
+                                {
+                                    // Recuperamos la foto del cliente para mostrar
+                                    string pathfoto = String.Empty;
+                                    pathfoto = System.Windows.Forms.Application.ExecutablePath;
+                                    pathfoto = System.IO.Path.GetDirectoryName(pathfoto);
 
-                                // Create source (BitmapImage.UriSource must be in a BeginInit/EndInit block)
-                                BitmapImage myBitmapImage = new BitmapImage();
-                                myBitmapImage.BeginInit();
-                                myBitmapImage.UriSource = new Uri(pathfoto + @"\FotosClientes\" + clientesVar.ToArray()[0].idCliente.ToString() + ".jpg");
-                                myBitmapImage.EndInit();
+                                    // Create source (BitmapImage.UriSource must be in a BeginInit/EndInit block)
+                                    BitmapImage myBitmapImage = new BitmapImage();
+                                    myBitmapImage.BeginInit();
+                                    myBitmapImage.UriSource = new Uri(pathfoto + @"\FotosClientes\" + clientesVar.ToArray()[0].idCliente.ToString() + ".jpg");
+                                    myBitmapImage.EndInit();
 
-                                image1.Source = myBitmapImage;
-                                myBitmapImage.UriSource = null;
+                                    image1.Source = myBitmapImage;
+                                    myBitmapImage.UriSource = null;
+                                }
+                                catch
+                                {
+                                    System.Console.WriteLine("No se encuentra el archivo de imagen para " + clientesVar.ToArray()[0].nombre + " " + clientesVar.ToArray()[0].apellido);
+                                }
                             }
 
                             //  DispatcherTimer setup
@@ -373,6 +350,13 @@ namespace Gimnasio
                             dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
                             D0 = true;  //Habilitar entrada.
                             dispatcherTimer.Start();
+
+                            TimeSpan time = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+                            int timestamp = (int)time.TotalSeconds;
+
+                            database1Entities.ExecuteStoreCommand(
+                                "INSERT INTO Ingresos(idIngreso, fecha, fk_cliente, exitoso) VALUES({0},{1},{2},{3})", timestamp, DateTime.Now, clientesVar.ToArray()[0].idCliente, "True");
+                            database1Entities.SaveChanges();
 
                         }
                         catch (Exception ex)
@@ -411,6 +395,13 @@ namespace Gimnasio
                         dispatcherTimer.Interval = new TimeSpan(0, 0, _TiempoApertura);
                         dispatcherTimer.Start();
 
+                        TimeSpan time = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+                        int timestamp = (int)time.TotalSeconds;
+
+                        database1Entities.ExecuteStoreCommand(
+                            "INSERT INTO Ingresos(idIngreso, fecha, fk_cliente, exitoso) VALUES({0},{1},{2},{3})", timestamp, DateTime.Now, clientesVar.ToArray()[0].idCliente, "False");
+                        database1Entities.SaveChanges();
+
                     }
                 }
                 else
@@ -425,57 +416,6 @@ namespace Gimnasio
             }
             this.textBox_Cedula.Text = "";
         }
-
-        /*String msg = "";
-        //When you place your finger on sensor of the device,this event will be triggered
-        public void axCZKEM1_OnFinger()
-        {
-            this.centerlabel.Content = "";
-            msg = "OnFinger";
-        }
-
-        //After you have placed your finger on the sensor(or swipe your card to the device),this event will be triggered.
-        //If you passes the verification,the returned value userid will be the user enrollnumber,or else the value will be -1;
-        public void axCZKEM1_OnVerify(int iUserID)
-        {
-            msg = "Verificando huella...";
-            //label8.Content += " \n " + msg;
-            if (iUserID != -1)
-            {
-                msg = "Verificado, el UserID es " + iUserID.ToString();
-                //label8.Content += " \n " + msg;
-            }
-            else
-            {
-                msg = "Verified Failed... ";
-                //Si entra aca es por que no leyo bien la huella o la persona no esta registrada en el marcador.
-                this.centerlabel.Content = "Por favor intente de nuevo. \nSi el problema persiste, consulte en recepción.";
-                //label8.Content += " \n " + msg;
-            }
-        }
-
-        //If your fingerprint(or your card) passes the verification,this event will be triggered
-        public void axCZKEM1_OnAttTransactionEx(string sEnrollNumber, int iIsInValid, int iAttState, int iVerifyMethod, int iYear, int iMonth, int iDay, int iHour, int iMinute, int iSecond, int iWorkCode)
-        {
-            textBox_Cedula.Text = sEnrollNumber;
-            ComprobarCedula();
-            msg = ("RTEvent OnAttTrasactionEx Has been Triggered,Verified OK");
-            //label8.Content += " \n " + msg;
-            msg = ("-UserID:" + sEnrollNumber);
-            //label8.Content += " \n " + msg;
-            msg = ("-Invalido:" + iIsInValid.ToString());
-            //label8.Content += " \n " + msg;
-            msg = ("-Estado:" + iAttState.ToString());
-            //label8.Content += " \n " + msg;
-            msg = ("-VerifyMethod:" + iVerifyMethod.ToString());
-            //label8.Content += " \n " + msg;
-            msg = ("-Workcode:" + iWorkCode.ToString());//the difference between the event OnAttTransaction and OnAttTransactionEx
-            //label8.Content += " \n " + msg;
-            msg = ("-Time:" + iYear.ToString() + "-" + iMonth.ToString() + "-" + iDay.ToString() + " " + iHour.ToString() + ":" + iMinute.ToString() + ":" + iSecond.ToString());
-            //label8.Content += " \n " + msg;
-
-            //MessageBox.Show("Mensaje =" + msg, "Msj");
-        }*/
 
     }
 }

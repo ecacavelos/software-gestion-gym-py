@@ -44,7 +44,7 @@ namespace Gimnasio
 
         #endregion
 
-        bool _Activado = false;
+        //bool _Activado = false;
         private int _PortAddress = 0;
         string ExceptionOccured;
 
@@ -61,18 +61,21 @@ namespace Gimnasio
         /// If detected than _PortAddress is set to the address of LPT1.
         /// If not detected then the whole user control gets disabled.
         /// </summary>
-        public void ParallelPort() {
+        public void ParallelPort()
+        {
             InitializeComponent();
 
             int[] PortAddresses = Detect_LPT_Ports();
             if (PortAddresses.Length != 0)
             {
                 _PortAddress = PortAddresses[0];
+                button1.IsEnabled = true;
             }
             else
             {
                 _PortAddress = 0;
                 MessageBox.Show("No se detecto el puerto paralelo en la computadora, no se podra utilizar el porton electrico.");
+                button1.IsEnabled = false;
             }
 
         }
@@ -81,7 +84,8 @@ namespace Gimnasio
         /// Detecs the presence of LPT ports.
         /// </summary>
         /// <returns>Returns an integer array of all detected LPT addresses.</returns>
-        private int[] Detect_LPT_Ports() {
+        private int[] Detect_LPT_Ports()
+        {
             int Number_Of_LPT_Ports = 0;
             short[] portAddresses = new short[3];
             for (int i = 0; i < 3; i++)
@@ -107,10 +111,10 @@ namespace Gimnasio
         public VistaIngresoManual()
         {
             InitializeComponent();
-            
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e) {
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 D0 = !D0;
@@ -209,14 +213,14 @@ namespace Gimnasio
                     if (value)
                     {
                         Out32(DataBusAddress, Convert.ToInt16(Inp32(DataBusAddress) | 1));
-                        _Activado = true;
+                        //_Activado = true;
                         button1.Content = "Cerrar";
                         //label1.Content = "D0 ON";
                     }
                     else
                     {
                         Out32(DataBusAddress, Convert.ToInt16(Inp32(DataBusAddress) & (~1)));
-                        _Activado = false;
+                        //_Activado = false;
                         button1.Content = "Abrir";
                         //label1.Content = "D0 OFF";
                     }
@@ -232,11 +236,9 @@ namespace Gimnasio
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
             InitializeComponent();
             ParallelPort();
             IsOpen = true;
-           
         }
 
         private void Window_Closed(object sender, EventArgs e)

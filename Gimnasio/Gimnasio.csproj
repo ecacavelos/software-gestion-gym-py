@@ -51,6 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -81,12 +82,36 @@
     <Compile Include="AboutGymAdmin.Designer.cs">
       <DependentUpon>AboutGymAdmin.cs</DependentUpon>
     </Compile>
+    <Compile Include="AutoCompleteEntry.cs" />
+    <Compile Include="AutoCompleteTextBox.xaml.cs">
+      <DependentUpon>AutoCompleteTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataGridExcelTools.cs" />
+    <Compile Include="DataGridExportManager.cs" />
+    <Compile Include="DialogDetalleFactura.xaml.cs">
+      <DependentUpon>DialogDetalleFactura.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Impresion.cs" />
+    <Compile Include="Facturacion.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="ConsultarPagosCliente.xaml.cs">
-      <DependentUpon>ConsultarPagosCliente.xaml</DependentUpon>
+    <Compile Include="VentanaLogin.xaml.cs">
+      <DependentUpon>VentanaLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VistaAdministrarAdmins.xaml.cs">
+      <DependentUpon>VistaAdministrarAdmins.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VistaConfiguracionFacturas.xaml.cs">
+      <DependentUpon>VistaConfiguracionFacturas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VistaConsultarPagos.xaml.cs">
+      <DependentUpon>VistaConsultarPagos.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataGridHelper.cs" />
+    <Compile Include="DialogFactura.xaml.cs">
+      <DependentUpon>DialogFactura.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InputDevice.cs" />
+    <Compile Include="Numalet.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -104,11 +129,20 @@
     <Compile Include="VistaControlIngreso.xaml.cs">
       <DependentUpon>VistaControlIngreso.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VistaFacturas.xaml.cs">
+      <DependentUpon>VistaFacturas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VistaIngresoDeCuota.xaml.cs">
       <DependentUpon>VistaIngresoDeCuota.xaml</DependentUpon>
     </Compile>
     <Compile Include="VistaIngresoManual.xaml.cs">
       <DependentUpon>VistaIngresoManual.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VistaReporteIngresos.xaml.cs">
+      <DependentUpon>VistaReporteIngresos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VistaReportePagos.xaml.cs">
+      <DependentUpon>VistaReportePagos.xaml</DependentUpon>
     </Compile>
     <Compile Include="VistaTiposCuotas.xaml.cs">
       <DependentUpon>VistaTiposCuotas.xaml</DependentUpon>
@@ -135,10 +169,12 @@
     </Compile>
     <EmbeddedResource Include="AboutGymAdmin.resx">
       <DependentUpon>AboutGymAdmin.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -181,17 +217,44 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="agregarClienteIcon.png" />
     <Content Include="Database1.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="iconoControAcceso.png" />
-    <Resource Include="iconoCuotas.jpg" />
-    <Resource Include="vistaClientesIcon.png" />
+    <Resource Include="Images\tick.png" />
+    <Resource Include="Images\delete.png" />
+    <Resource Include="Images\iconoConfiguracion.png" />
+    <Resource Include="Images\iconoFacturas.png" />
+    <Resource Include="Images\iconoCuotas.png" />
+    <Resource Include="Images\vistaClientesIcon.png" />
+    <Resource Include="Images\iconoControAcceso.png" />
     <Resource Include="Images\colorful_chart.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ConsultarPagosCliente.xaml">
+    <Page Include="AutoCompleteTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DialogDetalleFactura.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VistaAdministrarAdmins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VistaConfiguracionFacturas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VistaConsultarPagos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogFactura.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,6 +274,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="VistaFacturas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="VistaIngresoDeCuota.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -218,6 +285,14 @@
     <Page Include="VistaIngresoManual.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VistaReporteIngresos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VistaReportePagos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VistaTiposCuotas.xaml">
       <Generator>MSBuild:Compile</Generator>

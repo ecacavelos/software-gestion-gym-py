@@ -1,0 +1,67 @@
+﻿<Window x:Class="Gimnasio.VistaConfiguracionFacturas"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Configuración de Facturas" Height="704" Width="400" Background="#FFBECBEB" Loaded="Window_Loaded" Unloaded="Window_Unloaded" ResizeMode="CanMinimize" Top="10">
+    <Grid>
+        <Label Content="yFecha: " HorizontalAlignment="Right" Margin="0,12,66,0" Name="label_yFecha" VerticalAlignment="Top" Width="100" />
+        <TextBox HorizontalAlignment="Right" Margin="0,12,12,0" Name="textBox_yFecha" VerticalAlignment="Top" Width="48" Height="24" />
+        <Label Content="xFechaDia: " HorizontalAlignment="Left" Margin="12,12,0,0" Name="label_xFechaDia" VerticalAlignment="Top" Width="80" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,12,182,0" Name="textBox_xFechaDia" VerticalAlignment="Top" Width="48" />
+        <Label Content="xFechaMes: " HorizontalAlignment="Left" Margin="12,44,0,0" Name="label_xFechaMes" VerticalAlignment="Top" Width="80" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,44,182,0" Name="textBox_xFechaMes" VerticalAlignment="Top" Width="48" />
+        <Label Content="xFechaAño: " HorizontalAlignment="Left" Margin="12,76,0,0" Name="label_xFechaAño" VerticalAlignment="Top" Width="80" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,76,182,0" Name="textBox_xFechaAño" VerticalAlignment="Top" Width="48" />
+        <Separator Height="1" HorizontalAlignment="Stretch" Margin="12,108,12,0" Name="separator1" VerticalAlignment="Top" />
+        <Label Content="xContadoCredito: " HorizontalAlignment="Left" Margin="12,117,0,0" Name="label_xContadoCredito" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,117,182,0" Name="textBox_xContadoCredito" VerticalAlignment="Top" Width="48" />
+        <Separator Height="1" HorizontalAlignment="Stretch" Margin="12,149,12,0" Name="separator2" VerticalAlignment="Top" />
+        <Label Content="xNombre: " HorizontalAlignment="Left" Margin="12,158,0,0" Name="label_xNombre" VerticalAlignment="Top" Width="80" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,158,182,0" Name="textBox_xNombre" VerticalAlignment="Top" Width="48" />
+        <Label Content="yNombre: " HorizontalAlignment="Right" Margin="0,158,66,0" Name="label_yNombre" VerticalAlignment="Top" Width="100" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,158,12,0" Name="textBox_yNombre" VerticalAlignment="Top" Width="48" />
+        <Label Content="xRUC: " HorizontalAlignment="Left" Margin="12,188,0,0" Name="label_xRUC" VerticalAlignment="Top" Width="80" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,188,182,0" Name="textBox_xRUC" VerticalAlignment="Top" Width="48" />
+        <Label Content="yRUC: " HorizontalAlignment="Right" Margin="0,188,66,0" Name="label_yRUC" VerticalAlignment="Top" Width="100" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,188,12,0" Name="textBox_yRUC" VerticalAlignment="Top" Width="48" />
+        <Separator Height="1" HorizontalAlignment="Stretch" Margin="12,220,12,0" Name="separator3" VerticalAlignment="Top" />
+        <Label Content="yItem: " HorizontalAlignment="Right" Margin="0,229,66,0" Name="label_yItem" VerticalAlignment="Top" Width="100" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,229,12,0" Name="textBox_yItem" VerticalAlignment="Top" Width="48" />
+        <Label Content="xItemCant: " HorizontalAlignment="Left" Margin="12,229,0,0" Name="label_xItemCant" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,229,182,0" Name="textBox_xItemCant" VerticalAlignment="Top" Width="48" />
+        <Label Content="xItemConcepto: " HorizontalAlignment="Left" Margin="12,261,0,0" Name="label_xItemConcepto" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,261,182,0" Name="textBox_xItemConcepto" VerticalAlignment="Top" Width="48" />
+        <Label Content="xItemIVAExentas: " HorizontalAlignment="Left" Margin="12,293,0,0" Name="label_xItemIVAExentas" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,293,182,0" Name="textBox_xItemIVAExentas" VerticalAlignment="Top" Width="48" />
+        <Label Content="xItemIVA05: " HorizontalAlignment="Left" Margin="12,325,0,0" Name="label_xItemIVA05" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,325,182,0" Name="textBox_xItemIVA05" VerticalAlignment="Top" Width="48" />
+        <Label Content="xItemIVA10: " HorizontalAlignment="Left" Margin="12,357,0,0" Name="label_xItemIVA10" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,357,182,0" Name="textBox_xItemIVA10" VerticalAlignment="Top" Width="48" />
+        <Separator Height="1" HorizontalAlignment="Stretch" Margin="12,389,12,0" Name="separator4" VerticalAlignment="Top" />
+        <Label Content="ySubTotal: " HorizontalAlignment="Right" Margin="0,398,66,0" Name="label_ySubTotal" VerticalAlignment="Top" Width="100" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,398,12,0" Name="textBox_ySubTotal" VerticalAlignment="Top" Width="48" />
+        <Label Content="xSubTotalIVAExentas: " HorizontalAlignment="Left" Margin="12,398,0,0" Name="label_xSubTotalIVAExentas" VerticalAlignment="Top" Width="130" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,398,182,0" Name="textBox_xSubTotalIVAExentas" VerticalAlignment="Top" Width="48" />
+        <Label Content="xSubTotalIVA05: " HorizontalAlignment="Left" Margin="12,430,0,0" Name="label_xSubTotalIVA05" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,430,182,0" Name="textBox_xSubTotalIVA05" VerticalAlignment="Top" Width="48" />
+        <Label Content="xSubTotalIVA10: " HorizontalAlignment="Left" Margin="12,462,0,0" Name="label_xSubTotalIVA10" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,462,182,0" Name="textBox_xSubTotalIVA10" VerticalAlignment="Top" Width="48" />
+        <Separator Height="1" HorizontalAlignment="Stretch" Margin="12,494,12,0" Name="separator5" VerticalAlignment="Top" />
+        <Label Content="xTotalPagar: " HorizontalAlignment="Left" Margin="12,503,0,0" Name="label_xTotalPagar" VerticalAlignment="Top" Width="130" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,503,182,0" Name="textBox_xTotalPagar" VerticalAlignment="Top" Width="48" />
+        <Label Content="xTotalEnLetras: " HorizontalAlignment="Left" Margin="12,535,0,0" Name="label_xTotalEnLetras" VerticalAlignment="Top" Width="130" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,535,182,0" Name="textBox_xTotalEnLetras" VerticalAlignment="Top" Width="48" />
+        <Label Content="yTotalEnLetras: " HorizontalAlignment="Right" Margin="0,535,66,0" Name="label_yTotalEnLetras" VerticalAlignment="Top" Width="100" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,535,12,0" Name="textBox_yTotalEnLetras" VerticalAlignment="Top" Width="48" />
+        <Separator Height="1" HorizontalAlignment="Stretch" Margin="12,567,12,0" Name="separator6" VerticalAlignment="Top" />
+        <Label Content="yTotal: " HorizontalAlignment="Right" Margin="0,576,66,0" Name="label_yTotal" VerticalAlignment="Top" Width="100" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,576,12,0" Name="textBox_yTotal" VerticalAlignment="Top" Width="48" />
+        <Label Content="xTotalIVA05: " HorizontalAlignment="Left" Margin="12,576,0,0" Name="label_xTotalIVA05" VerticalAlignment="Top" Width="130" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,576,182,0" Name="textBox_xTotalIVA05" VerticalAlignment="Top" Width="48" />
+        <Label Content="xTotalIVA10: " HorizontalAlignment="Left" Margin="12,608,0,0" Name="label_xTotalIVA10" VerticalAlignment="Top" Width="130" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,608,182,0" Name="textBox_xTotalIVA10" VerticalAlignment="Top" Width="48" />
+        <Label Content="xTotalIVAGeneral: " HorizontalAlignment="Left" Margin="12,640,0,0" Name="label_xTotalIVAGeneral" VerticalAlignment="Top" Width="130" />
+        <TextBox Height="24" HorizontalAlignment="Right" Margin="0,640,182,0" Name="textBox_xTotalIVAGeneral" VerticalAlignment="Top" Width="48" />
+        <Button Content="Cancelar" Height="24" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonCancelar" VerticalAlignment="Bottom" Width="75" Click="buttonCancelar_Click" />
+        <Button Content="Aceptar" Height="24" HorizontalAlignment="Right" Margin="0,0,91,12" Name="buttonAceptar" VerticalAlignment="Bottom" Width="75" Click="buttonAceptar_Click" />
+    </Grid>
+</Window>

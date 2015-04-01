@@ -3,7 +3,7 @@
   <Version>1</Version>
   <General>My Config</General>
   <TiempoApertura>5</TiempoApertura>
-  <Keypad_usb>false</Keypad_usb>
+  <Keypad_usb>true</Keypad_usb>
   <MainDeviceID>720963</MainDeviceID>
   <ip1>192</ip1>
   <ip2>168</ip2>

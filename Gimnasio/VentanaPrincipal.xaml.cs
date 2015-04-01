@@ -23,67 +23,74 @@ namespace Gimnasio
     /// </summary>
     public partial class VentanaPrincipal : Window
     {
-        Configuration c2;
-        //private bool _Keypad_usb = false;
+        private Configuration c2;
 
-        Window winClientes = new Window();
-        Window winIngresoManual = new Window();
-        Window winVistaTiposCuotas = new Window();
-        Window winVistaControlIngreso = new Window();
-        Window winVistaConfiguracion = new Window();
-        Window winVistaIngresoHuella = new Window();
-        Window winVistaAdmUsuarios = new Window();
-        Window winVistaPermisoControlIngreso = new Window();
+        private Window winVistaConfiguracion = new Window();
+        private Window winVistaTiposCuotas = new Window();
+        private Window winClientes = new Window();
+        private Window winIngresarPago = new Window();
+        private Window winConsultarPagos = new Window();
+        private Window winIngresoManual = new Window();
+        private Window winVistaControlIngreso = new Window();
+        private Window winVistaFacturas = new Window();
+        private Window winVistaConfiguracionFacturas = new Window();
+        private Window winReportePagos = new Window();
+        private Window winReporteIngresos = new Window();
+        private Window winAdministrarAdmins = new Window();
 
-        RawStuff.InputDevice id;
-        int NumberOfKeyboards;
-        Message message = new Message();
+        private RawStuff.InputDevice id;
+        private int NumberOfKeyboards;
+        private Message message = new Message();
 
-        bool xmlinvalido = false;
+        private bool xmlinvalido = false;
 
         public VentanaPrincipal()
         {
-            //InitializeComponent();
-            //Activate();
+            /* Se intenta leer el archivo de Configuración, antes de mostrar las ventanas.
+             * Si el archivo 'config.xml' no existe o no posee la sintaxis correcta, 
+             * se arrojan y manejan las excepciones correspondientes. */
             try
             {
                 this.c2 = Configuration.Deserialize("config.xml");
             }
             catch (System.IO.FileNotFoundException ex)
             {
-                Console.WriteLine(ex);
-                System.Windows.MessageBox.Show("No se encontró el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.");
+                System.Console.WriteLine(ex.Message);
+                System.Windows.MessageBox.Show("No se encontró el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.", "Archivo de Configuración");
                 xmlinvalido = true;
-                /*this.c2 = new Gimnasio.Configuration();
-                this.c2.TiempoApertura = 5;
-                this.c2.MainDeviceID = "0000";
-                Configuration.Serialize("config.xml", this.c2);*/
             }
             catch (System.InvalidOperationException ex)
             {
-                Console.WriteLine(ex);
-                System.Windows.MessageBox.Show("Existe un error con el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.");
+                System.Console.WriteLine(ex.Message);
+                System.Windows.MessageBox.Show("Existe un error con el archivo de configuración.\nPor favor ingrese a la ventana de Configuración para recuperar las opciones.", "Archivo de Configuración");
                 xmlinvalido = true;
             }
         }
 
         private System.Data.Objects.ObjectQuery<clientes> GetclientesQuery(Database1Entities database1Entities)
         {
-            // Auto generated code
-
+            // Auto generated code.
             System.Data.Objects.ObjectQuery<Gimnasio.clientes> clientesQuery = database1Entities.clientes;
+
             // Returns an ObjectQuery.
             return clientesQuery;
         }
 
-        private void abrirVentanaClientes(object sender, RoutedEventArgs e) // Se controla que una instancia de esta ventana no este abierta.
+        private void Window_Closed(object sender, EventArgs e)
         {
-            if (VistaClientes.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
+            Application.Current.Shutdown(); // Cerrar la Aplicación Entera.
+        }
+
+        #region "Funciones para el Toolbar de Botones de la Ventana Principal"
+
+        private void abrirVentana_Clientes(object sender, RoutedEventArgs e)
+        {
+            if (VistaClientes.IsOpen)   // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winClientes.Activate();// Si esta abierta entonces activar, mandar al frente
+                this.winClientes.Activate();    // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            else // No está abierta. Abrir una instancia de la ventana.
             {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
@@ -92,130 +99,46 @@ namespace Gimnasio
             }
         }
 
-        private void clickBtnIngresarPago(object sender, RoutedEventArgs e)
+        private void abrirVentana_IngresarPago(object sender, RoutedEventArgs e)
         {
-
-            // Create an instance of the window named
-            // by the current button.
-            Type type = this.GetType();
-            Assembly assembly = type.Assembly;
-            Window win = (Window)assembly.CreateInstance("Gimnasio.VistaIngresoDeCuota");
-            //win.Owner = this;
-
-
-            win.Show();
-        }
-
-        private void SalirMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown(); //CERRAR LA APLICACION ENTERA. 
-        }
-
-        private void menuItem_CuotasEditar(object sender, RoutedEventArgs e)
-        {
-            if (VistaTiposCuotas.IsOpen)
+            if (VistaIngresoDeCuota.IsOpen)     // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winVistaTiposCuotas.Activate();
+                this.winIngresarPago.Activate();    // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else
+            else // No está abierta. Abrir una instancia de la ventana.
             {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
-                this.winVistaTiposCuotas = (Window)assembly.CreateInstance("Gimnasio.VistaTiposCuotas");
-                this.winVistaTiposCuotas.Show();
+                this.winIngresarPago = (Window)assembly.CreateInstance("Gimnasio.VistaIngresoDeCuota");
+                this.winIngresarPago.Show();
             }
         }
 
-        private void click_AboutGymAdmin(object sender, RoutedEventArgs e)
+        private void abrirVentana_ControlIngreso(object sender, RoutedEventArgs e)
         {
-            AboutGymAdmin windowAbout = new AboutGymAdmin();
-            windowAbout.Show();
-
-        }
-
-        private void click_ConsultarPagos(object sender, RoutedEventArgs e)
-        {
-            // Create an instance of the window named
-            // by the current button.
-            Type type = this.GetType();
-            Assembly assembly = type.Assembly;
-            Window win = (Window)assembly.CreateInstance("Gimnasio.ConsultarPagosCliente");
-            // Show the window.
-            win.Show();
-
-        }
-        private void openConfiguracion()
-        {
-            if (VistaConfiguracion.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
+            if (VistaControlIngreso.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winVistaConfiguracion.Activate();// Si esta abierta entonces activar, mandar al frente
+                this.winVistaControlIngreso.Activate(); // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            else // No está abierta. Abrir una instancia de la ventana.
             {
-                if (xmlinvalido == true)
-                {
-                    System.IO.File.Delete("config.xml");
-                    xmlinvalido = false;
-                }
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
-                this.winVistaConfiguracion = (Window)assembly.CreateInstance("Gimnasio.VistaConfiguracion");
-                this.winVistaConfiguracion.Show();
+                this.winVistaControlIngreso = (Window)assembly.CreateInstance("Gimnasio.VistaControlIngreso");
+                this.winVistaControlIngreso.Show();
             }
         }
-        private void MenuItem_Click_Configuracion(object sender, RoutedEventArgs e)
+
+        private void abrirVentana_IngresoManual(object sender, RoutedEventArgs e)
         {
-            openConfiguracion();
-            /*
-            if (VistaConfiguracion.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
+            if (VistaIngresoManual.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winVistaConfiguracion.Activate();// Si esta abierta entonces activar, mandar al frente
+                this.winIngresoManual.Activate(); // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
-            {
-                if (xmlinvalido == true)
-                {
-                    System.IO.File.Delete("config.xml");
-                    xmlinvalido = false;
-                }
-                Type type = this.GetType();
-                Assembly assembly = type.Assembly;
-                this.winVistaConfiguracion = (Window)assembly.CreateInstance("Gimnasio.VistaConfiguracion");
-                this.winVistaConfiguracion.Show();
-            }
-             */
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            Application.Current.Shutdown(); //CERRAR LA APLICACION ENTERA. 
-
-        }
-
-        private void abrirVentanaControlIngreso(object sender, RoutedEventArgs e)
-        {
-            if (this.stackPanel2.Visibility == Visibility.Hidden)
-            {
-                this.stackPanel2.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                this.stackPanel2.Visibility = Visibility.Hidden;
-            }
-        }
-
-        private void abrirVentanaIngresoManual(object sender, RoutedEventArgs e)
-        {
-
-            if (VistaIngresoManual.IsOpen) // Se controla que una instancia de esta ventana no este abierta. 
-            {
-                this.winIngresoManual.Activate(); // Si esta abierta entonces activar, mandar al frente
-                return;
-            }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            else // No está abierta. Abrir una instancia de la ventana.
             {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
@@ -224,14 +147,61 @@ namespace Gimnasio
             }
         }
 
-        private void VerClientesMenuItem_Click(object sender, RoutedEventArgs e)
+        #endregion "Funciones para el Toolbar de Botones de la Ventana Principal"
+
+        #region "Funciones para los Menús de la Ventana Principal"
+
+        private void menuItem_Configuracion(object sender, RoutedEventArgs e)
         {
-            if (VistaClientes.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
+            if (VistaConfiguracion.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
             {
-                this.winClientes.Activate();// Si esta abierta entonces activar, mandar al frente
+                this.winVistaConfiguracion.Activate(); // Si está abierta entonces activar y mandar al frente.
                 return;
             }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
+                // Si el archivo de configuración es inválido, es borrado para generar uno nuevo.
+                if (xmlinvalido == true)
+                {
+                    System.IO.File.Delete("config.xml");
+                    xmlinvalido = false;
+                }
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winVistaConfiguracion = (Window)assembly.CreateInstance("Gimnasio.VistaConfiguracion");
+                this.winVistaConfiguracion.Show();
+            }
+        }
+
+        private void menuItem_CuotasEditar(object sender, RoutedEventArgs e)
+        {
+            if (VistaTiposCuotas.IsOpen)    // Se controla que una instancia de esta ventana no esté abierta.
+            {
+                this.winVistaTiposCuotas.Activate();    // Si está abierta entonces activar y mandar al frente.
+                return;
+            }
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winVistaTiposCuotas = (Window)assembly.CreateInstance("Gimnasio.VistaTiposCuotas");
+                this.winVistaTiposCuotas.Show();
+            }
+        }
+
+        private void menuItem_Salir(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown(); // Cerrar la Aplicación Entera.
+        }
+
+        private void menuItem_VerClientes(object sender, RoutedEventArgs e)
+        {
+            if (VistaClientes.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
+            {
+                this.winClientes.Activate(); // Si está abierta entonces activar y mandar al frente.
+                return;
+            }
+            else // No está abierta. Abrir una instancia de la ventana.
             {
                 Type type = this.GetType();
                 Assembly assembly = type.Assembly;
@@ -240,16 +210,155 @@ namespace Gimnasio
             }
         }
 
+        private void menuItem_ConsultarPagos(object sender, RoutedEventArgs e)
+        {
+            if (VistaConsultarPagos.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
+            {
+                this.winConsultarPagos.Activate();  // Si está abierta entonces activar y mandar al frente.
+                return;
+            }
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winConsultarPagos = (Window)assembly.CreateInstance("Gimnasio.VistaConsultarPagos");
+                this.winConsultarPagos.Show();
+            }
+        }
+
+        private void menuItem_FacturasVer(object sender, RoutedEventArgs e)
+        {
+            if (VistaFacturas.IsOpen)   // Se controla que una instancia de esta ventana no esté abierta.
+            {
+                this.winVistaFacturas.Activate();   // Si está abierta entonces activar y mandar al frente.
+                return;
+            }
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winVistaFacturas = (Window)assembly.CreateInstance("Gimnasio.VistaFacturas");
+                this.winVistaFacturas.Show();
+            }
+        }
+
+        private void menuItem_FacturasConfiguracion(object sender, RoutedEventArgs e)
+        {
+            if (VistaConfiguracionFacturas.IsOpen)  // Si que una instancia de esta ventana está abierta.
+            {
+                this.winVistaConfiguracionFacturas.Activate();  // Si está abierta activar y mandar al frente.
+                return;
+            }
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winVistaConfiguracionFacturas = (Window)assembly.CreateInstance("Gimnasio.VistaConfiguracionFacturas");
+                this.winVistaConfiguracionFacturas.Show();
+            }
+        }
+
+        private void menuItem_AboutGymAdmin(object sender, RoutedEventArgs e)
+        {
+            AboutGymAdmin windowAbout = new AboutGymAdmin();
+            windowAbout.Show();
+        }
+
+        private void menuItem_ReportePagos(object sender, RoutedEventArgs e)
+        {
+            if (VistaReportePagos.IsOpen)   // Se controla que una instancia de esta ventana no esté abierta.
+            {
+                this.winReportePagos.Activate();    // Si está abierta entonces activar y mandar al frente.
+                return;
+            }
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
+                // Se llama a la ventana para hacer login y comprobar que el usuario es admin.
+                VentanaLogin winLogin = new VentanaLogin();
+                Nullable<bool> result = winLogin.ShowDialog();
+                // Si el login es exitoso.
+                if (result == true)
+                {
+                    Type type = this.GetType();
+                    Assembly assembly = type.Assembly;
+                    this.winReportePagos = (Window)assembly.CreateInstance("Gimnasio.VistaReportePagos");
+                    this.winReportePagos.Show();
+                }
+                else
+                {
+                    //System.Console.WriteLine("Se canceló el Login.");
+                }
+            }
+        }
+
+        private void menuItem_ReporteIngresos(object sender, RoutedEventArgs e)
+        {
+            if (VistaReporteIngresos.IsOpen)    // Se controla que una instancia de esta ventana no esté abierta.
+            {
+                this.winReporteIngresos.Activate(); // Si está abierta entonces activar y mandar al frente.
+                return;
+            }
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
+                // Se llama a la ventana para hacer login y comprobar que el usuario es admin.
+                VentanaLogin winLogin = new VentanaLogin();
+                Nullable<bool> result = winLogin.ShowDialog();
+                // Si el login es exitoso.
+                if (result == true)
+                {
+                    Type type = this.GetType();
+                    Assembly assembly = type.Assembly;
+                    this.winReporteIngresos = (Window)assembly.CreateInstance("Gimnasio.VistaReporteIngresos");
+                    this.winReporteIngresos.Show();
+                }
+                else
+                {
+                    //System.Console.WriteLine("Se canceló el Login.");
+                }
+            }
+        }
+
+        private void menuItem_administrarAdmins(object sender, RoutedEventArgs e)
+        {
+            if (VistaAdministrarAdmins.IsOpen)  // Se controla que una instancia de esta ventana no esté abierta.
+            {
+                this.winAdministrarAdmins.Activate();   // Si está abierta entonces activar y mandar al frente.
+                return;
+            }
+            else // No está abierta. Abrir una instancia de la ventana.
+            {
+                // Se llama a la ventana para hacer login y comprobar que el usuario es admin.
+                VentanaLogin winLogin = new VentanaLogin(true);
+                Nullable<bool> result = winLogin.ShowDialog();
+                // Si el login es exitoso.
+                if (result == true)
+                {
+                    Type type = this.GetType();
+                    Assembly assembly = type.Assembly;
+                    this.winAdministrarAdmins = (Window)assembly.CreateInstance("Gimnasio.VistaAdministrarAdmins");
+                    this.winAdministrarAdmins.Show();
+                }
+                else
+                {
+                    //System.Console.WriteLine("Se canceló el Login.");
+                }
+            }
+        }
+
+        #endregion "Funciones para los Menús de la Ventana Principal"
+
         #region "Funciones para la captura y manejo de teclas"
+
         // Esto es necesario para permitir el ingreso de numeros de cedula mediante el keypad USB
 
         private void _KeyPressed(object sender, RawStuff.InputDevice.KeyControlEventArgs e)
         {
             int teclaObtenida = -1;
+
             //Console.WriteLine("Presionaste una Tecla.");
 
-            //string[] tokens = e.Keyboard.Name.Split(';');
-            //string token = tokens[0];
+            string[] tokens = e.Keyboard.Name.Split(';');
+            string token = tokens[tokens.Length - 1];
 
             //Console.WriteLine(e.Keyboard.deviceHandle.ToString());
             //Console.WriteLine(e.Keyboard.deviceType);
@@ -272,7 +381,6 @@ namespace Gimnasio
                     label_ID.Content = e.Keyboard.deviceHandle.ToString();
                     boton_aplicar.IsEnabled = true;
                 }
-
             }
 
             if (e.Keyboard.vKey == "NumPad0")
@@ -321,6 +429,7 @@ namespace Gimnasio
             }
 
             this.c2 = Configuration.Deserialize("config.xml");
+
             //Console.WriteLine("Main ID: " + this.c2.MainDeviceID + ", Pressed ID: " + e.Keyboard.deviceHandle.ToString());
             if (e.Keyboard.deviceHandle.ToString().Equals(this.c2.MainDeviceID))
             {
@@ -332,6 +441,7 @@ namespace Gimnasio
             {
                 this.c2.Keypad_usb = true;
                 Configuration.Serialize("config.xml", this.c2);
+
                 //Console.WriteLine("Keypad USB.");
                 if (VistaControlIngreso.IsOpen)
                 {
@@ -362,14 +472,11 @@ namespace Gimnasio
                         }
                     }
                 }
-
             }
-
         }
 
         public IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-
             if (id != null)
             {
                 // I could have done one of two things here.
@@ -377,7 +484,7 @@ namespace Gimnasio
                 // 2. Changes the ProcessMessage method to handle all of these parameters(more work).
                 //    I opted for the easy way.
 
-                //Note: Depending on your application you may or may not want to set the handled param.
+                // Note: Depending on your application you may or may not want to set the handled param.
 
                 message.HWnd = hwnd;
                 message.Msg = msg;
@@ -410,7 +517,7 @@ namespace Gimnasio
             }
         }
 
-        void StartWndProcHandler()
+        private void StartWndProcHandler()
         {
             IntPtr hwnd = IntPtr.Zero;
             Window myWin = Application.Current.Windows.Cast<Window>().FirstOrDefault(window => window is VentanaPrincipal) as VentanaPrincipal;
@@ -421,11 +528,12 @@ namespace Gimnasio
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                System.Console.WriteLine(ex.Message);
             }
 
-            //Get the Hwnd source   
+            //Get the Hwnd source
             HwndSource source = HwndSource.FromHwnd(hwnd);
+
             //Win32 queue sink
             source.AddHook(new HwndSourceHook(WndProc));
 
@@ -434,82 +542,11 @@ namespace Gimnasio
             Console.WriteLine("Teclados: " + NumberOfKeyboards.ToString());
             if (NumberOfKeyboards == 1)
             {
-                System.Windows.MessageBox.Show("No se detectó un Teclado Auxiliar.\nNo podrá utilizarlo para ingresar números de Cédula.");
+                System.Windows.MessageBox.Show("No se detectó un Teclado Auxiliar.\nNo podrá utilizarlo para ingresar números de Cédula.", "Teclado Auxiliar");
             }
             id.KeyPressed += new RawStuff.InputDevice.DeviceEventHandler(_KeyPressed);
-            if (!Marcador.conected)
-            {
-                System.Windows.MessageBox.Show("No se detectó un dispositivo de marcación.");
-                openConfiguracion();
-            }
-        }
-        #endregion
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            //CI
-            this.stackPanel2.Visibility = Visibility.Hidden;
-            //if (VistaControlIngreso.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
-            //{
-            //    this.winVistaControlIngreso.Activate();// Si esta abierta entonces activar, mandar al frente
-            //    return;
-            //}
-            //else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
-            //{
-            //    Type type = this.GetType();
-            //    Assembly assembly = type.Assembly;
-            //    this.winVistaControlIngreso = (Window)assembly.CreateInstance("Gimnasio.VistaControlIngreso");
-            //    this.winVistaControlIngreso.Show();
-            //}
-            if (VistaPermisoControlIngreso.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
-            {
-                this.winVistaPermisoControlIngreso.Activate();// Si esta abierta entonces activar, mandar al frente
-                return;
-            }
-            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
-            {
-                Type type = this.GetType();
-                Assembly assembly = type.Assembly;
-                this.winVistaPermisoControlIngreso = (Window)assembly.CreateInstance("Gimnasio.VistaPermisoControlIngreso");
-                this.winVistaPermisoControlIngreso.Show();
-            }
-            this.stackPanel2.Visibility = Visibility.Collapsed;
         }
 
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
-            //Huella
-            this.stackPanel2.Visibility = Visibility.Hidden;
-            if (!Marcador.conected)
-            {
-                System.Windows.MessageBox.Show("No se detectó el reloj biométrico.\nVerifique la configuración.");
-                openConfiguracion();
-            }
-            else
-            {
-                if (VistaControlHuella.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
-                {
-                    this.winVistaIngresoHuella.Activate();// Si esta abierta entonces activar, mandar al frente
-                    return;
-                }
-                else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
-                {
-                    Type type = this.GetType();
-                    Assembly assembly = type.Assembly;
-                    this.winVistaIngresoHuella = (Window)assembly.CreateInstance("Gimnasio.VistaControlHuella");
-                    this.winVistaIngresoHuella.Show();
-                }
-            }
-            this.stackPanel2.Visibility = Visibility.Collapsed;
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Type type = this.GetType();
-            Assembly assembly = type.Assembly;
-            this.winVistaAdmUsuarios = (Window)assembly.CreateInstance("Gimnasio.VistaAdmUsuarios");
-            this.winVistaAdmUsuarios.Show();
-        }
-
+        #endregion "Funciones para la captura y manejo de teclas"
     }
 }

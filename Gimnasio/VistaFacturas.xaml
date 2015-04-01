@@ -1,0 +1,43 @@
+﻿<Window x:Class="Gimnasio.VistaFacturas"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Vista de Facturas" Height="320" Width="860" Background="#FFBECBEB" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:Gimnasio" Loaded="Window_Loaded" Unloaded="Window_Unloaded" Closing="Window_Closing" Icon="/Gimnasio;component/Images/iconoFacturas.png" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <CollectionViewSource x:Key="facturasViewSource" d:DesignSource="{d:DesignInstance my:Facturas, CreateList=True}" />
+    </Window.Resources>
+    <Grid DataContext="{StaticResource facturasViewSource}">
+        <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="12,12,12,44" Name="facturasDataGrid" VerticalAlignment="Stretch" ItemsSource="{Binding}" AlternatingRowBackground="Beige" HorizontalGridLinesBrush="Gainsboro" VerticalGridLinesBrush="Gainsboro" UnloadingRow="facturasDataGrid_UnloadingRow" CanUserAddRows="False" RowEditEnding="facturasDataGrid_RowEditEnding" CanUserDeleteRows="False">
+            <DataGrid.Resources>
+                <Style x:Key="DataGridCheckBoxStyle" TargetType="CheckBox">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="nroFacturaColumn" Binding="{Binding Path=Nro_Factura}" Header="Nro. Factura" Width="100" />
+                <DataGridTextColumn x:Name="fechaEmisionColumn" Binding="{Binding Path=Fecha_Emision, StringFormat=\{0:dd/MM/yyyy\}}" Header="Fecha de Emisión" />
+                <DataGridTextColumn x:Name="nombreColumn" Binding="{Binding Path=Nombre_Pagador}" Header="Nombre" />
+                <DataGridTextColumn x:Name="rucColumn" Binding="{Binding Path=RUC_Pagador}" Header="RUC" Width="100" />
+                <!--<DataGridTextColumn x:Name="conceptoColumn" Binding="{Binding Path=Concepto}" Header="Concepto" />-->
+                <DataGridTemplateColumn x:Name="buttonColumn" Width="Auto" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="detalleButton" Content="Detalle de Factura..." Click="DetalleFactura" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="montoTotalColumn" Binding="{Binding Path=Monto_Total}" Header="Monto Total" Width="100" />
+                <DataGridTemplateColumn x:Name="anuladaColumn" Header="Anulada" Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox Style="{StaticResource DataGridCheckBoxStyle}" IsChecked="{Binding Path=Anulada, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" Name="anularCheckBox" Click="anularCheckBox_Click" Checked="anularCheckBox_Checked" Unchecked="anularCheckBox_Unchecked" PreviewMouseLeftButtonDown="anularCheckBox_PreviewMouseLeftButtonDown" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Salir" Height="26" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonSalir" VerticalAlignment="Bottom" Width="100" Click="buttonSalir_Click" PreviewKeyDown="buttonSalir_PreviewKeyDown" />
+        <Button Content="Guardar Cambios" Height="26" HorizontalAlignment="Right" IsEnabled="False" Margin="0,0,118,12" Name="buttonGuardarCambios" VerticalAlignment="Bottom" Width="100" Click="buttonGuardarCambios_Click" PreviewKeyDown="buttonGuardarCambios_PreviewKeyDown" />
+        <Label Content="Vista de Facturas." Height="26" HorizontalAlignment="Left" Margin="12,0,0,12" Name="label1" VerticalAlignment="Bottom" Width="462" />
+    </Grid>
+</Window>

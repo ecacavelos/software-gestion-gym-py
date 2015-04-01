@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Gimnasio.VistaControlIngreso"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Control de Ingreso" Height="600" Width="800"  Icon="/Gimnasio;component/iconoControAcceso.png" Unloaded="Window_Unloaded" Name="window_ControlIngreso" Loaded="window_ControlIngreso_Loaded">
+        Title="Control de Ingreso" Height="600" Width="800"  Icon="/Gimnasio;component/Images/iconoControAcceso.png" Unloaded="Window_Unloaded" Name="window_ControlIngreso" Loaded="window_ControlIngreso_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="49*" />

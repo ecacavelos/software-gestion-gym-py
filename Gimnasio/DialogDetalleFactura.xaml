@@ -1,0 +1,26 @@
+﻿<Window x:Class="Gimnasio.DialogDetalleFactura"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Detalle de Factura" Height="400" Width="360" Background="#FFBECBEB" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button Content="Salir" Height="23" HorizontalAlignment="Right" Margin="0,0,12,12" Name="buttonCancel" VerticalAlignment="Bottom" Width="75" Click="buttonCancel_Click" />
+        <Label Content="RUC:" HorizontalAlignment="Left" Margin="12,36,0,0" Name="labelTitleRUC" VerticalAlignment="Top" Width="108" />
+        <Label Content="Cliente:" HorizontalAlignment="Left" Margin="12,12,0,0" Name="labelTitleCliente" VerticalAlignment="Top" Width="108" />
+        <Label HorizontalAlignment="Stretch" Margin="126,12,12,0" Name="labelCliente" VerticalAlignment="Top" Content="---" />
+        <Label Content="---" HorizontalAlignment="Stretch" Margin="126,36,12,0" Name="labelRUC" VerticalAlignment="Top" />
+        <Label Content="Monto Total: " FontSize="18" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="12,0,12,41" Name="labelMontoTotal" VerticalAlignment="Bottom" Width="274" />
+        <Label Content="Nro. de Factura:" HorizontalAlignment="Left" Margin="12,60,0,0" Name="labelTitleNroFactura" VerticalAlignment="Top" Width="108" />
+        <Label Content="---" HorizontalAlignment="Stretch" Margin="126,60,12,0" Name="labelNroFactura" VerticalAlignment="Top" />
+        <DataGrid AutoGenerateColumns="False" Height="110" HorizontalAlignment="Stretch" HorizontalGridLinesBrush="Gainsboro" Margin="12,140,12,0" Name="dataGridFacturaDetalle" VerticalAlignment="Top" VerticalGridLinesBrush="Gainsboro">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="conceptoColumn" Binding="{Binding Path=descripcionPago}" CanUserResize="False" Header="Concepto" MinWidth="150" Width="220" />
+                <DataGridTextColumn x:Name="montoColumn" Binding="{Binding Path=Cuotas.monto}" CanUserResize="False" Header="Monto" MinWidth="82" Width="82" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Fecha de Emisión:" HorizontalAlignment="Left" Margin="12,84,0,0" Name="labelTitleFechaEmision" VerticalAlignment="Top" Width="108" />
+        <Label Content="---" HorizontalAlignment="Stretch" Margin="126,84,12,0" Name="labelFechaEmision" VerticalAlignment="Top" />
+        <Label HorizontalAlignment="Stretch" Margin="12,256,218,0" Name="labelTitleTotalIVA" VerticalAlignment="Top" Content="Total IVA:" />
+        <Label Content="Esta Factura está Anulada." HorizontalAlignment="Stretch" Margin="12,108,12,0" Name="labelAnulada" VerticalAlignment="Top" Foreground="Red" Visibility="Collapsed" />
+        <Label Content="---" HorizontalAlignment="Stretch" Margin="126,256,12,0" Name="labelTotalIVA" VerticalAlignment="Top" />
+    </Grid>
+</Window>

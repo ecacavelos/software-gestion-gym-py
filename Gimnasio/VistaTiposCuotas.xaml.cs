@@ -97,7 +97,7 @@ namespace Gimnasio
                 //database1Entities.SaveChanges();
                 // Gimnasio.Database1Entities
             }
-        
+
         }
 
         private void unloadingRow_BorrarTipoCuota(object sender, DataGridRowEventArgs e)

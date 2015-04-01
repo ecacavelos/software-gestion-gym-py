@@ -3,22 +3,43 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
-
 namespace Gimnasio
 {
     [Serializable]
     public class Configuration
     {
+        // Datos Relativos a las Coordenadas de Impresión.
+        public struct ImpresionCoords
+        {
+            public int yFecha;
+            public int xFechaDia, xFechaMes, xFechaAño;
+
+            public int xContadoCredito;
+
+            public int xNombre, yNombre;
+            public int xRUC, yRUC;
+
+            public int yItem;
+            public int xItemCant, xItemConcepto;
+            public int xItemIVAExentas, xItemIVA05, xItemIVA10;
+
+            public int ySubTotal;
+            public int xSubTotalIVAExentas, xSubTotalIVA05, xSubTotalIVA10;
+
+            public int xTotalPagar;
+
+            public int xTotalEnLetras, yTotalEnLetras;
+
+            public int yTotal;
+            public int xTotalIVA05, xTotalIVA10, xTotalIVAGeneral;
+        }
+
         int _Version;
         string _General;
         int _TiempoApertura;
         bool _Keypad_usb;
         string _MainDeviceID;
-        String _ip1;
-        String _ip2;
-        String _ip3;
-        String _ip4;
-        String _puerto;
+        ImpresionCoords _ImpresionCoords;
 
         public Configuration()
         {
@@ -27,12 +48,10 @@ namespace Gimnasio
             _TiempoApertura = -1;
             _Keypad_usb = false;
             _MainDeviceID = "";
-            _ip1 = "192";
-            _ip2 = "168";
-            _ip3 = "";
-            _ip4 = "201";
-            _puerto = "4370";
+
+            InicializarCoordenadas();
         }
+
         public static void Serialize(string file, Configuration c)
         {
             System.Xml.Serialization.XmlSerializer xs
@@ -52,6 +71,7 @@ namespace Gimnasio
             reader.Close();
             return c;
         }
+
         public int Version
         {
             get { return _Version; }
@@ -77,34 +97,51 @@ namespace Gimnasio
             get { return _MainDeviceID; }
             set { _MainDeviceID = value; }
         }
-        public string ip1
+
+        // Interfaz para la Estructura con las Coordenadas de Impresión.
+        public ImpresionCoords CoordenadasImpresion
         {
-            get { return _ip1; }
-            set { _ip1 = value; }
+            get { return _ImpresionCoords; }
+            set { _ImpresionCoords = value; }
         }
 
-        public string ip2
+        public void InicializarCoordenadas()
         {
-            get { return _ip2; }
-            set { _ip2 = value; }
-        }
+            // Creamos e inicializamos la Estructura con las Coordenadas para la Impresión.
+            _ImpresionCoords = new ImpresionCoords();
+            _ImpresionCoords.yFecha = 15;
+            _ImpresionCoords.xFechaDia = 120;
+            _ImpresionCoords.xFechaMes = 160;
+            _ImpresionCoords.xFechaAño = 230;
 
-        public string ip3
-        {
-            get { return _ip3; }
-            set { _ip3 = value; }
-        }
+            _ImpresionCoords.xContadoCredito = 520;
 
-        public string ip4
-        {
-            get { return _ip4; }
-            set { _ip4 = value; }
-        }
+            _ImpresionCoords.xRUC = 180;
+            _ImpresionCoords.yRUC = 40;
+            _ImpresionCoords.xNombre = 180;
+            _ImpresionCoords.yNombre = 65;
 
-        public string puerto
-        {
-            get { return _puerto; }
-            set { _puerto = value; }
+            _ImpresionCoords.yItem = 150;
+            _ImpresionCoords.xItemCant = 120;
+            _ImpresionCoords.xItemConcepto = 160;
+            _ImpresionCoords.xItemIVAExentas = 400;
+            _ImpresionCoords.xItemIVA05 = 470;
+            _ImpresionCoords.xItemIVA10 = 540;
+
+            _ImpresionCoords.ySubTotal = 450;
+            _ImpresionCoords.xSubTotalIVAExentas = _ImpresionCoords.xItemIVAExentas;
+            _ImpresionCoords.xSubTotalIVA05 = _ImpresionCoords.xItemIVA05;
+            _ImpresionCoords.xSubTotalIVA10 = _ImpresionCoords.xItemIVA10;
+
+            _ImpresionCoords.xTotalPagar = 540;
+
+            _ImpresionCoords.xTotalEnLetras = 160;
+            _ImpresionCoords.yTotalEnLetras = 475;
+
+            _ImpresionCoords.yTotal = 500;
+            _ImpresionCoords.xTotalIVA05 = 220;
+            _ImpresionCoords.xTotalIVA10 = 350;
+            _ImpresionCoords.xTotalIVAGeneral = 480;
         }
 
     }
