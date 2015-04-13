@@ -39,6 +39,12 @@ namespace Gimnasio
         int _TiempoApertura;
         bool _Keypad_usb;
         string _MainDeviceID;
+        String _ip1;
+        String _ip2;
+        String _ip3;
+        String _ip4;
+        String _puerto;
+
         ImpresionCoords _ImpresionCoords;
 
         public Configuration()
@@ -48,6 +54,11 @@ namespace Gimnasio
             _TiempoApertura = -1;
             _Keypad_usb = false;
             _MainDeviceID = "";
+            _ip1 = "192";
+            _ip2 = "168";
+            _ip3 = "";
+            _ip4 = "201";
+            _puerto = "4370";
 
             InicializarCoordenadas();
         }
@@ -96,6 +107,35 @@ namespace Gimnasio
         {
             get { return _MainDeviceID; }
             set { _MainDeviceID = value; }
+        }
+        public string ip1
+        {
+            get { return _ip1; }
+            set { _ip1 = value; }
+        }
+
+        public string ip2
+        {
+            get { return _ip2; }
+            set { _ip2 = value; }
+        }
+
+        public string ip3
+        {
+            get { return _ip3; }
+            set { _ip3 = value; }
+        }
+
+        public string ip4
+        {
+            get { return _ip4; }
+            set { _ip4 = value; }
+        }
+
+        public string puerto
+        {
+            get { return _puerto; }
+            set { _puerto = value; }
         }
 
         // Interfaz para la Estructura con las Coordenadas de Impresión.

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gimnasio", "Gimnasio\Gimnasio.csproj", "{050A2221-DFC6-4434-A5BA-A2C9390BD700}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "GymAdmin", "GymAdmin\GymAdmin.vdproj", "{F7BD4644-AC2A-4C8C-9A00-61F9D8E52DD1}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "GymAdmin", "GymAdmin\GymAdmin.vdproj", "{C51F3A5B-08E8-4B2F-A072-376884B68FDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +15,8 @@ Global
 		{050A2221-DFC6-4434-A5BA-A2C9390BD700}.Debug|x86.Build.0 = Debug|x86
 		{050A2221-DFC6-4434-A5BA-A2C9390BD700}.Release|x86.ActiveCfg = Release|x86
 		{050A2221-DFC6-4434-A5BA-A2C9390BD700}.Release|x86.Build.0 = Release|x86
-		{F7BD4644-AC2A-4C8C-9A00-61F9D8E52DD1}.Debug|x86.ActiveCfg = Debug
-		{F7BD4644-AC2A-4C8C-9A00-61F9D8E52DD1}.Release|x86.ActiveCfg = Release
+		{C51F3A5B-08E8-4B2F-A072-376884B68FDB}.Debug|x86.ActiveCfg = Debug
+		{C51F3A5B-08E8-4B2F-A072-376884B68FDB}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,7 +15,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Usuario\Desktop\gimnasio setup\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -25,10 +26,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -49,6 +50,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>EE8CA84E08889012C8E81B9E54B11E0D809BA208</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Gimnasio_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -94,6 +107,7 @@
     <Compile Include="Impresion.cs" />
     <Compile Include="Facturacion.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Marcador.cs" />
     <Compile Include="VentanaLogin.xaml.cs">
       <DependentUpon>VentanaLogin.xaml</DependentUpon>
     </Compile>
@@ -126,6 +140,9 @@
     <Compile Include="VistaConfiguracion.xaml.cs">
       <DependentUpon>VistaConfiguracion.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VistaControlHuella.xaml.cs">
+      <DependentUpon>VistaControlHuella.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VistaControlIngreso.xaml.cs">
       <DependentUpon>VistaControlIngreso.xaml</DependentUpon>
     </Compile>
@@ -137,6 +154,9 @@
     </Compile>
     <Compile Include="VistaIngresoManual.xaml.cs">
       <DependentUpon>VistaIngresoManual.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VistaPermisoControlIngreso.xaml.cs">
+      <DependentUpon>VistaPermisoControlIngreso.xaml</DependentUpon>
     </Compile>
     <Compile Include="VistaReporteIngresos.xaml.cs">
       <DependentUpon>VistaReporteIngresos.xaml</DependentUpon>
@@ -181,6 +201,7 @@
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="App.Config" />
+    <None Include="Gimnasio_TemporaryKey.pfx" />
     <None Include="Model1.edmx.sqlce" />
     <None Include="Properties\DataSources\Database1Entities.datasource" />
     <None Include="Properties\Settings.settings">
@@ -192,7 +213,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 y x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -220,6 +241,8 @@
     <Content Include="Database1.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\Fingerprint-icon.png" />
+    <Content Include="ParallelPort.dll" />
     <Resource Include="Images\tick.png" />
     <Resource Include="Images\delete.png" />
     <Resource Include="Images\iconoConfiguracion.png" />
@@ -270,6 +293,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="VistaControlHuella.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="VistaControlIngreso.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -286,6 +313,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="VistaPermisoControlIngreso.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="VistaReporteIngresos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -298,6 +329,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="zkemkeeper">
+      <Guid>{FE9DED34-E159-408E-8490-B720A5E632C7}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

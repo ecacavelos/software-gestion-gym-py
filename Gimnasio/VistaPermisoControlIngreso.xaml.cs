@@ -21,7 +21,7 @@ namespace Gimnasio
     {
         int contIntentos = 0;
         Gimnasio.Database1Entities database1Entities = new Gimnasio.Database1Entities();
-        System.Data.Objects.ObjectQuery<Gimnasio.usuario> usuariosVar2;
+        System.Data.Objects.ObjectQuery<Gimnasio.Admins> usuariosVar2;
         public static bool IsOpen { get; private set; }
         Window winVistaControlIngreso = new Window();
 
@@ -35,9 +35,13 @@ namespace Gimnasio
             contIntentos = contIntentos + 1;
             info1Label.Visibility = Visibility.Hidden;
             info2Label.Visibility = Visibility.Hidden;
-            string esql = "select value u from usuarios as u where u.user= '" + txtUsr.Text + "\'";
-            var usuariosVar = database1Entities.CreateQuery<usuario>(esql);
-
+            string esql = "select value u from Admins as u where u.nombre= '" + txtUsr.Text + "\'";
+            //string esql = "select value u from usuarios as u where u.user= '" + txtUsr.Text + "\'";
+            //string esql = "SELECT [nombre] FROM Admins WHERE [nombre] = '" + txtUsr.Text + "'";
+            
+            try {
+                var usuariosVar = database1Entities.CreateQuery<Admins>(esql);
+            
             // Se controla que el cliente que se haya traido sea un cliente valido. 
             if (usuariosVar.ToList().Count == 0)
             {
@@ -45,8 +49,10 @@ namespace Gimnasio
             }
             else
             {
-                esql = "select value u from usuarios as u where u.user= '" + txtUsr.Text + "\' and u.password='"+ txtPass.Password + "\'";
-                var usuariosVar2 = database1Entities.CreateQuery<usuario>(esql);
+                esql = "select value u from Admins as u where u.nombre= '" + txtUsr.Text + "\' and u.password='" + txtPass.Password + "\'";
+                //esql = "select value u from usuarios as u where u.user= '" + txtUsr.Text + "\' and u.password='"+ txtPass.Password + "\'";
+                //esql = "SELECT [nombre] FROM Admins WHERE ([nombre] = '" + txtUsr.Text + "\' and [password] ='" + txtPass.Password + "'";
+                var usuariosVar2 = database1Entities.CreateQuery<Admins>(esql);
                 if (usuariosVar2.ToList().Count == 0)
                 {
                     info2Label.Visibility = Visibility.Visible;
@@ -69,6 +75,11 @@ namespace Gimnasio
                     info2Label.Visibility = Visibility.Hidden;
                     this.Close();
                 }
+            }
+            }
+            catch (System.Data.EntitySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

@@ -54,6 +54,9 @@ namespace Gimnasio
         //private static int test = 0;
         public static bool IsOpen { get; private set; }
 
+        //Create Standalone SDK class dynamicly.
+        public zkemkeeper.CZKEM axCZKEM1 = Marcador.axCZKEM1;
+
         public VistaControlIngreso()
         {
             ParallelPort();

@@ -3,11 +3,39 @@
   <Version>1</Version>
   <General>My Config</General>
   <TiempoApertura>5</TiempoApertura>
-  <Keypad_usb>true</Keypad_usb>
-  <MainDeviceID>720963</MainDeviceID>
+  <Keypad_usb>false</Keypad_usb>
+  <MainDeviceID>720957</MainDeviceID>
   <ip1>192</ip1>
   <ip2>168</ip2>
   <ip3>50</ip3>
   <ip4>201</ip4>
   <puerto>4370</puerto>
+  <CoordenadasImpresion>
+    <yFecha>15</yFecha>
+    <xFechaDia>120</xFechaDia>
+    <xFechaMes>160</xFechaMes>
+    <xFechaAño>230</xFechaAño>
+    <xContadoCredito>520</xContadoCredito>
+    <xNombre>180</xNombre>
+    <yNombre>65</yNombre>
+    <xRUC>180</xRUC>
+    <yRUC>40</yRUC>
+    <yItem>150</yItem>
+    <xItemCant>120</xItemCant>
+    <xItemConcepto>160</xItemConcepto>
+    <xItemIVAExentas>400</xItemIVAExentas>
+    <xItemIVA05>470</xItemIVA05>
+    <xItemIVA10>540</xItemIVA10>
+    <ySubTotal>450</ySubTotal>
+    <xSubTotalIVAExentas>400</xSubTotalIVAExentas>
+    <xSubTotalIVA05>470</xSubTotalIVA05>
+    <xSubTotalIVA10>540</xSubTotalIVA10>
+    <xTotalPagar>540</xTotalPagar>
+    <xTotalEnLetras>160</xTotalEnLetras>
+    <yTotalEnLetras>475</yTotalEnLetras>
+    <yTotal>500</yTotal>
+    <xTotalIVA05>220</xTotalIVA05>
+    <xTotalIVA10>350</xTotalIVA10>
+    <xTotalIVAGeneral>480</xTotalIVAGeneral>
+  </CoordenadasImpresion>
 </Configuration>

@@ -38,6 +38,11 @@ namespace Gimnasio
         private Window winReporteIngresos = new Window();
         private Window winAdministrarAdmins = new Window();
 
+        
+        private Window winVistaIngresoHuella = new Window();
+        private Window winVistaAdmUsuarios = new Window();
+        private Window winVistaPermisoControlIngreso = new Window();
+
         private RawStuff.InputDevice id;
         private int NumberOfKeyboards;
         private Message message = new Message();
@@ -99,6 +104,18 @@ namespace Gimnasio
             }
         }
 
+        private void abrirVentanaControlIngreso(object sender, RoutedEventArgs e)
+        {
+            if (this.stackPanel2.Visibility == Visibility.Hidden)
+            {
+                this.stackPanel2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.stackPanel2.Visibility = Visibility.Hidden;
+            }
+        }
+
         private void abrirVentana_IngresarPago(object sender, RoutedEventArgs e)
         {
             if (VistaIngresoDeCuota.IsOpen)     // Se controla que una instancia de esta ventana no esté abierta.
@@ -114,7 +131,7 @@ namespace Gimnasio
                 this.winIngresarPago.Show();
             }
         }
-
+        /*
         private void abrirVentana_ControlIngreso(object sender, RoutedEventArgs e)
         {
             if (VistaControlIngreso.IsOpen) // Se controla que una instancia de esta ventana no esté abierta.
@@ -128,6 +145,18 @@ namespace Gimnasio
                 Assembly assembly = type.Assembly;
                 this.winVistaControlIngreso = (Window)assembly.CreateInstance("Gimnasio.VistaControlIngreso");
                 this.winVistaControlIngreso.Show();
+            }
+        }
+        */
+        private void abrirVentana_ControlIngreso(object sender, RoutedEventArgs e)
+        {
+            if (this.stackPanel2.Visibility == Visibility.Hidden)
+            {
+                this.stackPanel2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.stackPanel2.Visibility = Visibility.Hidden;
             }
         }
 
@@ -145,6 +174,50 @@ namespace Gimnasio
                 this.winIngresoManual = (Window)assembly.CreateInstance("Gimnasio.VistaIngresoManual");
                 this.winIngresoManual.Show();
             }
+        }
+
+        private void openConfiguracion()
+        {
+            if (VistaConfiguracion.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
+            {
+                this.winVistaConfiguracion.Activate();// Si esta abierta entonces activar, mandar al frente
+                return;
+            }
+            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            {
+                if (xmlinvalido == true)
+                {
+                    System.IO.File.Delete("config.xml");
+                    xmlinvalido = false;
+                }
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winVistaConfiguracion = (Window)assembly.CreateInstance("Gimnasio.VistaConfiguracion");
+                this.winVistaConfiguracion.Show();
+            }
+        }
+        private void MenuItem_Click_Configuracion(object sender, RoutedEventArgs e)
+        {
+            openConfiguracion();
+            /*
+            if (VistaConfiguracion.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
+            {
+                this.winVistaConfiguracion.Activate();// Si esta abierta entonces activar, mandar al frente
+                return;
+            }
+            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            {
+                if (xmlinvalido == true)
+                {
+                    System.IO.File.Delete("config.xml");
+                    xmlinvalido = false;
+                }
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winVistaConfiguracion = (Window)assembly.CreateInstance("Gimnasio.VistaConfiguracion");
+                this.winVistaConfiguracion.Show();
+            }
+             */
         }
 
         #endregion "Funciones para el Toolbar de Botones de la Ventana Principal"
@@ -545,8 +618,79 @@ namespace Gimnasio
                 System.Windows.MessageBox.Show("No se detectó un Teclado Auxiliar.\nNo podrá utilizarlo para ingresar números de Cédula.", "Teclado Auxiliar");
             }
             id.KeyPressed += new RawStuff.InputDevice.DeviceEventHandler(_KeyPressed);
+            if (!Marcador.conected)
+            {
+                System.Windows.MessageBox.Show("No se detectó un dispositivo de marcación.");
+                openConfiguracion();
+            }
+        }
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            //CI
+            this.stackPanel2.Visibility = Visibility.Hidden;
+            //if (VistaControlIngreso.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
+            //{
+            //    this.winVistaControlIngreso.Activate();// Si esta abierta entonces activar, mandar al frente
+            //    return;
+            //}
+            //else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            //{
+            //    Type type = this.GetType();
+            //    Assembly assembly = type.Assembly;
+            //    this.winVistaControlIngreso = (Window)assembly.CreateInstance("Gimnasio.VistaControlIngreso");
+            //    this.winVistaControlIngreso.Show();
+            //}
+            if (VistaPermisoControlIngreso.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
+            {
+                this.winVistaPermisoControlIngreso.Activate();// Si esta abierta entonces activar, mandar al frente
+                return;
+            }
+            else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+            {
+                Type type = this.GetType();
+                Assembly assembly = type.Assembly;
+                this.winVistaPermisoControlIngreso = (Window)assembly.CreateInstance("Gimnasio.VistaPermisoControlIngreso");
+                this.winVistaPermisoControlIngreso.Show();
+            }
+            this.stackPanel2.Visibility = Visibility.Collapsed;
         }
 
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            //Huella
+            this.stackPanel2.Visibility = Visibility.Hidden;
+            if (!Marcador.conected)
+            {
+                System.Windows.MessageBox.Show("No se detectó el reloj biométrico.\nVerifique la configuración.");
+                openConfiguracion();
+            }
+            else
+            {
+                if (VistaControlHuella.IsOpen)// Se controla que una instancia de esta ventana no este abierta. 
+                {
+                    this.winVistaIngresoHuella.Activate();// Si esta abierta entonces activar, mandar al frente
+                    return;
+                }
+                else // NO ESTA ABIERTA. Abrir una instancia de la ventana.
+                {
+                    Type type = this.GetType();
+                    Assembly assembly = type.Assembly;
+                    this.winVistaIngresoHuella = (Window)assembly.CreateInstance("Gimnasio.VistaControlHuella");
+                    this.winVistaIngresoHuella.Show();
+                }
+            }
+            this.stackPanel2.Visibility = Visibility.Collapsed;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Type type = this.GetType();
+            Assembly assembly = type.Assembly;
+            this.winVistaAdmUsuarios = (Window)assembly.CreateInstance("Gimnasio.VistaAdmUsuarios");
+            this.winVistaAdmUsuarios.Show();
+        }
         #endregion "Funciones para la captura y manejo de teclas"
+
+
     }
 }

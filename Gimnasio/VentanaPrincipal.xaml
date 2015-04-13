@@ -56,9 +56,11 @@
                 <MenuItem Header="Cambiar Contraseña de Admin..." Click="menuItem_administrarAdmins" />
             </MenuItem>
             <MenuItem Header="Ayuda">
+            <MenuItem Header="Usuarios" Click="MenuItem_Click" />
                 <!--<MenuItem Header="Ayuda" />-->
                 <MenuItem Header="About GymAdmin..." Click="menuItem_AboutGymAdmin" />
             </MenuItem>
+            <!--<MenuItem Header="Usuarios" Click="MenuItem_Click" />-->
         </Menu>
         <ToolBar Grid.Row="4" Background="#5A1B1B1D" Margin="12,12,12,215">
             <Button Margin="3" Click="abrirVentana_Clientes" Content="Clientes" Width="130"></Button>
@@ -70,6 +72,11 @@
             <Button Margin="3" Click="abrirVentana_IngresoManual" Width="130">Habilitar manualmente</Button>
         </ToolBar>
         <StackPanel Grid.Row="4" HorizontalAlignment="Left" Margin="12,6,0,0" Name="stackPanel1" VerticalAlignment="Top"  DataContext="{StaticResource clientesViewSource}"></StackPanel>
-        <Label Content="v27052013 Full" Grid.Row="4" Height="28" HorizontalAlignment="Right" Margin="0,0,12,12" Name="label1" VerticalAlignment="Bottom" />
+        <Separator Grid.Row="4" Height="49" HorizontalAlignment="Left" Margin="440,17,0,0" Name="separator1" VerticalAlignment="Top" Width="2" />
+        <Separator Grid.Row="4" Height="18" HorizontalAlignment="Left" Margin="440,21,0,0" Name="separator2" VerticalAlignment="Top" Width="3" />
+        <StackPanel Grid.Row="4" Height="45" HorizontalAlignment="Left" Margin="306,44,0,0" Name="stackPanel2" VerticalAlignment="Top" Width="113" Background="#FF858DA2" Visibility="Hidden">
+            <Button Content="Lector de huellas" Name="button2" Width="113" BorderThickness="0" Background="{x:Null}" Click="button2_Click" />
+            <Button Content="Cédula de identidad" Name="button1" Background="{x:Null}" BorderThickness="0" Height="22" Click="button1_Click"></Button>
+        </StackPanel>
     </Grid>
 </Window>
